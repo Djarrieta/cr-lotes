@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @layer base {
+    .inputText {
+        @apply rounded-full m-1 p-2 bg-white
+    }
+    .inputText:focus{
+        @apply bg-white
+    }
+    .tag {
+        @apply inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2
+    }
+} */
