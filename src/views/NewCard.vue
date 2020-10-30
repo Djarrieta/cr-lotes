@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen">
         <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-md w-full">
+            <div class=" max-w-xl w-full">
                 <StepsIndicator :indicator="indicator"/>
                 <Step1/>
             </div>
