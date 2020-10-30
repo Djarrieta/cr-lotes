@@ -1,5 +1,4 @@
 <template>
-    <Header></Header>
     <div>
         {{ cardData }}
     </div>
@@ -7,9 +6,7 @@
 
 <script>
 import {db} from "@/main.js"
-import Header from "@/components/Header"
 export default {
-    components:{Header},
     data(){
         return{
             cardId:"",

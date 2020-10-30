@@ -1,6 +1,6 @@
 <template>
 <div class="min-h-screen">
-  <Header></Header>
+
   <div class="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
       <div class="flex flex-col w-full">
@@ -57,11 +57,9 @@
 </template>
 
 <script>
-import Header from "@/components/Header"
 import firebase from "firebase"
 export default {
     name:"SignIn",
-    components:{Header},
     data(){
       return{
         currentUser:"",

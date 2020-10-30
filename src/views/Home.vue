@@ -1,6 +1,5 @@
 <template>
   <div class="bg-gray-100 min-h-screen flex flex-col justify-between">
-    <Header/>
     <div v-if="!showLoading" class="container m-auto pt-2 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <Card 
         v-for="(dato,i) in datos" 
@@ -18,14 +17,13 @@
 <script>
 import {db} from "@/main.js"
 import firebase from "firebase"
-import Header from "@/components/Header"
 import Card from "@/components/Card"
 import Loading from "@/components/Loading"
 
 export default {
   name: 'Home',
   components: {
-    Header,Card,Loading
+    Card,Loading
   },
   props:["dato"],
   data(){
