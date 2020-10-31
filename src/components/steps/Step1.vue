@@ -2,24 +2,36 @@
 <div>
   <div class="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
-      <form class="mt-8" action="#" method="POST">
+      <div class="mt-8">
         <!-- Inputs -->
         <div class="rounded-md shadow-sm">
+          <!-- Titulo -->
           <div>
-            <input v-model="titulo" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="TITULO">
+            <input v-model="title" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="TITULO">
           </div>
+          <!-- Descripcion -->
           <div class="-mt-px">
-            <input v-model="phoneNumber" aria-label="phoneNumber" name="phoneNumber" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="WhatsApp">
+            <textarea v-model="description" class="w-full h-32 appearance-none rounded-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" style="resize:none" placeholder="Descripción corta"></textarea>
           </div>
+          <!-- Tipo -->
           <div class="-mt-px">
-            <input v-model="email" aria-label="Email address" name="email" type="email" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Correo">
+            <select v-model="type" class="w-full h-10 appearance-none rounded-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5">
+              <option value="Lote">Lote</option>
+              <option value="Vivienda">Vivienda</option>
+            </select>
           </div>
-
-          <div class="-mt-px">
-            <input v-model="password" name="password" type="password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Contraseña">
+          <!-- Area -->
+          <div class="-mt-px flex border border-gray-300">
+            <input v-model="area" type="number" class="appearance-none rounded-none relative block w-full px-3 py-2  placeholder-gray-500 text-gray-900  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5 text-right" placeholder="Área">
+            <select v-model="unArea" class="text-gray-500">
+              <option value="Metros cuad.">Metros cuad.</option>
+              <option value="Hectareas">Hectareas</option>
+            </select>
           </div>
-          <div class="-mt-px">
-            <input v-model="password2" aria-label="Password2" name="password2" type="password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Repite tu contraseña">
+          <!-- Precio -->
+          <div class="-mt-px -mt-px flex border border-gray-300 items-center">
+            <input v-model="price" type="number" class=" w-full px-3 py-2  placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5 text-right" placeholder="Precio">
+            <span class="px-2 text-gray-500">₡</span>
           </div>
         </div>
         
@@ -28,18 +40,17 @@
           {{ problems }}
         </p>
 
-        <!-- SignUp button -->
-        <div class="mt-4">
-          <div @click="signUp" class=" cursor-pointer group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 transition ease-in-out duration-150" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-              </svg>
-            </span>
-            Registrarse
+        <!-- buttons -->
+        <div class="flex w-full justify-between">
+          <div>
+
           </div>
+          <button @click="next" class="boton-indigo m-2">
+            Siguiente
+          </button>
         </div>
-      </form>
+        
+      </div>
     </div>
   </div>
 </div>
@@ -48,6 +59,55 @@
 <script>
 export default {
     name:"Step1",
-    props:{}
+    props:{},
+    data(){
+      return{
+        title:"",
+        description:"",
+        type:"Lote",
+        area:0,
+        unArea:"Metros cuad.",
+        price:0,
+        problems:""
+      }
+    },
+    computed:{
+      dataStep1(){
+        return {
+          title:this.title,
+          description:this.description,
+          type:this.type,
+          area:this.area,
+          unArea:this.unArea,
+          price:this.price
+        }
+      }
+    },
+    methods:{
+      next(){
+        /* problems */
+        if(!this.title) 
+        {
+          this.problems="Título no válido"
+          return
+        } 
+        if(!this.description) 
+        {
+          this.problems="Descripción no válida"
+          return
+        } 
+        if(parseInt(this.area)===0) 
+        {
+          this.problems="Área no válida"
+          return
+        } 
+        if(parseInt(this.price)===0) 
+        {
+          this.problems="Precio no válido"
+          return
+        } 
+        this.$emit("send-step1",this.dataStep1)
+      }
+    }    
 }
 </script>

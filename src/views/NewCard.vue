@@ -3,7 +3,7 @@
         <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div class="container">
                 <StepsIndicator :indicator="indicator"/>
-                <Step1/>
+                <Step1 v-if="indicator===1" @sendStep1="getStep1"/>
             </div>
         </div>
     </div>
@@ -17,9 +17,17 @@ export default {
     components:{StepsIndicator,Step1},
     data(){
         return{
-            indicator:2,
+            indicator:1,
             data:{}
         }
+    },
+    methods:{
+        getStep1(dataStep1){
+            this.indicator++
+            this.data={...dataStep1}
+            console.log(this.data)
+        }
     }
+
 }
 </script>
