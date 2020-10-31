@@ -14,7 +14,7 @@
   }
 
   .inputForm {
-    @apply appearance-none rounded-none relative block w-full px-3 py-5 border border-gray-300 text-gray-900 rounded-t-md;
+    @apply appearance-none relative block w-full px-3 py-5 border border-gray-300 text-gray-900 rounded;
   } /* placeholder-gray-500 sm:text-sm lg:text-lg sm:leading-5 */
   .inputForm:focus {
     @apply outline-none shadow-outline-blue border-blue-300 z-10;
@@ -36,7 +36,7 @@
     @apply bg-indigo-700;
   }
   .label {
-    @apply block tracking-wide text-gray-700 text-base text-blue-900 font-bold mb-2;
+    @apply block tracking-wide text-base text-blue-900  mb-2;
   }
 
   @screen sm {
@@ -46,7 +46,7 @@
   }
   @screen lg {
     .inputForm {
-      @apply text-sm text-lg;
+      @apply text-lg;
     }
   }
 }
