@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div class=" max-w-xl w-full">
+            <div class="container">
                 <StepsIndicator :indicator="indicator"/>
                 <Step1/>
             </div>
@@ -17,7 +17,7 @@ export default {
     components:{StepsIndicator,Step1},
     data(){
         return{
-            indicator:3,
+            indicator:2,
             data:{}
         }
     }

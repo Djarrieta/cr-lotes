@@ -61,7 +61,7 @@
           <div 
             v-if="profileMenuVisible" 
             @mouseleave="ShowProfileMenu"
-            class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
+            class="origin-top-right absolute right-0 mt-1 w-48 rounded-md shadow-lg">
             <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                 <router-link 
                     to="/signin" 

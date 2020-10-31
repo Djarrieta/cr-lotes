@@ -132,34 +132,6 @@ export default {
               this.problems="Hubo un problema, vuelve a intentarlo."
           }
         })
-
-
-
-        
-
-        
-        
-/* 
-
-        firebase.auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(()=>this.problems="")
-        .catch(e=>{
-          console.log(e.code)
-          switch(e.code){
-            case "auth/invalid-email":
-              this.problems="Correo inválido."
-              break;
-            case "auth/email-already-in-use":
-              this.problems="Ya hay una cuenta vinculada a este correo."
-              break;
-            case "auth/weak-password":
-              this.problems="Coloca una contraseña más dificil de adivinar."
-              break;
-            default:
-              this.problems="Hubo un problema, vuelve a intentarlo."
-          }
-        }) */
       },
     },
 }
