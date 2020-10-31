@@ -39,11 +39,25 @@
     @apply block tracking-wide text-gray-700 text-base text-blue-900 font-bold mb-2;
   }
 
+  .caja-sombreada {
+    @apply w-full bg-white px-5 py-10 shadow-2xl rounded-2xl;
+  }
+
   @screen sm {
     .inputForm {
       @apply text-sm leading-5;
     }
+
+    .caja-sombreada {
+      @apply mb-10 px-20;
+    }
   }
+  @screen md {
+    .caja-sombreada {
+      @apply bg-white px-20 py-20 mt-20  shadow-lg rounded-2xl;
+    }
+  }
+
   @screen lg {
     .inputForm {
       @apply text-sm text-lg;

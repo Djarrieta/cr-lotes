@@ -1,9 +1,9 @@
 <template>
 
   <div class="flex items-center justify-center sm:px-6 lg:px-8">
-    <div class="max-w-2xl w-full bg-white px-5 py-10 sm:mb-10 sm:px-20 shadow-2xl rounded-2xl md:bg-white md:px-20 md:py-20 md:mt-20  md:shadow-lg md:rounded-2xl">
+    <div class="max-w-2xl caja-sombreada">
       <div class="flex flex-col w-full">
-        <h1  class="w-auto text-5xl font-extrabold text-blue-900 text-center uppercase tracking-widest">
+        <h1 class="w-auto text-5xl font-extrabold text-blue-900 text-center uppercase tracking-widest">
           CR-Lotes
         </h1>
         <h2 class="text-center text-xl leading-9 text-gray-400 uppercase tracking-widest">
