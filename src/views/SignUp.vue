@@ -1,6 +1,5 @@
 <template>
-<div>
-  <div class="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
       <div class="flex flex-col w-full">
         <span  class="w-auto text-4xl font-extrabold text-blue-900 text-center">
@@ -17,8 +16,10 @@
           <div>
             <input v-model="name" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Nombre Apellido">
           </div>
-          <div class="-mt-px">
-            <input v-model="phoneNumber" aria-label="phoneNumber" name="phoneNumber" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="WhatsApp">
+          <div class="-mt-px flex">
+            <input aria-label="prefixPhoneNumber" name="prefixPhoneNumber" type="tel" class="flex-auto w-16 appearance-none rounded-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" value="+506">
+
+            <input v-model="phoneNumber" aria-label="phoneNumber" name="phoneNumber" type="text" class="flex-auto appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="WhatsApp" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
           </div>
           <div class="-mt-px">
             <input v-model="email" aria-label="Email address" name="email" type="email" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Correo">
@@ -33,7 +34,7 @@
         </div>
         
         <!-- Problems -->
-        <p v-if="problems" class="bg-red-300 w-full text-red-600 text-xs my-2 p-2 rounded-sm">
+        <p v-if="problems" class="bg-red-300 w-full text-red-600 text-base my-2 p-2 rounded-sm">
           {{ problems }}
         </p>
 
@@ -57,9 +58,9 @@
           </div>
         </div>
       </form>
+      {{ whatsApp }}
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -69,16 +70,22 @@ export default {
     name:"SignUp",
     data(){
       return{
-        currentUser:"",
-        name:"",
-        email:"",
-        phoneNumber:"",
-        password:"",
-        password2:"",
-        problems:""
+        currentUser: "",
+        name: "",
+        email: "",
+        phoneNumber: "",
+        whatsApp: '',
+        password: "",
+        password2: "",
+        problems: ""
       }
     },
-    created(){
+    watch: {
+      phoneNumber() {
+        this.whatsApp = '+506' + this.phoneNumber
+      }
+    },
+    created() {
         const self=this
         //user
         firebase.auth().onAuthStateChanged(user=>{
@@ -86,6 +93,10 @@ export default {
                 self.currentUser=user
             }
         })
+    },
+    
+    computed: {
+
     },
     methods:{
       
@@ -112,11 +123,11 @@ export default {
         .then(()=>{
           const uid=self.currentUser.uid
           db.collection("users").doc(uid).set({
-            phoneNumber:self.phoneNumber,
+            phoneNumber:self.whatsApp,
           })
         })
         .catch(e=>{
-          self.currentUser.delete()
+          // self.currentUser.delete()
           console.error(e)
           switch(e.code){
             case "auth/invalid-email":

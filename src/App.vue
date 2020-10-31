@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen">
+  <div class="min-h-screen bg-gray-100">
     <Header/>
     <router-view/>
   </div>
@@ -7,7 +7,6 @@
 <script>
 import Header from "@/components/Header"
 export default {
-  components:{Header}
+  components: { Header }
 }
 </script>
-

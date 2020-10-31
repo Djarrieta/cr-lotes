@@ -26,7 +26,7 @@
         <div class="flex-shrink-0">
           <!-- small logo -->
           <span class="hidden sm:block lg:hidden h-8 w-auto text-blue-50 text-2xl  font-bold">
-            CR
+            CR-Lotes
           </span>
 
           <!-- big logo -->
@@ -64,27 +64,27 @@
             class="origin-top-right absolute right-0 mt-1 w-48 rounded-md shadow-lg">
             <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                 <router-link 
-                    to="/signin" 
+                    :to="{ name: 'SignIn' }" 
                     v-if="!currentUser"
                     class="profileMenuElement">
                     Ingresar</router-link>
-                <router-link 
-                    to="/signup" 
+                <router-link
+                    :to="{ name: 'SignUp' }" 
                     v-if="!currentUser"
                     class="profileMenuElement">
                     Registrarse</router-link>
-                <router-link 
-                    to="/" 
+                <router-link
+                    :to="{ name: 'Home' }"
                     v-if="currentUser"
                     class="profileMenuElement">
                     {{ currentUser.displayName }}</router-link>
-                <router-link 
-                    to="/newcard" 
+                <router-link
+                    :to="{ name: 'NewCard' }"
                     v-if="currentUser"
                     class="profileMenuElement">
                     Publicar</router-link>
                 <a 
-                    to="/" 
+                    :to="{ name: 'Home' }"
                     v-if="currentUser"
                     class="profileMenuElement"
                     @click="signOut">
