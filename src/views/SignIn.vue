@@ -12,7 +12,7 @@
         </h2>
         
       </div>
-      <form class="mt-8" action="#" method="POST">
+      <form @submit.prevent class="mt-8" action="#" method="POST">
         <!-- Inputs -->
         <div class="rounded-md shadow-sm">
           <div>
@@ -81,7 +81,12 @@ export default {
       signIn(){
         firebase.auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(()=>this.problems="")
+        .then(
+            () => {
+              this.problems = "",
+              this.$router.replace("/")
+            }
+          )
         .catch(e=>{
           console.log(e.code)
           switch(e.code){
