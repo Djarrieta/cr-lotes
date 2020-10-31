@@ -8,8 +8,6 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-createApp(App).use(router).mount('#app')
-
 var firebaseConfig = {
     apiKey: "AIzaSyD8zLxcVrbpJHPacuBDqclXPMTiOSJB2XE",
     authDomain: "cr-lotes-firebase.firebaseapp.com",
@@ -24,4 +22,5 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 const storage=firebaseApp.storage();
 
+createApp(App).use(router).mount('#app')
 export { db, storage};

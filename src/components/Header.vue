@@ -60,6 +60,7 @@
           </div>
           <div 
             v-if="profileMenuVisible" 
+            @mouseleave="ShowProfileMenu"
             class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
             <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                 <router-link 
@@ -119,6 +120,7 @@ export default {
     },
     computed:{
         profilePic(){
+            
             return this.currentUser ? "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FuserColor_40px.png?alt=media&token=47c3b3a4-9de5-42a8-91fa-53857aea0526" :
 
             "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fuser_40px.png?alt=media&token=3a5e7134-b699-492d-8e65-78c34e59e893"
@@ -128,6 +130,7 @@ export default {
         const self=this
         //user
         firebase.auth().onAuthStateChanged(user=>{
+          console.log("cambia user")
             if(user){
                 self.currentUser=user
             }else{
@@ -145,7 +148,7 @@ export default {
         signOut(){
             firebase.auth().signOut()
             .catch(e=>console.error(e))
-            this.profileMenuVisible=false
+            this.currentUser=""
             this.$router.replace("/")
         },
     }
