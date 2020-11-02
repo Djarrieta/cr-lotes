@@ -48,7 +48,9 @@
             class="text-right my-1 ml-1 p-2 rounded-l-full"
             type="number"
             placeholder="0">
-          <select class="my-1 mr-1 py-2 pr-2 rounded-r-full">
+          <select 
+            v-model="unArea"
+            class="my-1 mr-1 py-2 pr-2 rounded-r-full">
             <option value="m²">m²</option>
             <option value="ha">ha</option>
           </select>
@@ -84,6 +86,7 @@ export default {
         description:"",
         price:0,
         area:0,
+        unArea:"m²",
         problems:""
       }
     },
@@ -93,7 +96,8 @@ export default {
           title:this.title,
           description:this.description,
           price:this.price,
-          area:this.area
+          area:this.area,
+          unArea:this.unArea
         }
       }
     },

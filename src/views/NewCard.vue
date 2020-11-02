@@ -6,6 +6,8 @@
                 <Step1
                     v-if="indicator===1"
                     @get-data-step1="getDataStep1"/>
+                <Step2
+                    v-if="indicator===2"/>
             </div>
         </div>
     </div>
@@ -13,9 +15,10 @@
 <script>
 import StepsIndicator from "@/components/steps/StepsIndicator"
 import Step1 from "@/components/steps/Step1"
+import Step2 from "@/components/steps/Step2"
 export default {
     name:"NewCard",
-    components:{StepsIndicator,Step1},
+    components:{StepsIndicator,Step1,Step2},
     data(){
         return{
             indicator:1,

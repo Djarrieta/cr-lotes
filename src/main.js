@@ -8,6 +8,8 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
+import * as VueGoogleMaps from 'vue2-google-maps'
+
 var firebaseConfig = {
     apiKey: "AIzaSyD8zLxcVrbpJHPacuBDqclXPMTiOSJB2XE",
     authDomain: "cr-lotes-firebase.firebaseapp.com",
@@ -23,4 +25,12 @@ const db = firebaseApp.firestore();
 const storage=firebaseApp.storage();
 
 createApp(App).use(router).mount('#app')
+
+createApp(App).use(VueGoogleMaps, {
+    load: {
+      key: "AIzaSyAXfjM-ENwQbcfybmC_kSAofPHayGe3rog",
+    },
+  });
+
+
 export { db, storage};
