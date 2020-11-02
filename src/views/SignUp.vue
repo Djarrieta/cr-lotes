@@ -63,7 +63,7 @@
 
         <div class="mt-6 flex items-center justify-between">
           <div class="text-sm leading-5 w-full flex justify-around">
-            <router-link :to="{ name: 'SignIn' }" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+            <router-link :to="{ name: 'SignIn' }" class="font-medium text-base text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 text-center">
               Ya tengo una cuenta
             </router-link>
           </div>

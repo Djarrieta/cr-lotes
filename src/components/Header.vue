@@ -122,7 +122,6 @@ export default {
         profilePic(){
             
             return this.currentUser ? "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FuserColor_40px.png?alt=media&token=47c3b3a4-9de5-42a8-91fa-53857aea0526" :
-
             "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fuser_40px.png?alt=media&token=3a5e7134-b699-492d-8e65-78c34e59e893"
         }
     },

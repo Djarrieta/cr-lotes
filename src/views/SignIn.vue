@@ -49,7 +49,7 @@
 
         <div class="mt-6 flex items-center justify-between">
           <div class="text-lg leading-5 w-full flex justify-around">
-            <a @click="resetPass" class=" cursor-pointer font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 text-center">
+            <a @click="resetPass" class="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 text-center">
               ¿Olvidaste tu contraseña?
             </a>
             <router-link :to="{ name: 'SignUp' }" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 text-center">
