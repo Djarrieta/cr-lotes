@@ -12,6 +12,11 @@
         @click="seeMore">Ver más</button>
     </div>
   </div>
+  <div class="grid grid-cols-2">
+    <div class="bg-red-600"></div>
+    <Map/>
+  </div>
+  
 </template>
 
 <script>
@@ -19,11 +24,13 @@ import {db} from "@/main.js"
 import firebase from "firebase"
 import Card from "@/components/Card"
 import Loading from "@/components/Loading"
+import Map from "@/components/Map"
+
 
 export default {
   name: 'Home',
   components: {
-    Card,Loading
+    Card,Loading,Map
   },
   props:["dato"],
   data(){

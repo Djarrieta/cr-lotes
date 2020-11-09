@@ -7,6 +7,8 @@ import SignUp from '@/views/SignUp'
 import About from '@/views/About'
 import CardDetail from '@/views/CardDetail'
 import NewCard from '@/views/NewCard'
+  //////prueba 
+import PruebaMap from '@/views/PruebaMap'
 
 const routes = [
   {
@@ -36,9 +38,7 @@ const routes = [
     path: '/newcard',
     name: 'NewCard',
     component: NewCard,
-    meta:{
-      autentificado:true
-    }
+
   },
   {
     path: '/card/:id',
@@ -47,6 +47,13 @@ const routes = [
     meta:{
       autentificado:true
     }
+  },
+
+  //////prueba 
+  {
+    path: '/prueba-map',
+    name: 'PruebaMap',
+    component: PruebaMap
   },
 ]
 

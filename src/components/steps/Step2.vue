@@ -1,83 +1,61 @@
 <template>
-{{lat}} <br>
-{{lng}}
   <div class="w-full" style="height:400px">
-    <div class="grid grid-cols-1 sm:grid-cols-2">
+      <!-- Título -->
       <div>
-        <!-- provincias -->
-        <div class="mr-10">
-          <label class="label ml-2 ">
-            Provincia
-          </label>
-          <div class="flex">
-            <select 
-              v-model="provSelected"
-              class="my-1 mr-1 py-2 p-2 rounded-full  w-full">
-                <option 
-                  v-for="prv in prvs"
-                  :key="prv.id"
-                  :value="prv.id"> {{ prv.provincia }} </option>
-            </select>
-          </div>
-        </div>
-        <!-- Cantones -->
-        <div class="mr-10">
-          <label class="label ml-2 ">
-            Cantón
-          </label>
-          <select 
-            v-model="ctnSelected"
-            class="my-1 mr-1 py-2 p-2 rounded-full  w-full">
-              <option 
-                v-for="ctn in ctns"
-                :key="ctn.id"
-                :value="ctn.id"> {{ ctn.canton }} </option>
-          </select>
-        </div>
-        <!-- Distrito -->
-        <div class="mr-10">
-          <label class="label ml-2 ">
-            Distrito
-          </label>
-          <select 
-            v-model="dttSelected"
-            class="my-1 mr-1 py-2 p-2 rounded-full  w-full">
-              <option 
-                v-for="dtt in dtts"
-                :key="dtt.id"
-                :value="dtt.id"> {{ dtt.distrito }} </option>
-          </select>
-        </div>
-        <!-- Dirección -->
-        <div class="mr-10">
-          <label class="label ml-2 ">
-            Dirección
-          </label>
+        <label class="label ml-2">
+          Título
+        </label>
+        <input 
+          v-model="title"
+          type="text" 
+          class="inputText"
+          placeholder="TÍTULO PUBLICACIÓN">
+      </div>
+      <!-- Descripción -->
+      <div>
+        <label class="label ml-2">
+          Descripción
+        </label>
+        <textarea
+        v-model="description"
+          class="rounded-lg w-full h-32"
+          style="resize:none"
+          placeholder="Descripción corta"/>
+      </div>
+      <!-- Precio -->
+      <div>
+        <label class="label ml-2 ">
+          Precio
+        </label>
+        <div class="flex overflow-hidden">
           <input 
-            class="inputText w-full"
-            v-model="dir"
-            placeholder="Dirección"
-            type="text">
+            v-model="price"
+            class="text-right my-1 ml-1 p-2 rounded-l-full"
+            placeholder="0.00"
+            type="number">
+            <span
+              class="bg-white my-1 mr-1 py-2 pr-2 rounded-r-full">₡</span>
         </div>
       </div>
-      <div class="bg-red-600">
-        <GmapMap
-          :center="{lat:10, lng:10}"
-          :zoom="zoom"
-          map-type-id="terrain"
-          style="width: 500px; height: 300px"
-        ></GmapMap>
-<!--           <GmapMarker
-            :key="index"
-            v-for="(m, index) in markers"
-            :position="m.position"
-            :clickable="true"
-            :draggable="true"
-            @click="center=m.position"
-          />
-        </GmapMap> -->
+      <!-- Area -->
+      <div>
+        <label class="label ml-2 ">
+          Área
+        </label>
+        <div class="flex">
+          <input 
+            v-model="area"
+            class="text-right my-1 ml-1 p-2 rounded-l-full"
+            type="number"
+            placeholder="0">
+          <select 
+            v-model="unArea"
+            class="my-1 mr-1 py-2 pr-2 rounded-r-full">
+            <option value="m²">m²</option>
+            <option value="ha">ha</option>
+          </select>
+        </div>
       </div>
-    </div>
       <!-- Problems -->
       <p v-if="problems" class="group relative w-full flex justify-center bg-red-100 text-red-600 font-bold text-lg my-5 p-4 rounded-sm">
         <span class="absolute flex-auto left-0 inset-y-0 flex items-center pl-3">  
@@ -89,10 +67,7 @@
       </p>
       <!-- button -->
       <div class="flex justify-between m-2">
-        <button 
-          class="boton-indigo"
-          @click="next">
-            Anterior</button>
+        <div/>
         <button 
           class="boton-indigo"
           @click="next">
@@ -102,53 +77,27 @@
 </template>
 
 <script>
-import provincias from "@/assets/provinciasCR.js"
-import cantones from "@/assets/cantonesCR.js"
-import distritos from "@/assets/distritosCR.js"
 export default {
     name:"Step2",
     props:{},
     data(){
       return{
-        provSelected:1,
-        ctnSelected:1,
-        dttSelected:1,
-        dir:"",
-        prvs:[],
-        ctns:[],
-        dtts:[],
-        lat:10.0159394,
-        lng:-84.21417009999999,
-        zoom:7,
-        problems:"",
-        markers:[{lat:10, lng:10}]
-
-      }
-    },
-    created(){
-      this.prvs=provincias
-    },
-    watch:{
-      provSelected:function(newProvValue){
-        this.dtts=[]
-        this.ctns=cantones.filter(x=>x.provincia_id==newProvValue)
-
-        this.lat=this.prvs[newProvValue].coordenadas.split(", ")[0]
-        this.lng=this.prvs[newProvValue].coordenadas.split(", ")[1]
-        this.zoom=7
-      },
-      ctnSelected:function(newCtnValue){
-        this.dtts=distritos.filter(x=>x.canton_id==newCtnValue)
-        console.log(this.ctns.filter(x=>x.id==newCtnValue))
-
-        this.lat=this.ctns[newCtnValue]
-        this.zoom=10
+        title:"title",
+        description:"descripción",
+        price:1000,
+        area:200,
+        unArea:"m²",
+        problems:""
       }
     },
     computed:{
-      dataStep2(){
+      dataStep1(){
         return {
-          s:"hola"
+          title:this.title,
+          description:this.description,
+          price:this.price,
+          area:this.area,
+          unArea:this.unArea
         }
       }
     },
@@ -158,7 +107,19 @@ export default {
           this.problems="Título inválido."
           return
         }
-        this.$emit("get-data-step2",this.dataStep2)
+        if(!this.description){
+          this.problems="Descripción inválida."
+          return
+        }
+        if(!this.price){
+          this.problems="Precio inválido."
+          return
+        }
+        if(!this.area){
+          this.problems="Área inválida."
+          return
+        }
+        this.$emit("get-data-step1",this.dataStep1)
       }
     }
 }
