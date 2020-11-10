@@ -1,14 +1,11 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import firebase from "firebase"
+import Home from '@/views/Home.vue'
+import Login from '@/views/Login.vue'
+import Publicar from '@/views/Publicar.vue'
 
-import Home from '@/views/Home'
-import SignIn from '@/views/SignIn'
-import SignUp from '@/views/SignUp'
-import About from '@/views/About'
-import CardDetail from '@/views/CardDetail'
-import NewCard from '@/views/NewCard'
-  //////prueba 
-import PruebaMap from '@/views/PruebaMap'
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -18,57 +15,31 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'SignIn',
-    component: SignIn
+    name: 'Login',
+    component: Login
   },
   {
-    path: '/registro',
-    name: 'SignUp',
-    component: SignUp
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: About,
+    path: '/publicar',
+    name: 'Publicar',
+    component: Publicar,
     meta:{
       autentificado:true
     }
-  },
-  {
-    path: '/newcard',
-    name: 'NewCard',
-    component: NewCard,
-
-  },
-  {
-    path: '/card/:id',
-    name: 'CardDetail',
-    component: CardDetail,
-    meta:{
-      autentificado:true
-    }
-  },
-
-  //////prueba 
-  {
-    path: '/prueba-map',
-    name: 'PruebaMap',
-    component: PruebaMap
   },
 ]
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes
 })
-
 //redirección automática cuando no hay 
 router.beforeEach((to, from, next) => {
   let usuario = firebase.auth().currentUser;
   let autorizacion = to.matched.some((record) => record.meta.autentificado);
 
   if (autorizacion && !usuario) {
-    next({ name: "SignIn" });
+    next({ name: "Home" });
   } else {
     next();
   }

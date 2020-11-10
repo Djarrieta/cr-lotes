@@ -68,7 +68,7 @@ import { db } from "@/main";
 import "firebase/auth";
 import Swal from "sweetalert2";
 export default {
-    name:"SignIn",
+    name:"Login",
     data(){
       return{
         currentUser: "",

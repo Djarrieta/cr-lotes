@@ -1,126 +1,238 @@
 <template>
-  <div class="w-full" style="height:400px">
-      <!-- Título -->
-      <div>
-        <label class="label ml-2">
-          Título
-        </label>
-        <input 
-          v-model="title"
-          type="text" 
-          class="inputText"
-          placeholder="TÍTULO PUBLICACIÓN">
-      </div>
-      <!-- Descripción -->
-      <div>
-        <label class="label ml-2">
-          Descripción
-        </label>
-        <textarea
-        v-model="description"
-          class="rounded-lg w-full h-32"
-          style="resize:none"
-          placeholder="Descripción corta"/>
-      </div>
-      <!-- Precio -->
-      <div>
-        <label class="label ml-2 ">
-          Precio
-        </label>
-        <div class="flex overflow-hidden">
-          <input 
-            v-model="price"
-            class="text-right my-1 ml-1 p-2 rounded-l-full"
-            placeholder="0.00"
-            type="number">
-            <span
-              class="bg-white my-1 mr-1 py-2 pr-2 rounded-r-full">₡</span>
+<div>
+    <Buttons @next="next" @prev="prev"/>
+    <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
+    <div class="grid sm:grid-cols-2 w-full h-full">
+        <div class="flex flex-col p-4">
+            <!-- provincias -->
+            <div class="my-1">
+                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Provincia</label>
+                <div class="border  border-gray-300 py-2 px-1 rounded">
+                    <select 
+                        id="selectPrv"
+                        class=" focus:outline-none w-full bg-gray-100"
+                        v-model="s2_idPrvSelected"
+                        @click="SelectPrv">
+                        <option disabled value="0"
+                        class="">Selecciona</option>
+
+                        <option v-for="p in prvs"
+                            :key="p.id"
+                            :value="{id:p.id,
+                            pos:p.coordenadas}">{{ p.provincia }}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- cantones -->
+            <div class="my-1">
+                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Cantón</label>
+                <div class="border  border-gray-300 py-2 px-1 rounded">
+                    <select 
+                        id="selectCtn"
+                        class=" focus:outline-none w-full bg-gray-100"
+                        v-model="s2_idCtnSelected"
+                        @click="SelectCtn">
+                        <option disabled value="0"
+                        class="">Selecciona</option>
+                        <option v-for="p in ctns"
+                            :key="p.id"
+                            :value="{id:p.id,
+                            pos:p.coordenadas}">{{ p.canton }}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- distritos -->
+            <div class="my-1">
+                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Distrito</label>
+                <div class="border  border-gray-300 py-2 px-1 rounded">
+                    <select 
+                        id="selectDtt"
+                        class=" focus:outline-none w-full bg-gray-100"
+                        v-model="s2_idDttSelected">
+                        <option disabled value="0"
+                        class="">Selecciona</option>
+                        <option v-for="p in dtts"
+                            :key="p.id"
+                            :value="{id:p.id,
+                            pos:p.coordenadas}">{{ p.distrito }}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Dirección -->
+            <div class="my-1">
+                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Dirección</label>
+                <div class="border  border-gray-300 py-2 px-1 rounded">
+                    <input 
+                        class="focus:outline-none w-full bg-gray-100 px-2"
+                        v-model="s2_address"
+                        type="text"
+                        placeholder="Cl 12#34-56">
+                </div>
+            </div>
+            <!-- Coordenadas -->
+            <div class="my-1">
+                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Coordenadas</label>
+                <div class="border  border-gray-300 py-2 px-1 rounded flex flex-col">
+                    <span class="text-gray-500 pl-2">Latitud {{center.lat}} </span>
+                    <span class="text-gray-500 pl-2">Longitud {{center.lng}}</span>
+                </div>
+            </div>
         </div>
-      </div>
-      <!-- Area -->
-      <div>
-        <label class="label ml-2 ">
-          Área
-        </label>
-        <div class="flex">
-          <input 
-            v-model="area"
-            class="text-right my-1 ml-1 p-2 rounded-l-full"
-            type="number"
-            placeholder="0">
-          <select 
-            v-model="unArea"
-            class="my-1 mr-1 py-2 pr-2 rounded-r-full">
-            <option value="m²">m²</option>
-            <option value="ha">ha</option>
-          </select>
-        </div>
-      </div>
-      <!-- Problems -->
-      <p v-if="problems" class="group relative w-full flex justify-center bg-red-100 text-red-600 font-bold text-lg my-5 p-4 rounded-sm">
-        <span class="absolute flex-auto left-0 inset-y-0 flex items-center pl-3">  
-          <svg class="h-5 w-5 text-red-600 group-hover:text-red-600 transition ease-in-out duration-150" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-          </svg>
-        </span>
-        <span class="flex-auto ml-6">{{ problems }}</span>
-      </p>
-      <!-- button -->
-      <div class="flex justify-between m-2">
-        <div/>
-        <button 
-          class="boton-indigo"
-          @click="next">
-            Siguiente</button>
-      </div>
-  </div>
+        <GmapMap
+            class="w-full h-64 sm:h-full"
+            ref="mapRef"
+            :center="center"
+            :zoom="zoom"
+            map-type-id="roadmap"
+            :options="{
+                mapTypeControl: false,
+                streetViewControl: false,
+                rotateControl: false,}">
+            <GmapMarker
+                :position="center"
+                :clickable="true"
+                :draggable="true"
+                @dragend="getMarkerPosition($event.latLng)"
+            />
+        </GmapMap>
+    </div>
+
+</div>
 </template>
 
 <script>
+import provincias from "@/assets/provinciasCR.js"
+import cantones from "@/assets/cantonesCR.js"
+import distritos from "@/assets/distritosCR.js"
+import Buttons from "@/components/steps/Buttons"
+
 export default {
-    name:"Step2",
-    props:{},
-    data(){
-      return{
-        title:"title",
-        description:"descripción",
-        price:1000,
-        area:200,
-        unArea:"m²",
-        problems:""
-      }
-    },
-    computed:{
-      dataStep1(){
-        return {
-          title:this.title,
-          description:this.description,
-          price:this.price,
-          area:this.area,
-          unArea:this.unArea
-        }
-      }
-    },
-    methods:{
-      next(){
-        if(!this.title){
-          this.problems="Título inválido."
-          return
-        }
-        if(!this.description){
-          this.problems="Descripción inválida."
-          return
-        }
-        if(!this.price){
-          this.problems="Precio inválido."
-          return
-        }
-        if(!this.area){
-          this.problems="Área inválida."
-          return
-        }
-        this.$emit("get-data-step1",this.dataStep1)
-      }
+  name: 'Step2',
+  components:{Buttons},
+  props:["data"],
+  data(){
+    return{
+      center:{lat: 10,lng: -83},
+      zoom:7,
+      prvs:provincias,
+      s2_idPrvSelected:0,
+      s2_namePrvSelected:"",
+      ctns:[],
+      s2_idCtnSelected:0,
+      s2_nameCtnSelected:"",
+      dtts:[],
+      s2_idDttSelected:0,
+      s2_nameDttSelected:"",
+      s2_address:"",
+      problems:""
     }
+  },
+  mounted(){
+      if(this.data.s2_idPrvSelected)
+        {
+            const p=provincias.filter(p=>p.id==this.data.s2_idPrvSelected)[0]
+            this.s2_idPrvSelected={
+                id:p.id,
+                pos:p.coordenadas
+            }
+            this.SelectPrv()
+        }
+      if(this.data.s2_idCtnSelected)
+        {
+            const c=cantones.filter(c=>c.id==this.data.s2_idCtnSelected)[0]
+            this.s2_idCtnSelected={
+                id:c.id,
+                pos:c.coordenadas
+            }
+            this.SelectCtn()
+        }
+      if(this.data.s2_idDttSelected){
+            const d=distritos.filter(d=>d.id==this.data.s2_idDttSelected)[0]
+            this.s2_idDttSelected={
+                id:d.id,
+                pos:d.coordenadas
+            }
+      }
+
+      if(this.data.s2_address){
+          this.s2_address=this.data.s2_address
+      }
+  },
+  computed:{
+    dataStep2(){
+        return {
+            s2_idPrvSelected:this.s2_idPrvSelected.id,
+            s2_namePrvSelected:this.s2_namePrvSelected,
+            s2_idCtnSelected:this.s2_idCtnSelected.id,
+            s2_nameCtnSelected:this.s2_nameCtnSelected,
+            s2_idDttSelected:this.s2_idDttSelected.id,
+            s2_nameDttSelected:this.s2_nameDttSelected,
+            s2_address:this.s2_address,
+            s2_lat:this.center.lat,
+            s2_lng:this.center.lng
+        }
+    }
+  },
+  watch:{
+      s2_idPrvSelected(newId){
+          const lat =Number(newId.pos.split(", ")[0])
+          const lng =Number(newId.pos.split(", ")[1])
+          this.center={lat,lng}
+          this.zoom=10
+          
+          const e=document.getElementById("selectPrv")
+          this.s2_namePrvSelected= e.options[e.selectedIndex].text
+      },
+      s2_idCtnSelected(newId){
+          const lat =Number(newId.pos.split(", ")[0])
+          const lng =Number(newId.pos.split(", ")[1])
+          this.center={lat,lng}
+          this.zoom=12
+
+          const e=document.getElementById("selectCtn")
+          this.s2_nameCtnSelected= e.options[e.selectedIndex].text
+      },
+      s2_idDttSelected(newId){
+          const lat =Number(newId.pos.split(", ")[0])
+          const lng =Number(newId.pos.split(", ")[1])
+          this.center={lat,lng}
+          this.zoom=14
+
+          const e=document.getElementById("selectDtt")
+          this.s2_nameDttSelected= e.options[e.selectedIndex].text
+      }
+  },
+  methods:{
+    next(){
+        this.problems=""
+        if(!this.s2_address){this.problems="Dirección inválida"}
+        if(!this.s2_nameDttSelected){this.problems="Distrito Inválido"}
+        if(!this.s2_nameCtnSelected){this.problems="Cantón Inválido"}
+        if(!this.s2_namePrvSelected){this.problems="Provincia Inválida"}
+
+        //Emite solo cuando no hay problemas
+        if(!this.problems){
+            this.$emit("next",this.dataStep2)
+        }
+    },
+    prev(){
+        this.$emit("prev",this.dataStep2)
+    },
+    SelectPrv(){
+        this.ctns=[]
+        this.dtts=[]
+        this.ctns=cantones.filter(c=>c.provincia_id==this.s2_idPrvSelected.id)
+    },
+    SelectCtn(){
+        this.dtts=[]
+        this.dtts=distritos.filter(c=>c.canton_id==this.s2_idCtnSelected.id)
+    },
+    getMarkerPosition(obj){
+      this.center={
+        lat: obj.lat(),
+        lng: obj.lng()
+      }
+    },
+  }
 }
 </script>

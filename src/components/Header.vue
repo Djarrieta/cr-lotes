@@ -3,46 +3,46 @@
   <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
     <div class="relative flex items-center justify-between h-16">
         <!-- left menu -->
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-          <!-- small logo -->
-          <span class="block lg:hidden text-blue-50 text-2xl  font-bold mr-2">
-            CR
-          </span>
+        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+            <!-- small logo -->
+            <span class="block lg:hidden text-blue-50 text-2xl  font-bold mr-2">
+                CR
+            </span>
 
-        <button @click="showLeftMenu" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false">
+            <button @click="showLeftMenu" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false">
 
-            <!-- sandwitch Icon when menu is open -->
-          <svg v-if="!leftMenuVisible" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <!-- Close Icon when menu is open -->
-          <svg v-if="leftMenuVisible" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-      <!-- Logos -->
-      <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-        <div class="flex-shrink-0">
-          <!-- small logo -->
-          <span class="hidden sm:block lg:hidden h-8 w-auto text-blue-50 text-2xl  font-bold">
-            CR-Lotes
-          </span>
-
-          <!-- big logo -->
-          <span  class="hidden lg:block h-8 w-auto text-blue-50 text-2xl font-bold">
-              CR-Lotes
-          </span>
+                <!-- sandwitch Icon when menu is open -->
+            <svg v-if="!leftMenuVisible" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <!-- Close Icon when menu is open -->
+            <svg v-if="leftMenuVisible" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            </button>
         </div>
-        <!-- Left menu visible on md and bigger-->
-        <div class="hidden sm:block sm:ml-6">
-          <div class="flex">
-            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium leading-5 text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Nosotros</a>
-            <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Contacto</a>
-          </div>
+        <!-- Logos -->
+        <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+            <div class="flex-shrink-0">
+            <!-- small logo -->
+            <span class="hidden sm:block lg:hidden h-8 w-auto text-blue-50 text-2xl  font-bold">
+                CR
+            </span>
+
+            <!-- big logo -->
+            <span  class="hidden lg:block h-8 w-auto text-blue-50 text-2xl font-bold">
+                CR-Lotes
+            </span>
+            </div>
+            <!-- Left menu visible on md and bigger-->
+            <div class="hidden sm:block sm:ml-6">
+            <div class="flex">
+                <a href="#" class="px-3 py-2 rounded-md text-sm font-medium leading-5 text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Nosotros</a>
+                <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Contacto</a>
+            </div>
+            </div>
         </div>
-      </div>
-      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         <!-- Notifications bell -->
         <button class="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out" aria-label="Notifications">
           <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -60,31 +60,30 @@
           </div>
           <div 
             v-if="profileMenuVisible" 
-            @mouseleave="ShowProfileMenu"
             class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
             <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                 <router-link 
-                    :to="{ name: 'SignIn' }" 
+                    to="/signin" 
                     v-if="!currentUser"
                     class="profileMenuElement">
                     Ingresar</router-link>
-                <router-link
-                    :to="{ name: 'SignUp' }" 
+                <router-link 
+                    to="/signup" 
                     v-if="!currentUser"
                     class="profileMenuElement">
                     Registrarse</router-link>
-                <router-link
-                    :to="{ name: 'Home' }"
+                <router-link 
+                    to="/" 
                     v-if="currentUser"
                     class="profileMenuElement">
                     {{ currentUser.displayName }}</router-link>
-                <router-link
-                    :to="{ name: 'NewCard' }"
+                <router-link 
+                    to="/publicar" 
                     v-if="currentUser"
                     class="profileMenuElement">
                     Publicar</router-link>
                 <a 
-                    :to="{ name: 'Home' }"
+                    to="/" 
                     v-if="currentUser"
                     class="profileMenuElement"
                     @click="signOut">
@@ -120,8 +119,8 @@ export default {
     },
     computed:{
         profilePic(){
-            
             return this.currentUser ? "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FuserColor_40px.png?alt=media&token=47c3b3a4-9de5-42a8-91fa-53857aea0526" :
+
             "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fuser_40px.png?alt=media&token=3a5e7134-b699-492d-8e65-78c34e59e893"
         }
     },
@@ -129,7 +128,6 @@ export default {
         const self=this
         //user
         firebase.auth().onAuthStateChanged(user=>{
-          console.log("cambia user")
             if(user){
                 self.currentUser=user
             }else{
@@ -147,7 +145,7 @@ export default {
         signOut(){
             firebase.auth().signOut()
             .catch(e=>console.error(e))
-            this.currentUser=""
+            this.profileMenuVisible=false
             this.$router.replace("/")
         },
     }
