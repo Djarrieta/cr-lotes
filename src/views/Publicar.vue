@@ -54,7 +54,9 @@
       @prev="prev"
       @save="save"
       v-if="indicator===9"/>
+  
   </div>
+  
 </template>
 
 <script>
@@ -69,6 +71,7 @@ import Step7 from "@/components/steps/Step7"
 import Step8 from "@/components/steps/Step8"
 import Confirmation from "@/components/steps/Confirmation"
 import firebase from "firebase"
+import {db} from "@/main.js"
 
 export default {
   name: 'Home',
@@ -81,13 +84,11 @@ export default {
     }
   },
   created(){
-      const self=this
-      //user
       firebase.auth().onAuthStateChanged(user=>{
           if(user){
-              self.currentUser=user
+              this.currentUser=user
           }else{
-              self.currentUser=""
+              this.currentUser=""
           }
       })
   },
@@ -99,15 +100,18 @@ export default {
     next(incominData){
       this.data={...this.data,...incominData}
       this.indicator++
-      console.log(this.indicator)
-      console.log(this.data)
     },
     save(){
-      this.data={
-        ...this.data,
-        uid:this.currentUser.uid,
-        date:"firestore.FieldValue.serverTimestamp()"}
-    }
+        db.collection("props").doc(this.data.propId.toString()).set({
+            ...this.data,
+            status:"complete",
+            date:firebase.firestore.FieldValue.serverTimestamp(),
+            uid:this.currentUser.uid,
+        }).then(()=>{
+          //acá redirecciona a la propiedad guardada, el detalle de la propiedad
+          this.$route.replace("Home")
+        }).catch(e=>console.error(e))
+    },
   }
 }
 </script>

@@ -25,6 +25,7 @@
                 v-if="i.fileUrl"
                 @click="deleteFile(n)">x</a>
             <input 
+                v-if="!i.fileUrl"
                 type='file' 
                 class="hidden" 
                 :id=n
@@ -34,6 +35,7 @@
                 :value="i.progress"
                 class="w-full"/> 
         </label>
+        
     </div>
 </div>
 </template>
@@ -41,6 +43,7 @@
 <script>
 import Buttons from "@/components/steps/Buttons"
 import firebase  from "firebase"
+import {db} from "@/main.js"
 export default {
     name:"Step7",
     props:["data"],
@@ -53,14 +56,14 @@ export default {
                     fileUrl:"",
                     fileName:"",
                     progress:0,
-                    code:"Cata"
+                    code:"Catastro"
                 },
                 {
                     title:"Uso del Suelo",
                     fileUrl:"",
                     fileName:"",
                     progress:0,
-                    code:"Suel"
+                    code:"Suelo"
                 },
                 {
                     title:"Disponibilidad de Agua",
@@ -70,23 +73,33 @@ export default {
                     code:"Agua"
                 },
                 {
-                    title:"Disponibilidad Eléctirca",
+                    title:"Disponibilidad Eléctrica",
                     fileUrl:"",
                     fileName:"",
                     progress:0,
-                    code:"Elec"
+                    code:"Electricidad"
                 },
                 {
                     title:"Visado Municipal",
                     fileUrl:"",
                     fileName:"",
                     progress:0,
-                    code:"Visa"
+                    code:"Visado"
                 },
             ],
-            
-            problems:""
+            problems:"",
+            currentUser:"",
+            propId:""
         }
+    },
+    created(){
+        firebase.auth().onAuthStateChanged(user=>{
+            if(user){
+                this.currentUser=user
+            }else{
+                this.currentUser=""
+            }
+        })
     },
     computed:{
         generalProgress(){
@@ -109,36 +122,54 @@ export default {
     },
     methods:{
         getFiles(id){
-            this.info[id].fileUrl=""
-            const fileDir=document.getElementById(id).files[0]
-            if(!fileDir){return}
-            const fileName=`docs/${this.info[id].code}-${fileDir.name}`
-            const storageRef = firebase.storage().ref()
-            const fileRef=storageRef.child(fileName);
-            const uploadTask=fileRef.put(fileDir)
+            const self=this
+            //incrementar y retorna el número de consecutivo único de la propiedad con una transacción
+            const counterRef = db.collection("propCounter").doc("counter");
 
-            uploadTask.on("state_changed",
-            (x)=>{
-                    //Progreso
-                    this.info[id].progress=x.bytesTransferred/x.totalBytes
-                },
-                (error)=>{
-                    //error
-                    console.error(error)
-                },
-                ()=>{
-                    //Carga con éxito
-                    this.info[id].progress=0
-                    uploadTask.snapshot.ref.getDownloadURL().then(downloadURL=>{
-                        //metadatos usuario y fullSaved
-                        fileRef.updateMetadata({
-                            customMetadata:{fullSaved:false}
-                            })
-                        this.info[id].fileUrl=downloadURL
-                        this.info[id].fileName=fileName
-                    });                   
-                }
-            )
+            return db.runTransaction(transaction=>{
+                return transaction.get(counterRef).then(lastProp=>{
+                    if (!lastProp.exists) {
+                        throw "Document does not exist!";
+                    }
+                    if(!self.propId){
+                        self.propId = lastProp.data().counter + 1;
+                        transaction.update(counterRef, { counter: self.propId});
+                    }
+                });
+            })
+            .then(()=>{
+                //guarda en el storage con el código de la nueva propiedad como carpeta y el código del archivo como nombre de archivo
+                //el propId también será el nombre del documento de esta propiedad en firestore
+                self.info[id].fileUrl=""
+                const fileDir=document.getElementById(id).files[0]
+                if(!fileDir){return}
+                const fileName=`props/${self.propId}/docs/${self.info[id].code}`
+                const storageRef = firebase.storage().ref()
+                const fileRef=storageRef.child(fileName);
+                const uploadTask=fileRef.put(fileDir)
+
+                uploadTask.on("state_changed",
+                (x)=>{
+                        //Progreso
+                        self.info[id].progress=x.bytesTransferred/x.totalBytes
+                    },
+                    (error)=>{
+                        //error
+                        console.error(error)
+                    },
+                    ()=>{
+                        //Carga con éxito
+                        self.info[id].progress=0
+                        uploadTask.snapshot.ref.getDownloadURL()
+                        .then(downloadURL=>{
+                            self.info[id].fileUrl=downloadURL
+                            self.info[id].fileName=fileName
+                        })      
+                    }
+                )
+            }).catch(function(error) {
+                console.log("Transaction failed: ", error);
+            });
         },
         deleteFile(id){
             let storage = firebase.storage()
@@ -155,23 +186,35 @@ export default {
             if(this.generalProgress>0){this.problems="Espera que termine la carga"}
             //Emite solo cuando no hay problemas
             if(!this.problems){
-                this.$emit("next",{s7_files:this.s7_files})
+                this.$emit("next",{s7_files:this.s7_files,propId:this.propId})
             }
         },
         prev(){
-            this.$emit("prev",{s7_files:this.s7_files})
+            this.problems=""
+            if(this.generalProgress>0){this.problems="Espera que termine la carga"}
+            //Emite solo cuando no hay problemas
+            this.$emit("prev",{s7_files:this.s7_files,propId:this.propId})
         },
     },
     mounted(){
+        if(this.data.propId){this.propId=this.data.propId}
         if(this.data.s7_files){
-            this.data.s7_files.forEach(i=>{
-                this.info.forEach((l,n)=>{
-                    if(i.code===l.code){
-                        this.info[n]=i.code
+            let newInfo=[]
+            this.info.forEach(i=>{
+                let match=false
+                this.data.s7_files.forEach(j=>{
+                    if(i.code===j.code){
+                        newInfo.push(j)
+                        match=true
                     }
                 })
+                if(!match){
+                    newInfo.push(i)
+                }
             })
+            this.info=newInfo
         }
     },
+
 }
 </script>
