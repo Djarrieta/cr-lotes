@@ -1,5 +1,7 @@
 <template>
+<!-- Archivos -->
 <div>
+    <p>Opcional pero muy importante... puedes adjuntar aquí documentos del terreno, que sean públicos... Eso si, te advierto!!! Si alguien se pone en contacto contigo y hace mención de estos documentos, seguro que estas bastante cerca de vender.</p>
     <Buttons @next="next" @prev="prev"/>
     <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
@@ -29,7 +31,8 @@
                 type='file' 
                 class="hidden" 
                 :id=n
-                @change="getFiles(n)"/>
+                @change="getFiles(n)"
+                accept="image/png, image/jpeg,application/pdf,application/vnd.ms-excel"/>
             <progress
                 v-if="i.progress"
                 :value="i.progress"
@@ -143,6 +146,11 @@ export default {
                 self.info[id].fileUrl=""
                 const fileDir=document.getElementById(id).files[0]
                 if(!fileDir){return}
+                const fileSize=fileDir.size/1024/1024
+                if(fileSize>1){
+                    this.problems="Escoge archivos de menos de 1Mb"
+                    return
+                }
                 const fileName=`props/${self.propId}/docs/${self.info[id].code}`
                 const storageRef = firebase.storage().ref()
                 const fileRef=storageRef.child(fileName);

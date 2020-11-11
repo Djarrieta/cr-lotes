@@ -107,9 +107,6 @@ export default {
             status:"complete",
             date:firebase.firestore.FieldValue.serverTimestamp(),
             uid:this.currentUser.uid,
-        }).then(()=>{
-          //acá redirecciona a la propiedad guardada, el detalle de la propiedad
-          this.$route.replace("Home")
         }).catch(e=>console.error(e))
     },
   }

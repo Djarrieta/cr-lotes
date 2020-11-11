@@ -1,5 +1,7 @@
 <template>
+<!-- Comodidades -->
 <div>
+    <p>¿Con qué cómodidades contarán tus clientes cerca o en la propiedad?</p>
     <Buttons @next="next" @prev="prev"/>
     <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
     <div class="w-full h-full bg-gray-200 rounded-lg shadow-inner p-8">
@@ -32,27 +34,31 @@ export default {
                     "Acera",
                     "Cordón y caño",
                     "Alumbrado público",
+                    "Transporte público",
                     "Teléfono",
                     "Electricidad",
-                    "Cañería de agua potable",
+                    "Agua potable",
                     "Cobertura celular",
                     "Cable TV",
                     "Fibra optica",
                     "Internet",
-                    "Alcantarillado sanitario",
-                    "Aseo y recolección basura",
+                    "Alcantarillado",
+                    "Recolección basura",
                     "Facilidades comunales",
                     "Edificios comerciales",
                     "Escuela primaria",
                     "Educación secundaria",
-                    "Tempo católico y otras",
-                    "Servicios privados, municipales, comerciales y financieros",
+                    "Tempos religiosos",
+                    "Servicios privados", 
+                    "Servicios municipales", 
+                    "Servicios Financieros",
                     "Servicios de salud",
                     "Áreas recreativas",
-                    "Planta de tratamiento aguas residuales cercanas",
-                    "Riesgo de inundación o deslizamiento",
-                    "Afectado por alta tensión",
-                    "Transporte público (frente a vía publica)",
+                    "Planta de aguas residuales",
+                    "Riesgo de inundación",
+                    "Riesgo de deslizamiento",
+                    "Riesgo por alta tensión",
+                    
                 ],
             problems:""
         }

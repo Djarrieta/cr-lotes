@@ -1,5 +1,7 @@
 <template>
+<!-- Nivel -->
 <div>
+    <p>¿Tu terreno está en su mayoría por encima, por debajo o al nivel de la calle?</p>
     <Buttons @next="next" @prev="prev"/>
     <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
     <span> {{ s5_nivel }} </span>

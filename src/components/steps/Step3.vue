@@ -1,5 +1,7 @@
 <template>
+<!-- Frente -->
 <div>
+    <p>Marca en la imagen cómo es el frente del terreno en relación al acceso.</p>
     <Buttons @next="next" @prev="prev"/>
     <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
     <div class="relative">

@@ -1,5 +1,9 @@
 <template>
+<!-- Inclinación -->
 <div>
+    <p>
+        Mira que fácil... podremos decirle a los compradores la topografía predominante de tu terreno, solo mira en la imagen la posición de la rodilla.
+    </p>
     <Buttons @next="next" @prev="prev"/>
     <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
     <span> {{ s4_inclination }} </span>

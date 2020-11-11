@@ -1,20 +1,26 @@
 <template>
+<!-- fotos -->
 <div>
+    <p>
+         Te recomendamos subir las mejores fotografías de mejor vista, el acceso, de frente y desde arriba. Escoge cuidadosamente!
+    </p>
     <Buttons @next="next" @prev="prev"/>
     <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
         <label 
             v-for="(i,n) in info"
             :key="n"
-            class="flex flex-col items-center justify-center text-center px-4 py-6 m-2 bg-white text-blue rounded-lg shadow-lg tracking-wide border border-blue cursor-pointer hover:bg-blue hover:text-white ">
+            class="flex flex-col items-center justify-center text-center px-4 py-6 m-2 bg-white text-blue rounded-lg shadow-lg tracking-wide border border-blue cursor-pointer hover:bg-blue hover:text-white">
             <!-- upload icon -->
             <svg v-if="!i.fileUrl" class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
             </svg>
             <!-- ok icon -->
-            <svg v-if="i.fileUrl" class="w-8 h-8 bg-green-400 rounded-full" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
+            <img 
+                v-if="i.fileUrl" 
+                :src="i.fileUrl"
+                class="object-cover w-full h-full">
+            
             <!-- Title -->
             <span class="mt-2">
                 {{i.title}}
@@ -29,7 +35,8 @@
                 type='file' 
                 class="hidden" 
                 :id=n
-                @change="getFiles(n)"/>
+                @change="getFiles(n)"
+                accept="image/png, image/jpeg"/>
             <progress
                 v-if="i.progress"
                 :value="i.progress"
@@ -52,6 +59,20 @@ export default {
         return{
             info:[
                 {
+                    title:"Mejor",
+                    fileUrl:"",
+                    fileName:"",
+                    progress:0,
+                    code:"Mejor"
+                },
+                {
+                    title:"Acceso",
+                    fileUrl:"",
+                    fileName:"",
+                    progress:0,
+                    code:"Acceso"
+                },
+                {
                     title:"Frente",
                     fileUrl:"",
                     fileName:"",
@@ -59,11 +80,11 @@ export default {
                     code:"Frente"
                 },
                 {
-                    title:"Superior",
+                    title:"Arriba",
                     fileUrl:"",
                     fileName:"",
                     progress:0,
-                    code:"Superior"
+                    code:"Arriba"
                 },
             ],
             problems:"",
@@ -89,6 +110,7 @@ export default {
             //emitir al padre gp para que desabilitar botones cuando hay progreso>0
             return gp
         },
+
         s8_pictures(){
             let fulled=[]
             this.info.forEach(i=>{
@@ -122,6 +144,11 @@ export default {
                 self.info[id].fileUrl=""
                 const fileDir=document.getElementById(id).files[0]
                 if(!fileDir){return}
+                const fileSize=fileDir.size/1024/1024
+                if(fileSize>1){
+                    this.problems="Escoge archivos de menos de 1Mb"
+                    return
+                }
                 const fileName=`props/${self.propId}/pics/${self.info[id].code}`
                 const storageRef = firebase.storage().ref()
                 const fileRef=storageRef.child(fileName);
