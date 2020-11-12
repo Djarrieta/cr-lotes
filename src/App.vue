@@ -1,6 +1,6 @@
 <template>
-  <div id="app" class=" min-h-screen" >
-    <Header/>
+  <div id="app" class="min-h-screen" >
+    <Header />
     <router-view/>
   </div>
 </template>
