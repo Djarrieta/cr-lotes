@@ -2,7 +2,7 @@
   <div class="container mx-auto flex flex-col">
     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-stretch">
         <li class="w-full" v-for="(prop, n) in props" :key="n">
-            <Card :propiedad="prop"></Card>
+            <Card :prop="prop"></Card>
         </li>
     </ul>
     <button @click="seeMore" class="w-full p-2">
