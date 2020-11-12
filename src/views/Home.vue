@@ -1,5 +1,9 @@
 <template>
   <div class="container mx-auto flex flex-col">
+    <div class="grid sm:grid-cols-2 w-full h-full">
+      
+    </div>
+    <!-- Cards -->
     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-stretch">
         <li class="w-full" v-for="(prop, n) in props" :key="n">
             <Card :prop="prop"></Card>
