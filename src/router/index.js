@@ -4,6 +4,7 @@ import firebase from "firebase"
 import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import Publicar from '@/views/Publicar.vue'
+import PerfilPropiedad from '@/views/PerfilPropiedad.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,14 @@ const routes = [
     meta:{
       autentificado:true
     }
+  },
+  { 
+    path: "/perfil-propiedad/:id", 
+    component: PerfilPropiedad, 
+    name: 'perfilpropiedad',
+    meta: {
+      autentificado: true,
+    },
   },
 ]
 
