@@ -156,7 +156,7 @@ export default {
                 if(!fileDir){return}
                 const fileSize=fileDir.size/1024/1024
                 if(fileSize>1){
-                    this.problems="Escoge archivos de menos de 1Mb"
+                    this.problems="Escoge archivos de menos de 10Mb"
                     self.info[id].progress=0
                     return
                 }
