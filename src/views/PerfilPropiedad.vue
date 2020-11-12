@@ -8,7 +8,7 @@
       <!-- Fotos -->
       <div id="fotos" class="lg:w-3/6 object-center">
         <ul class="" id="slideshowFotos">
-          <li v-for="foto in info.s8_pictures" :key="foto">
+          <li v-for="foto in info.s8_pictures" :key="foto.title">
             <img
             class="w-full h-40 object-scale-down"
             :src="foto.fileUrl"
@@ -89,7 +89,7 @@
                   <td class="font-bold">La propiedad cuenta con:</td>
                   <td>
                     <ul class="pl-0">
-                      <li v-for="cuenta in info.s6_assets" :key="cuenta">{{ cuenta }}</li>
+                      <li v-for="(cuenta, indexCuenta) in info.s6_assets" :key="indexCuenta">{{ cuenta }}</li>
                     </ul>
                   </td>
                 </tr>
@@ -106,7 +106,7 @@
         <li>
           <table class="">
             <tbody>
-              <tr v-for="file in info.s7_files" :key="file">
+              <tr v-for="file in info.s7_files" :key="file.code">
                 <td>
                   {{file.title}}
                 </td>
@@ -146,7 +146,6 @@ export default {
     let self = this
     self.datosUser = firebase.auth().currentUser;
     const getId = this.$route.params.id;
-    console.log(getId)
 
     // Capturar datos de la propiedad
     let dPropiedad = db.collection("props").doc(getId);

@@ -28,8 +28,8 @@
                     <i class="fas fa-ruler-combined"></i> {{propiedad.s1_area}} {{propiedad.s1_areaUn}}
                 </p>
                 <div>
-                    <router-link :to="'/perfil-propiedad/'+propiedad.propid" class="bg-gray-600 px-4 py-2 rounded-sm mr-5 text-white hover:text-white h-6">Detalles</router-link>
-                    <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+propiedad.propid" class="text-gray-900 hover:text-orange-700" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <router-link :to="'/perfil-propiedad/'+propiedad.propId" class="bg-gray-600 px-4 py-2 rounded-sm mr-5 text-white hover:text-white h-6">Detalles</router-link>
+                    <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+propiedad.propId" class="text-gray-900 hover:text-orange-700" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>

@@ -22,7 +22,7 @@ export default {
     return{
         props: [],
         inicialLoad:3,
-        loadMore:2
+        loadMore:3
     }
   },
   created(){
