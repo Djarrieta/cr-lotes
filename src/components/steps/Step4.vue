@@ -56,6 +56,13 @@ export default {
             problems:""
         }
     },
+    watch:{
+        problems:function(){
+            setTimeout(() => {
+                this.problems=""
+            }, 2000);
+        }
+    },
     mounted(){
     
         if(this.data.s4_inclination){

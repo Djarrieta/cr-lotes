@@ -121,15 +121,24 @@ export default {
             return fulled
         }
     },
+    watch:{
+        problems:function(){
+            setTimeout(() => {
+                this.problems=""
+            }, 2000);
+        }
+    },
     methods:{
         getFiles(id){
             const self=this
+            self.info[id].progress=0.01
             //incrementar y retorna el número de consecutivo único de la propiedad con una transacción
             const counterRef = db.collection("propCounter").doc("counter");
 
             return db.runTransaction(transaction=>{
                 return transaction.get(counterRef).then(lastProp=>{
                     if (!lastProp.exists) {
+                        self.info[id].progress=0
                         throw "Document does not exist!";
                     }
                     if(!self.propId){
@@ -147,6 +156,7 @@ export default {
                 const fileSize=fileDir.size/1024/1024
                 if(fileSize>1){
                     this.problems="Escoge archivos de menos de 1Mb"
+                    self.info[id].progress=0
                     return
                 }
                 const fileName=`props/${self.propId}/pics/${self.info[id].code}`
@@ -161,6 +171,7 @@ export default {
                     },
                     (error)=>{
                         //error
+                        self.info[id].progress=0
                         console.error(error)
                     },
                     ()=>{
@@ -174,6 +185,7 @@ export default {
                     }
                 )
             }).catch(function(error) {
+                self.info[id].progress=0
                 console.log("Transaction failed: ", error);
             });
         },

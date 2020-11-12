@@ -94,13 +94,6 @@ export default {
           return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
       }
   },
-  mounted(){
-      if(this.data.s1_title){this.s1_title=this.data.s1_title}
-      if(this.data.s1_description){this.s1_description=this.data.s1_description}
-      if(this.data.s1_area){this.s1_area=this.data.s1_area}
-      if(this.data.s1_areaUn){this.s1_areaUn=this.data.s1_areaUn}
-      if(this.data.s1_price){this.s1_price=this.data.s1_price}
-  },
   computed:{
     emitedData(){
         return {
@@ -111,6 +104,20 @@ export default {
             s1_price:this.s1_price,
         }
     }
+  },
+    watch:{
+        problems:function(){
+            setTimeout(() => {
+                this.problems=""
+            }, 2000);
+        }
+    },
+  mounted(){
+      if(this.data.s1_title){this.s1_title=this.data.s1_title}
+      if(this.data.s1_description){this.s1_description=this.data.s1_description}
+      if(this.data.s1_area){this.s1_area=this.data.s1_area}
+      if(this.data.s1_areaUn){this.s1_areaUn=this.data.s1_areaUn}
+      if(this.data.s1_price){this.s1_price=this.data.s1_price}
   },
   methods:{
       next(){

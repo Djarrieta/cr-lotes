@@ -39,6 +39,13 @@ export default {
             problems:""
         }
     },
+    watch:{
+        problems:function(){
+            setTimeout(() => {
+                this.problems=""
+            }, 2000);
+        }
+    },
     mounted(){
       if(this.data.s3_frontType){
           this.s3_frontType=this.data.s3_frontType}
@@ -56,7 +63,6 @@ export default {
             this.$emit("prev",{s3_frontType:this.s3_frontType})
         },
     }
-    
 }
 </script>
 <style scoped>

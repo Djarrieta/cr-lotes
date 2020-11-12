@@ -63,6 +63,13 @@ export default {
             problems:""
         }
     },
+    watch:{
+        problems:function(){
+            setTimeout(() => {
+                this.problems=""
+            }, 2000);
+        }
+    },
     methods:{
         addAsset(i){
             if(this.s6_assets.includes(i)){

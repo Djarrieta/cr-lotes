@@ -174,34 +174,40 @@ export default {
         }
     }
   },
+  
   watch:{
-      s2_idPrvSelected(newId){
-          const lat =Number(newId.pos.split(", ")[0])
-          const lng =Number(newId.pos.split(", ")[1])
-          this.center={lat,lng}
-          this.zoom=10
-          
-          const e=document.getElementById("selectPrv")
-          this.s2_namePrvSelected= e.options[e.selectedIndex].text
-      },
-      s2_idCtnSelected(newId){
-          const lat =Number(newId.pos.split(", ")[0])
-          const lng =Number(newId.pos.split(", ")[1])
-          this.center={lat,lng}
-          this.zoom=12
+        s2_idPrvSelected(newId){
+            const lat =Number(newId.pos.split(", ")[0])
+            const lng =Number(newId.pos.split(", ")[1])
+            this.center={lat,lng}
+            this.zoom=10
+            
+            const e=document.getElementById("selectPrv")
+            this.s2_namePrvSelected= e.options[e.selectedIndex].text
+        },
+        s2_idCtnSelected(newId){
+            const lat =Number(newId.pos.split(", ")[0])
+            const lng =Number(newId.pos.split(", ")[1])
+            this.center={lat,lng}
+            this.zoom=12
 
-          const e=document.getElementById("selectCtn")
-          this.s2_nameCtnSelected= e.options[e.selectedIndex].text
-      },
-      s2_idDttSelected(newId){
-          const lat =Number(newId.pos.split(", ")[0])
-          const lng =Number(newId.pos.split(", ")[1])
-          this.center={lat,lng}
-          this.zoom=14
+            const e=document.getElementById("selectCtn")
+            this.s2_nameCtnSelected= e.options[e.selectedIndex].text
+        },
+        s2_idDttSelected(newId){
+            const lat =Number(newId.pos.split(", ")[0])
+            const lng =Number(newId.pos.split(", ")[1])
+            this.center={lat,lng}
+            this.zoom=14
 
-          const e=document.getElementById("selectDtt")
-          this.s2_nameDttSelected= e.options[e.selectedIndex].text
-      }
+            const e=document.getElementById("selectDtt")
+            this.s2_nameDttSelected= e.options[e.selectedIndex].text
+        },
+        problems:function(){
+            setTimeout(() => {
+                this.problems=""
+            }, 2000);
+        }
   },
   methods:{
     next(){
