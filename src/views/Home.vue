@@ -57,31 +57,39 @@
                 </div>
             </div>
         </div>
-        <GmapMap
-            class="w-full h-64 sm:h-full"
-            ref="gmap"
-            :center="center"
-            :zoom="zoom"
-            map-type-id="roadmap"
-            :options="{
-                mapTypeControl: false,
-                streetViewControl: false,
-                rotateControl: false,}">
-            <GmapMarker
-                v-for="(p,i) in props"
-                :key=i
-                :position="{lat:p.s2_lat,lng:p.s2_lng}"
-                :clickable="true"
-                :draggable="false"
-            />
-        </GmapMap>
+        <div class="py-4">
+          <GmapMap
+              class="w-full h-64 sm:h-full"
+              ref="gmap"
+              :center="center"
+              :zoom="zoom"
+              map-type-id="roadmap"
+              :options="{
+                  mapTypeControl: false,
+                  streetViewControl: false,
+                  rotateControl: false,}">
+              <GmapMarker
+                  v-for="(p,i) in props"
+                  :key=i
+                  :position="{lat:p.s2_lat,lng:p.s2_lng}"
+                  :clickable="true"
+                  :draggable="false"
+                  @click="selectPin(p.propId)"
+              />
+          </GmapMap>
+        </div>
     </div>
     <!-- Cards -->
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-stretch">
+    <ul v-if="!loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-stretch">
         <li class="w-full" v-for="(prop, n) in props" :key="n">
             <Card :prop="prop"></Card>
         </li>
     </ul>
+    <!-- loading -->
+    <div v-if="loading" class="flex justify-center items-center opacity-25">
+      <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+    </div>
+    <!-- see more -->
     <button @click="searchMore" class="w-full p-2">
       Ver más
     </button>
@@ -114,6 +122,8 @@ export default {
         prvs:provincias,
         ctns:[],
         dtts:[],
+
+        loading:false
     }
   },
   watch:{
@@ -153,6 +163,8 @@ export default {
       if(doit){
         doit=false  
         setTimeout(() => {
+          //se muestra primero el componente de cargando
+          this.loading=true
           this.props=[]
           this.search()
           doit=true
@@ -162,12 +174,16 @@ export default {
   },
   methods:{
     SelectPrv(){
+        this.loading=true
+
         this.props= []
         this.ctns=[]
         this.dtts=[]
         this.ctns=cantones.filter(c=>c.provincia_id==this.s2_idPrvSelected.id)
     },
     SelectCtn(){
+        this.loading=true
+        
         this.props= []
         this.dtts=[]
         this.dtts=distritos.filter(c=>c.canton_id==this.s2_idCtnSelected.id)
@@ -202,6 +218,7 @@ export default {
                           counter++
                         }
                 })
+                this.loading=false
             })
           })
     },
@@ -236,8 +253,12 @@ export default {
                           counter++
                         }
                 })
+                this.loading=false
             })
           })
+    },
+    selectPin(id){
+      this.$router.replace("/perfil-propiedad/" +id)
     }
   }
 }

@@ -19,6 +19,8 @@ export default {
     },
     created() {
         let self = this
+        //si no hay usuario registrado no hace nada.
+        if(!firebase.auth().currentUser){return}
         this.idUser = firebase.auth().currentUser.uid;
 
         let dUser = db.collection("users").doc(this.idUser);
@@ -31,6 +33,7 @@ export default {
     },
     methods: {
         async favoritoMet() {
+            
             this.status = !this.status
             if(this.status === true) {
                 await db.collection('users').doc(this.idUser).update({

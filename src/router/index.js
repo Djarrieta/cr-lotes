@@ -5,6 +5,7 @@ import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import Publicar from '@/views/Publicar.vue'
 import PerfilPropiedad from '@/views/PerfilPropiedad.vue'
+import Swal from 'sweetalert2'
 
 Vue.use(VueRouter)
 
@@ -48,6 +49,12 @@ router.beforeEach((to, from, next) => {
   let autorizacion = to.matched.some((record) => record.meta.autentificado);
 
   if (autorizacion && !usuario) {
+    Swal.fire({
+      icon: "warning",
+      title: "Autentificación",
+      text:
+        "Debes estar logueado para continuar. Si no tienes una cuenta puedes crear una, ES GRATIS!",
+    });
     next({ name: "Home" });
   } else {
     next();
