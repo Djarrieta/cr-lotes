@@ -1,7 +1,80 @@
 <template>
   <div class="container mx-auto flex flex-col">
     <div class="grid sm:grid-cols-2 w-full h-full">
-      
+        <div class="flex flex-col p-4">
+            <!-- provincias -->
+            <div class="my-1">
+                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Provincia</label>
+                <div class="border  border-gray-300 py-2 px-1 rounded">
+                    <select 
+                        id="selectPrv"
+                        class=" focus:outline-none w-full bg-gray-100"
+                        v-model="s2_idPrvSelected"
+                        @click="SelectPrv">
+                        <option disabled value="0"
+                        class="">Selecciona</option>
+
+                        <option v-for="p in prvs"
+                            :key="p.id"
+                            :value="{id:p.id,
+                            pos:p.coordenadas}">{{ p.provincia }}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- cantones -->
+            <div class="my-1">
+                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Cantón</label>
+                <div class="border  border-gray-300 py-2 px-1 rounded">
+                    <select 
+                        id="selectCtn"
+                        class=" focus:outline-none w-full bg-gray-100"
+                        v-model="s2_idCtnSelected"
+                        @click="SelectCtn">
+                        <option disabled value="0"
+                        class="">Selecciona</option>
+                        <option v-for="p in ctns"
+                            :key="p.id"
+                            :value="{id:p.id,
+                            pos:p.coordenadas}">{{ p.canton }}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- distritos -->
+            <div class="my-1">
+                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Distrito</label>
+                <div class="border  border-gray-300 py-2 px-1 rounded">
+                    <select 
+                        id="selectDtt"
+                        class=" focus:outline-none w-full bg-gray-100"
+                        v-model="s2_idDttSelected">
+                        <option disabled value="0"
+                        class="">Selecciona</option>
+                        <option v-for="p in dtts"
+                            :key="p.id"
+                            :value="{id:p.id,
+                            pos:p.coordenadas}">{{ p.distrito }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <GmapMap
+            class="w-full h-64 sm:h-full"
+            ref="gmap"
+            :center="center"
+            :zoom="zoom"
+            map-type-id="roadmap"
+            :options="{
+                mapTypeControl: false,
+                streetViewControl: false,
+                rotateControl: false,}">
+            <GmapMarker
+                v-for="(p,i) in props"
+                :key=i
+                :position="{lat:p.s2_lat,lng:p.s2_lng}"
+                :clickable="true"
+                :draggable="false"
+            />
+        </GmapMap>
     </div>
     <!-- Cards -->
     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-stretch">
@@ -9,13 +82,16 @@
             <Card :prop="prop"></Card>
         </li>
     </ul>
-    <button @click="seeMore" class="w-full p-2">
+    <button @click="searchMore" class="w-full p-2">
       Ver más
     </button>
   </div>
 </template>
 
 <script>
+import provincias from "@/assets/provinciasCR.js"
+import cantones from "@/assets/cantonesCR.js"
+import distritos from "@/assets/distritosCR.js"
 
 import Card from "@/components/Card"
 import { db } from "@/main";
@@ -26,32 +102,143 @@ export default {
     return{
         props: [],
         inicialLoad:3,
-        loadMore:3
+        loadMore:3,
+
+        center:{lat: 10,lng: -83},
+        zoom:7,
+
+        s2_idPrvSelected:0,
+        s2_idCtnSelected:0,
+        s2_idDttSelected:0,
+        
+        prvs:provincias,
+        ctns:[],
+        dtts:[],
     }
   },
-  created(){
-    db.collection('props')
-      .orderBy("propId", "desc")
-      .limit(this.inicialLoad)
-      .get()
-      .then((props)=>{
-          props.forEach(  prop => {
-              this.props.push(prop.data())
-          })
-      })
+  watch:{
+        s2_idPrvSelected(newId){
+            const lat =Number(newId.pos.split(", ")[0])
+            const lng =Number(newId.pos.split(", ")[1])
+            this.center={lat,lng}
+            this.zoom=10
+            
+            const e=document.getElementById("selectPrv")
+            this.s2_namePrvSelected= e.options[e.selectedIndex].text
+        },
+        s2_idCtnSelected(newId){
+            const lat =Number(newId.pos.split(", ")[0])
+            const lng =Number(newId.pos.split(", ")[1])
+            this.center={lat,lng}
+            this.zoom=12
+
+            const e=document.getElementById("selectCtn")
+            this.s2_nameCtnSelected= e.options[e.selectedIndex].text
+        },
+        s2_idDttSelected(newId){
+            const lat =Number(newId.pos.split(", ")[0])
+            const lng =Number(newId.pos.split(", ")[1])
+            this.center={lat,lng}
+            this.zoom=14
+
+            const e=document.getElementById("selectDtt")
+            this.s2_nameDttSelected= e.options[e.selectedIndex].text
+        },
+  },
+  mounted(){
+    //Escucha cuando cambia el zoom, pero al drag cambia muy rápido, así es que solo ejecuta search a lo sumo cada 1.2s 
+    const googleMap=this.$refs.gmap
+    let doit=true
+    googleMap.$on('bounds_changed', () => {
+      if(doit){
+        doit=false  
+        setTimeout(() => {
+          this.props=[]
+          this.search()
+          doit=true
+        }, 1500);
+      }
+    })
   },
   methods:{
-    seeMore(){
+    SelectPrv(){
+        this.props= []
+        this.ctns=[]
+        this.dtts=[]
+        this.ctns=cantones.filter(c=>c.provincia_id==this.s2_idPrvSelected.id)
+    },
+    SelectCtn(){
+        this.props= []
+        this.dtts=[]
+        this.dtts=distritos.filter(c=>c.canton_id==this.s2_idCtnSelected.id)
+    },
+    search(){
+      //establece los límites del mapa
+      this.$refs.gmap.$mapPromise
+      .then(map=>{
+          let counter=0
+          const minLat=map.getBounds().Ya.i
+          const maxLat=map.getBounds().Ya.j
+          const minLng=map.getBounds().Sa.i
+          const maxLng=map.getBounds().Sa.j
+
+          //busca según filtros
+          this.props= []
+          db.collection('props')
+            .orderBy("propId", "desc")
+            .where("status","==","complete")
+            .get()
+            .then((props)=>{
+                props.forEach(  prop => {
+                    const propLat=prop.data().s2_lat
+                    const propLng=prop.data().s2_lng
+                    if(
+                        propLat <= maxLat && 
+                        propLng <= maxLng &&
+                        propLat >= minLat &&
+                        propLng >= minLng && 
+                        counter<this.inicialLoad){
+                          this.props.push(prop.data())
+                          counter++
+                        }
+                })
+            })
+          })
+          
+    },
+    searchMore(){
       const lastCod= this.props[this.props.length-1].propId
-      db.collection("props")
-        .orderBy("propId","desc")
-        .startAfter(lastCod)
-        .limit(this.loadMore)
-        .get()
-        .then(x=>{x.forEach(x=>{
-          this.inicialLoad++
-          this.props.push(x.data())
-        })})
+      this.$refs.gmap.$mapPromise
+      .then(map=>{
+          let counter=0
+          //establece los límites del mapa
+          const minLat=map.getBounds().Ya.i
+          const maxLat=map.getBounds().Ya.j
+          const minLng=map.getBounds().Sa.i
+          const maxLng=map.getBounds().Sa.j
+
+          //busca según filtros
+          db.collection('props')
+            .orderBy("propId", "desc")
+            .where("status","==","complete")
+            .startAfter(lastCod)
+            .get()
+            .then((props)=>{
+                props.forEach(  prop => {
+                    const propLat=prop.data().s2_lat
+                    const propLng=prop.data().s2_lng
+                    if(
+                        propLat <= maxLat && 
+                        propLng <= maxLng &&
+                        propLat >= minLat &&
+                        propLng >= minLng){
+                          this.props.push(prop.data())
+                          if(counter==this.inicialLoad){return}
+                          counter++
+                        }
+                })
+            })
+          })
     }
   }
 }
