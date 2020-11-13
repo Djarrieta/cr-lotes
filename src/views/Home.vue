@@ -204,7 +204,6 @@ export default {
                 })
             })
           })
-          
     },
     searchMore(){
       const lastCod= this.props[this.props.length-1].propId
