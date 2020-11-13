@@ -21,8 +21,10 @@
       <!-- Datos -->
       <div class="lg:w-3/6 lg:ml-10">
         <div class="rounded overflow-hidden shadow-lg px-10 py-10">
-          
-          <h1 class="text-lg uppercase">{{ info.s1_title }}</h1>
+
+          <Favorito :propId="info.propId" />
+
+          <h1 class="text-lg uppercase">{{ info.s1_title }} - {{info.propId}}</h1>
           <p>{{ info.s1_description }}</p>
           <p>
             <span class="block"><b>Provincia:</b> {{ info.s2_namePrvSelected }}</span> 
@@ -34,7 +36,7 @@
           <h3 class="block text-lg">Esta propiedad cuenta con:</h3>
             <ul class="grid grid-cols-3 gap-x-4 gap-y-2">
               <li class="min-h-8 px-2 bg-gray-200 py-2 px-2" v-for="contaran in info.s6_assets" :key="contaran">
-                {{contaran}}
+                {{ contaran }}
               </li>
             </ul>
         </div>
@@ -125,15 +127,17 @@
 <script>
 import firebase from "firebase"
 import { db } from "@/main";
+import Favorito from "@/components/Favorito"
 export default {
     name: "PerfilPropiedad",
+    components: { Favorito },
     data() {
     return {
-      uid: "",
       datosUser: "",
       info: [],
       selectedCenter: { lat: 0, lng:0 },
       selectedZoom: 14,
+      idPropiedad: ''
     };
   },
   filters: {
@@ -142,10 +146,11 @@ export default {
       return precioFormateado + "₡"
     }
   },
-  mounted: function () {
+  created: function () {
     let self = this
     self.datosUser = firebase.auth().currentUser;
     const getId = this.$route.params.id;
+    this.idPropiedad = getId
 
     // Capturar datos de la propiedad
     let dPropiedad = db.collection("props").doc(getId);
