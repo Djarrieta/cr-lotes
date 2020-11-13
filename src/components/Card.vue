@@ -21,8 +21,8 @@
                 {{ prop.s1_price  | precio }}
             </p>
             <p class="text-gray-700 text-xs">
-                <!-- {{ prop.descripcion.substring(0,100)+"..." }} -->
-                {{ prop.s1_description.substring(0,100)+"..." }}
+
+                {{ prop.s1_description.substring(0,70)+" ..." }}
             </p>
             <div class="flex justify-between mt-5">
                 <p>

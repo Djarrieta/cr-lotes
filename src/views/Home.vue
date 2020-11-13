@@ -1,14 +1,14 @@
 <template>
   <div class="container mx-auto flex flex-col">
-    <div class="grid sm:grid-cols-2 w-full h-full">
+    <div class="grid sm:grid-cols-2 w-full h-full bg-gray-200 rounded-lg shadow-inner p-2 my-4">
         <div class="flex flex-col p-4">
             <!-- provincias -->
             <div class="my-1">
-                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Provincia</label>
+                <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Provincia</label>
                 <div class="border  border-gray-300 py-2 px-1 rounded">
                     <select 
                         id="selectPrv"
-                        class=" focus:outline-none w-full bg-gray-100"
+                        class=" focus:outline-none w-full bg-gray-200"
                         v-model="s2_idPrvSelected"
                         @click="SelectPrv">
                         <option disabled value="0"
@@ -23,11 +23,11 @@
             </div>
             <!-- cantones -->
             <div class="my-1">
-                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Cantón</label>
+                <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Cantón</label>
                 <div class="border  border-gray-300 py-2 px-1 rounded">
                     <select 
                         id="selectCtn"
-                        class=" focus:outline-none w-full bg-gray-100"
+                        class=" focus:outline-none w-full bg-gray-200"
                         v-model="s2_idCtnSelected"
                         @click="SelectCtn">
                         <option disabled value="0"
@@ -41,11 +41,11 @@
             </div>
             <!-- distritos -->
             <div class="my-1">
-                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Distrito</label>
+                <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Distrito</label>
                 <div class="border  border-gray-300 py-2 px-1 rounded">
                     <select 
                         id="selectDtt"
-                        class=" focus:outline-none w-full bg-gray-100"
+                        class=" focus:outline-none w-full bg-gray-200"
                         v-model="s2_idDttSelected">
                         <option disabled value="0"
                         class="">Selecciona</option>
@@ -89,8 +89,10 @@
     <div v-if="loading" class="flex justify-center items-center opacity-25">
       <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
     </div>
+    <!-- Alerta sin resultados -->
+    <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600">No hay propiedades en venta en esta área, selecciona otra región con los desplegables o directamente mueve el mapa.</div>
     <!-- see more -->
-    <button v-if="props.length"  @click="searchMore" class="w-full p-2">
+    <button v-if="props.length"  @click="searchMore" class="w-full p-2 focus:outline-none">
       Ver más
     </button>
   </div>
