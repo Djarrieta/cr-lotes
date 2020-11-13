@@ -90,7 +90,8 @@
       <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
     </div>
     <!-- Alerta sin resultados -->
-    <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600">No hay propiedades en venta en esta área, selecciona otra región con los desplegables o directamente mueve el mapa.</div>
+    <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600 text-center">No hay propiedades en venta en esta área. 
+    Selecciona otra región con los desplegables o mueve el mapa.</div>
     <!-- see more -->
     <button v-if="props.length"  @click="searchMore" class="w-full p-2 focus:outline-none">
       Ver más
@@ -125,7 +126,7 @@ export default {
         ctns:[],
         dtts:[],
 
-        loading:false
+        loading:true
     }
   },
   watch:{

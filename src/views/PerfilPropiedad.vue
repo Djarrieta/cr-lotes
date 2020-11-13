@@ -17,8 +17,8 @@
           </li>
         </ul>
         <!-- botones -->
-        <div class="flex justify-center">
-          <button class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Inactivar</button>
+        <div v-if="ownProp"  class="flex justify-center">
+          <button @click="activateProp" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">{{info.status==="complete" ? "Inactivar" : "Activar"}} </button>
           <router-link :to="'/publicar/'+ idPropiedad" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Editar</router-link>
         </div>
       </div>
@@ -133,6 +133,7 @@
 import firebase from "firebase"
 import { db } from "@/main";
 import Favorito from "@/components/Favorito"
+import Swal from 'sweetalert2'
 export default {
     name: "PerfilPropiedad",
     components: { Favorito },
@@ -142,7 +143,7 @@ export default {
       info: [],
       selectedCenter: { lat: 0, lng:0 },
       selectedZoom: 14,
-      idPropiedad: ''
+      idPropiedad: '',
     };
   },
   filters: {
@@ -165,10 +166,43 @@ export default {
         self.info = { ...docProp.data() };
         self.selectedCenter = { lat: docProp.data().s2_lat, lng: docProp.data().s2_lng };
       })
+  },
+  computed:{
+    ownProp(){
+      return this.datosUser.uid===this.info.uid
+    }
+  },
+  methods:{
+    activateProp(){
+      if(this.info.status==="complete"){
+        this.activatePropFirebase("inactive")       
+      }else if(this.info.status==="inactive"){
+        this.activatePropFirebase("complete")
+      }
+    },
+    activatePropFirebase(newStatus){
+      Swal.fire({
+        title: '¿Estás seguro que quieres modificar el estado de la propiedad?',
+        text:"Si está inactiva no será visible para los compradores. Inactívala cuando la hayas vendido.",
+        showDenyButton: true,
+        confirmButtonText: `Modificar`,
+        denyButtonText: `No modificar`,
+      }).then((result)=>{
+        if (result.isConfirmed){
+          const ref=db.collection("props").doc(this.idPropiedad.toString())
+          ref.update({status:newStatus}).then(()=>{
+            this.info.status=newStatus
+          }).then(()=>{
+            Swal.fire('Guardado!', '', 'success')
+          }).catch((e)=>{
+            console.log(e)
+            Swal.fire('No se guardaron los cambios.', '', 'info')
+          })
+        }else{
+          Swal.fire('No se guardaron los cambios.', '', 'info')
+        }
+      })
+    }
   }
 }
 </script>
-
-<style>
-
-</style>
