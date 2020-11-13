@@ -8,8 +8,9 @@
         /> 
         <!-- Detalles -->
         <div class="pl-2 py-2 bg-gradient-to-r from-gray-900 via-gray-700 w-full">
-            <p class="px-5 rounded-lg text-white font-poppins">
-                <i class="fas fa-map-marked-alt text-white"></i> {{ prop.s2_namePrvSelected }} - {{ prop.s2_nameCtnSelected }}
+            <p class="px-5 rounded-lg text-white font-poppins flex justify-between">
+                <span class="text-white"><i class="fas fa-map-marked-alt text-white"></i> {{ prop.s2_namePrvSelected }} - {{ prop.s2_nameCtnSelected }}</span>
+                <Favorito :propId="prop.propId" />
             </p>
         </div>
         <div class="px-6 py-5 bg-gray-200">
@@ -28,7 +29,7 @@
                     <i class="fas fa-ruler-combined"></i> {{prop.s1_area}} {{prop.s1_areaUn}}
                 </p>
                 <div>
-                    <router-link :to="'/perfil-propiedad/'+prop.propId" class="bg-gray-600 px-4 py-2 rounded-sm mr-5 text-white hover:text-white h-6">Detalles</router-link>
+                    <router-link :to="'/perfil-propiedad/'+prop.propId" class="bg-gray-900 px-4 py-2 rounded-sm mr-5 text-white hover:text-white h-6">Detalles</router-link>
                     <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+prop.propId" class="text-gray-900 hover:text-orange-700" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
@@ -38,8 +39,10 @@
 
 <script>
 import firebase from "firebase"
+import Favorito from "@/components/Favorito"
 export default {
     name:"Card",
+    components: { Favorito },
     props:["prop"],
     data(){
         return {
@@ -50,13 +53,6 @@ export default {
     mounted: function () {
         let self = this
         self.idUser = firebase.auth().currentUser;
-        // let idPropiedad = ''
-
-        // if(self.propiedad.propid) { idPropiedad = self.propiedad.propid }
-        // if(self.propiedad.id) { idPropiedad = self.propiedad.id }
-        // console.log(`uid ${this.propiedad.uid}`)
-        // console.log(self.idUser.uid)
-        
     },
     filters: {
         precio: function(val){
