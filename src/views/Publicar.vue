@@ -72,6 +72,7 @@ import Step8 from "@/components/steps/Step8"
 import Confirmation from "@/components/steps/Confirmation"
 import firebase from "firebase"
 import {db} from "@/main.js"
+import Swal from 'sweetalert2'
 
 export default {
   name: 'Home',
@@ -83,7 +84,7 @@ export default {
       currentUser:""
     }
   },
-  created(){
+ created(){
       firebase.auth().onAuthStateChanged(user=>{
           if(user){
               this.currentUser=user
@@ -91,7 +92,9 @@ export default {
               this.currentUser=""
           }
       })
+    this.getPropIdInfo()
   },
+
   methods:{
     prev(incominData){
       this.data={...this.data,...incominData}
@@ -102,13 +105,37 @@ export default {
       this.indicator++
     },
     save(){
-        db.collection("props").doc(this.data.propId.toString()).set({
-            ...this.data,
-            status:"complete",
-            date:firebase.firestore.FieldValue.serverTimestamp(),
-            uid:this.currentUser.uid,
-        }).catch(e=>console.error(e))
+      Swal.fire({
+        title: '¿Quieres guardar los cambios?',
+        showDenyButton: true,
+        confirmButtonText: `Guardar`,
+        denyButtonText: `No guardar`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          db.collection("props").doc(this.data.propId.toString()).set({
+              ...this.data,
+              status:"complete",
+              date:firebase.firestore.FieldValue.serverTimestamp(),
+              uid:this.currentUser.uid,
+          }).then(()=>{
+            Swal.fire('Guardado!', '', 'success')
+          }).catch(e=>{
+            Swal.fire('Hubo un error y no se guardaron los cambios.', '', 'info')
+            console.error(e)})
+        } else if (result.isDenied) {
+          Swal.fire('No se guardaron los cambios.', '', 'info')
+        }
+      })
     },
+    getPropIdInfo(){
+      const id = this.$route.params.id;
+      if(id){
+        db.collection("props").doc(id).get()
+        .then((info)=>{
+          this.data={...info.data()}
+        }).catch(e=>console.error(e))
+      }
+    }
   }
 }
 </script>

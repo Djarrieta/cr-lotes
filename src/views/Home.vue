@@ -90,7 +90,7 @@
       <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
     </div>
     <!-- see more -->
-    <button @click="searchMore" class="w-full p-2">
+    <button v-if="props.length"  @click="searchMore" class="w-full p-2">
       Ver más
     </button>
   </div>

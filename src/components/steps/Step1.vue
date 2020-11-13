@@ -110,15 +110,17 @@ export default {
             setTimeout(() => {
                 this.problems=""
             }, 2000);
+        },
+        data(){
+            //cuando data cambia por cualquier motivo, incluso cuando carga, se pasan los valores de data del padre a los valores locales del hijo.
+            if(this.data.s1_title){this.s1_title=this.data.s1_title}
+            if(this.data.s1_description){this.s1_description=this.data.s1_description}
+            if(this.data.s1_area){this.s1_area=this.data.s1_area}
+            if(this.data.s1_areaUn){this.s1_areaUn=this.data.s1_areaUn}
+            if(this.data.s1_price){this.s1_price=this.data.s1_price}
         }
     },
-  mounted(){
-      if(this.data.s1_title){this.s1_title=this.data.s1_title}
-      if(this.data.s1_description){this.s1_description=this.data.s1_description}
-      if(this.data.s1_area){this.s1_area=this.data.s1_area}
-      if(this.data.s1_areaUn){this.s1_areaUn=this.data.s1_areaUn}
-      if(this.data.s1_price){this.s1_price=this.data.s1_price}
-  },
+
   methods:{
       next(){
         this.problems=""

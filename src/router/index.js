@@ -28,6 +28,14 @@ const routes = [
       autentificado:true
     }
   },
+  {
+    path: '/publicar/:id',
+    name: 'Publicar',
+    component: Publicar,
+    meta:{
+      autentificado:true
+    }
+  },
   { 
     path: "/perfil-propiedad/:id", 
     component: PerfilPropiedad, 

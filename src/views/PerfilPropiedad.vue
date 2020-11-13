@@ -16,6 +16,11 @@
             />
           </li>
         </ul>
+        <!-- botones -->
+        <div class="flex justify-center">
+          <button class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Inactivar</button>
+          <router-link :to="'/publicar/'+ idPropiedad" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Editar</router-link>
+        </div>
       </div>
 
       <!-- Datos -->
