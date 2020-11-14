@@ -5,6 +5,7 @@ import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import Publicar from '@/views/Publicar.vue'
 import PerfilPropiedad from '@/views/PerfilPropiedad.vue'
+import Registro from '@/views/Registro.vue'
 import Swal from 'sweetalert2'
 
 Vue.use(VueRouter)
@@ -27,6 +28,11 @@ const routes = [
     meta:{
       autentificado:true
     }
+  },
+  {
+    path: "/registro",
+    name: "SignUp",
+    component: Registro,
   },
   {
     path: '/publicar/:id',
