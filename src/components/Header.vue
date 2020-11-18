@@ -64,7 +64,7 @@
                         class="origin-top-right absolute right-t1 -mt-4 w-48 rounded-md shadow-lg">
                         <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                             <router-link 
-                                to="/signin" 
+                                to="/login" 
                                 v-if="!currentUser"
                                 class="profileMenuElement">
                                 Ingresar</router-link>
@@ -74,7 +74,7 @@
                                 class="profileMenuElement">
                                 Registrarse</router-link>
                             <router-link 
-                                to="/" 
+                                to="/profile" 
                                 v-if="currentUser"
                                 class="profileMenuElement">
                                 {{ currentUser.displayName }}</router-link>
@@ -119,9 +119,17 @@ export default {
     },
     computed:{
         profilePic(){
-            return this.currentUser ? "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FuserColor_40px.png?alt=media&token=47c3b3a4-9de5-42a8-91fa-53857aea0526" :
+            let pic="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fuser_40px.png?alt=media&token=3a5e7134-b699-492d-8e65-78c34e59e893"
 
-            "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fuser_40px.png?alt=media&token=3a5e7134-b699-492d-8e65-78c34e59e893"
+            if(this.currentUser){
+                pic="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FuserColor_40px.png?alt=media&token=47c3b3a4-9de5-42a8-91fa-53857aea0526"
+            }
+
+            if(this.currentUser.photoURL){
+                pic=this.currentUser.photoURL
+            }
+ 
+            return pic
         }
     },
     created(){

@@ -3,7 +3,9 @@ import VueRouter from 'vue-router'
 import firebase from "firebase"
 import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
+import SignUp from '@/views/SignUp.vue'
 import Publicar from '@/views/Publicar.vue'
+import Profile from '@/views/Profile.vue'
 import PerfilPropiedad from '@/views/PerfilPropiedad.vue'
 import Swal from 'sweetalert2'
 
@@ -21,9 +23,22 @@ const routes = [
     component: Login
   },
   {
+    path: '/signup',
+    name: 'SignUp',
+    component: SignUp
+  },
+  {
     path: '/publicar',
     name: 'Publicar',
     component: Publicar,
+    meta:{
+      autentificado:true
+    }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
     meta:{
       autentificado:true
     }
