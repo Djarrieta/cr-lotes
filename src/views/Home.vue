@@ -171,7 +171,7 @@ export default {
           this.props=[]
           this.search()
           doit=true
-        }, 1500);
+        }, 2000);
       }
     })
   },
