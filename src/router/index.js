@@ -6,6 +6,7 @@ import Login from '@/views/Login.vue'
 import SignUp from '@/views/SignUp.vue'
 import Publicar from '@/views/Publicar.vue'
 import Profile from '@/views/Profile.vue'
+import Registro from '@/views/Registro.vue'
 import PerfilPropiedad from '@/views/PerfilPropiedad.vue'
 import Swal from 'sweetalert2'
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/registro',
+    name: 'Registro',
+    component:Registro
   },
   {
     path: '/signup',

@@ -64,12 +64,12 @@
                         class="origin-top-right absolute right-t1 -mt-4 w-48 rounded-md shadow-lg">
                         <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                             <router-link 
-                                to="/login" 
+                                :to="{ name: 'Login' }"
                                 v-if="!currentUser"
                                 class="profileMenuElement">
                                 Ingresar</router-link>
                             <router-link 
-                                to="/signup" 
+                                :to="{ name: 'SignUp' }"
                                 v-if="!currentUser"
                                 class="profileMenuElement">
                                 Registrarse</router-link>
