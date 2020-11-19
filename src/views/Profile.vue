@@ -33,9 +33,8 @@
                 
             </div>
         </section>
-        <section>
-            <span>Favoritos</span>
-        </section>
+
+        <ListaFavoritos :uid="uid"></ListaFavoritos>
     </div>
 </template>
 
@@ -43,8 +42,10 @@
 import firebase from "firebase"
 import {db} from "@/main.js"
 import Swal from 'sweetalert2'
+import ListaFavoritos from "@/components/ListaFavoritos"
 export default {
     name:"Profile",
+    components: { ListaFavoritos },
     data(){
         return{
             user:"",
