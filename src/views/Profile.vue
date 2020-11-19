@@ -29,12 +29,13 @@
                     <input type="text" v-model="tel"><button @click="saveNumber" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Guardar</button>
                 </span> 
                 <label>Correo:</label>
-                <span>{{email}}</span>
+                <span><input type="text" v-model="email"><button @click="saveEmail" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Guardar</button></span>
                 
             </div>
         </section>
 
         <ListaFavoritos :uid="uid"></ListaFavoritos>
+        <ListaPropiedades :uid="uid"></ListaPropiedades>
     </div>
 </template>
 
@@ -43,9 +44,10 @@ import firebase from "firebase"
 import {db} from "@/main.js"
 import Swal from 'sweetalert2'
 import ListaFavoritos from "@/components/ListaFavoritos"
+import ListaPropiedades from "@/components/ListaPropiedades"
 export default {
     name:"Profile",
-    components: { ListaFavoritos },
+    components: { ListaFavoritos, ListaPropiedades },
     data(){
         return{
             user:"",
@@ -89,6 +91,11 @@ export default {
                 confirmButtonText: `OK`,
             }))
             .catch(e=>console.error(e));
+
+            let nombre = db.collection('users').doc(this.uid);
+            nombre.update({
+                'nombre': this.name
+            });
         },
         saveNumber(){
             db.collection("users").doc(this.uid).update({phoneNumber:this.tel})
@@ -97,6 +104,24 @@ export default {
                 confirmButtonText: `OK`,
             }))
             .catch(e=>console.error(e));
+
+            let telefono = db.collection('users').doc(this.uid);
+            telefono.update({
+                'telefono': this.cel
+            });
+        },
+        saveEmail(){
+            db.collection("users").doc(this.uid).update({email:this.email})
+            .then(Swal.fire({
+                title: 'Cambios guardados con éxito',
+                confirmButtonText: `OK`,
+            }))
+            .catch(e=>console.error(e));
+
+            let email = db.collection('users').doc(this.uid);
+            email.update({
+                'email': this.email
+            });
         },
         getFiles(){
             this.progress=0.01

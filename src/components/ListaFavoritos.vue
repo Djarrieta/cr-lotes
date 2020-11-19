@@ -1,9 +1,10 @@
 <template>
   <section>
-      Lista de favoritos
+      <h2>Lista de favoritos</h2>
       <table>
           <thead>
               <tr>
+                  <th></th>
                   <th>Título</th>
                   <th>Área</th>
                   <th>Precio</th>
@@ -16,7 +17,8 @@
               </tr>
           </thead>
           <tbody>
-            <tr v-for="propiedad in propiedades" :key="propiedad">
+            <tr v-for="propiedad in propiedades" :key="propiedad.propId">
+                <td><Favorito :propId="propiedad.propId" /></td>
                 <td>{{ propiedad.s1_title }}</td>
                 <td>{{ propiedad.s1_area }} {{ propiedad.s1_areaUn }}</td>
                 <td>{{ propiedad.s1_price }}</td>
@@ -33,11 +35,12 @@
 </template>
 
 <script>
-// import firebase from "firebase"
 import { db } from "@/main";
+import Favorito from "@/components/Favorito"
 export default {
     name:"listaFavoritos",
-    props:["uid"],
+    components: { Favorito },
+    props:["uid", "prop"],
     data(){
         return {
             idUser: '',
@@ -58,14 +61,15 @@ export default {
     
     // Seleccionar solo las propiedades que están en favorito
     let propiedades = db.collection('props');
-    propiedades.onSnapshot(function (snapshot)  {
-      snapshot.forEach(doc => {
-        if(self.favoritos.includes(doc.data().propId)) {
+    propiedades
+        .get()
+        .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            if(self.favoritos.includes(doc.data().propId)) {
             self.propiedades.push(doc.data())
         }
-      })
+        });
     })
-
   },
 }
 </script>

@@ -148,7 +148,9 @@ export default {
                 let uid = data.user.uid;
                 const user = firebase.auth().currentUser;
                 db.collection("users").doc(uid).set({
-                    uid: uid
+                    uid: uid,
+                    nombre: self.nombre,
+                    email: self.email
                 });
                 return user.updateProfile({
                     displayName: self.nombre

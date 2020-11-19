@@ -40,12 +40,25 @@
           </p>
           <h3 class="block text-lg">Esta propiedad cuenta con:</h3>
             <ul class="grid grid-cols-3 gap-x-4 gap-y-2">
-              <li class="min-h-8 px-2 bg-gray-200 py-2 px-2" v-for="contaran in info.s6_assets" :key="contaran">
+              <li class="min-h-8 px-2 bg-gray-200 py-2" v-for="contaran in info.s6_assets" :key="contaran">
                 {{ contaran }}
               </li>
             </ul>
         </div>
       </div>
+    </section>
+
+    <!-- Datos del vendedor -->
+    <section class="container mx-auto mt-10 rounded shadow-lg px-10 py-10 bg-gray-200">
+        <button @click="datosVendedor" v-if="!infoVendedor">Datos del vendedor</button>
+        <div v-else>
+          <h2>Datos del vendedor</h2>
+          <div class="flex">
+            <span>Nombre: {{dataVendedor.nombre}}</span>
+            <span>Email: {{dataVendedor.email}}</span>
+            <span>WhatsApp: {{dataVendedor.phoneNumber}}</span>
+          </div>
+        </div>
     </section>
 
     <!-- mapa -->
@@ -68,7 +81,7 @@
 
     <!-- Detalles -->
     <section class="container mx-auto mt-10">
-      <ul uk-tab>
+      <ul>
         <li class=""><a href="">Detalles</a></li>
         <li><a href="">Documentos</a></li>
       </ul>
@@ -144,6 +157,10 @@ export default {
       selectedCenter: { lat: 0, lng:0 },
       selectedZoom: 14,
       idPropiedad: '',
+      infoVendedor: false,
+      idUser: '',
+      propsInteres: [],
+      dataVendedor: []
     };
   },
   filters: {
@@ -166,12 +183,33 @@ export default {
         self.info = { ...docProp.data() };
         self.selectedCenter = { lat: docProp.data().s2_lat, lng: docProp.data().s2_lng };
       })
+
+    // Capturar datos de propiedades de interés
+    this.idUser = firebase.auth().currentUser.uid;
+    let dUser = db.collection("users").doc(this.idUser);
+        dUser
+        .get()
+        .then(function (docProp) {
+            self.propsInteres = docProp.data().propsInteres
+            if(self.propsInteres.includes(self.info.propId) === true) { self.infoVendedor = true }
+        })
+    
+    // Capturar datos del vendedor
+    let dataU = db.collection("users").doc(this.idUser);
+        dataU
+        .get()
+        .then(function (docProp) {
+            self.dataVendedor = docProp.data()
+        })
+
   },
+
   computed:{
     ownProp(){
       return this.datosUser.uid===this.info.uid
     }
   },
+
   methods:{
     activateProp(){
       if(this.info.status==="complete"){
@@ -180,6 +218,7 @@ export default {
         this.activatePropFirebase("complete")
       }
     },
+    
     activatePropFirebase(newStatus){
       Swal.fire({
         title: '¿Estás seguro que quieres modificar el estado de la propiedad?',
@@ -202,7 +241,16 @@ export default {
           Swal.fire('No se guardaron los cambios.', '', 'info')
         }
       })
+    },
+
+    datosVendedor() {
+      
+      this.infoVendedor = !this.infoVendedor
+      db.collection('users').doc(this.idUser).update({
+          'propsInteres': firebase.firestore.FieldValue.arrayUnion(this.info.propId)
+      });
     }
+
   }
 }
 </script>

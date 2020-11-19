@@ -10,7 +10,10 @@
         <div class="pl-2 py-2 bg-gradient-to-r from-gray-900 via-gray-700 w-full">
             <p class="px-5 rounded-lg text-white font-poppins flex justify-between">
                 <span class="text-white"><i class="fas fa-map-marked-alt text-white"></i> {{ prop.s2_namePrvSelected }} - {{ prop.s2_nameCtnSelected }}</span>
-                <Favorito :propId="prop.propId" />
+                <span class="flex">
+                    <router-link :to="'/publicar/'+ prop.propId"> <i v-if="prop.uid === idUser.uid" class="fas fa-edit text-gray-900 cursor-pointer mr-2"></i></router-link>
+                    <Favorito v-if="prop.uid != idUser.uid" :propId="prop.propId" /> 
+                </span>
             </p>
         </div>
         <div class="px-6 py-5 bg-gray-200">
@@ -34,15 +37,21 @@
                 </div>
             </div>
         </div>
+        <div class="px-6 py-5 flex justify-between bg-gray-200">
+            <StatusProp :propId="prop.propId"></StatusProp>
+            <StatusVendido :propId="prop.propId"></StatusVendido>
+        </div>
   </section>
 </template>
 
 <script>
 import firebase from "firebase"
 import Favorito from "@/components/Favorito"
+import StatusProp from "@/components/StatusProp"
+import StatusVendido from "@/components/StatusVendido"
 export default {
     name:"Card",
-    components: { Favorito },
+    components: { Favorito, StatusProp, StatusVendido },
     props:["prop"],
     data(){
         return {
