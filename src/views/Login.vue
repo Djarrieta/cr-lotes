@@ -1,7 +1,7 @@
 <template>
 
   <div class="flex items-center justify-center sm:px-6 lg:px-8 mt-10">
-    <div class="max-w-2xl caja-sombreada">
+    <div class="max-w-2xl">
       <div class="flex flex-col w-full">
         <h1 class="w-auto text-5xl font-extrabold text-gray-700 text-center uppercase">
           CR-Lotes
@@ -19,7 +19,6 @@
             <label for="email" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Correo electrónico
             </label>
-            <!-- <input v-model="email" aria-label="Email address" name="email" id="email" type="email" class="inputForm" placeholder="Correo electrónico"> -->
             <input
               class="appearance-none block w-full bg-white text-gray-700 border rounded py-3 px-4 mb-3 leading-tight"
               id="email"
@@ -84,7 +83,7 @@ export default {
     created(){
       firebase.auth().onAuthStateChanged(user=>{
           if(user){
-              self.currentUser=user
+              this.currentUser=user
           }
       })
     },
@@ -94,7 +93,7 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
             () => {
-              this.problems = "",
+              this.problems = ""
               this.$router.replace("/")
             }
           )

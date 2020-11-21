@@ -35,7 +35,7 @@
                         </router-link>
                     </div>
                     <!-- Left menu visible on md and bigger-->
-                    <div class="hidden sm:block sm:ml-6">
+                    <div v-if="!currentUser" class="hidden sm:block sm:ml-6">
                         <div class="flex">
                             <router-link to="/login" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Ingresar</router-link>
                             <router-link to="/signup" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Registrarse</router-link>
@@ -77,7 +77,7 @@
                                 to="/profile" 
                                 v-if="currentUser"
                                 class="profileMenuElement">
-                                {{ currentUser.displayName }}</router-link>
+                                {{ displayName }}</router-link>
                             <router-link 
                                 to="/publicar" 
                                 v-if="currentUser"
@@ -108,6 +108,7 @@
 
 <script>
 import firebase from "firebase"
+import {db} from "@/main.js"
 export default {
     name:"Header",
     data(){
@@ -115,6 +116,7 @@ export default {
             profileMenuVisible:false,
             leftMenuVisible:false,
             currentUser:"",
+            displayName:""
         }
     },
     computed:{
@@ -128,7 +130,7 @@ export default {
             if(this.currentUser.photoURL){
                 pic=this.currentUser.photoURL
             }
- 
+
             return pic
         }
     },
@@ -136,6 +138,9 @@ export default {
         firebase.auth().onAuthStateChanged(user=>{
             if(user){
                 this.currentUser=user
+                db.collection("users").doc(this.currentUser.uid).get().then(u=>{
+                    this.displayName=u.data().name
+                })
             }else{
                 this.currentUser=""
             }
@@ -152,7 +157,6 @@ export default {
             firebase.auth().signOut()
             .catch(e=>console.error(e))
             this.profileMenuVisible=false
-            this.$router.replace("/")
         },
     }
 }

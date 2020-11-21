@@ -61,9 +61,6 @@ const routes = [
     path: "/perfil-propiedad/:id", 
     component: PerfilPropiedad, 
     name: 'perfilpropiedad',
-    meta: {
-      autentificado: true,
-    },
   },
 ]
 

@@ -50,7 +50,7 @@
 
     <!-- Datos del vendedor -->
     <section class="container mx-auto mt-10 rounded shadow-lg px-10 py-10 bg-gray-200">
-        <button @click="datosVendedor" v-if="!infoVendedor">Datos del vendedor</button>
+        <button @click="datosVendedor" v-if="!showInfoVendedor">Datos del vendedor</button>
         <div v-else>
           <h2>Datos del vendedor</h2>
           <div class="flex">
@@ -153,12 +153,12 @@ export default {
     data() {
     return {
       datosUser: "",
+      ownProp:false,
       info: [],
       selectedCenter: { lat: 0, lng:0 },
       selectedZoom: 14,
       idPropiedad: '',
-      infoVendedor: false,
-      idUser: '',
+      showInfoVendedor: false,
       propsInteres: [],
       dataVendedor: []
     };
@@ -169,45 +169,44 @@ export default {
       return precioFormateado + "₡"
     }
   },
-  created: function () {
+  created () {
     let self = this
-    self.datosUser = firebase.auth().currentUser;
-    const getId = this.$route.params.id;
-    this.idPropiedad = getId
-
-    // Capturar datos de la propiedad
-    let dPropiedad = db.collection("props").doc(getId);
+    //datos propiedad
+    this.idPropiedad = this.$route.params.id;
+    let dPropiedad = db.collection("props").doc(this.idPropiedad);
     dPropiedad
       .get()
-      .then(function (docProp) {
-        self.info = { ...docProp.data() };
+      .then(docProp=> {
+        self.info =docProp.data()
         self.selectedCenter = { lat: docProp.data().s2_lat, lng: docProp.data().s2_lng };
-      })
+      }).catch(e=>console.error(e))
 
-    // Capturar datos de propiedades de interés
-    this.idUser = firebase.auth().currentUser.uid;
-    let dUser = db.collection("users").doc(this.idUser);
-        dUser
-        .get()
-        .then(function (docProp) {
-            self.propsInteres = docProp.data().propsInteres
-            if(self.propsInteres.includes(self.info.propId) === true) { self.infoVendedor = true }
-        })
-    
-    // Capturar datos del vendedor
-    let dataU = db.collection("users").doc(this.idUser);
-        dataU
-        .get()
-        .then(function (docProp) {
-            self.dataVendedor = docProp.data()
-        })
-
-  },
-
-  computed:{
-    ownProp(){
-      return this.datosUser.uid===this.info.uid
-    }
+    // Capturar datos usuario
+    firebase.auth().onAuthStateChanged(user=>{
+        if(user){
+            self.datosUser=user
+            db.collection("users").doc(this.datosUser.uid).get().then(userInfo=>{
+                //es propia?
+                if (self.info.uid===self.datosUser.uid){
+                  self.ownProp=true
+                }else{
+                  self.ownProp=false
+                }
+                //marcada como propiedad de interes
+                const propsInteres=userInfo.data().propsInteres
+                if(propsInteres && propsInteres.includes(this.idPropiedad)){
+                  self.showInfoVendedor=true
+                }
+                //datos del vendedor
+                db.collection("users")
+                  .doc(self.info.uid)
+                  .get()
+                  .then(x=>self.dataVendedor=x.data())
+            }).catch(e=>console.error(e))
+        }else{
+            self.datosUser=""
+        }
+    })
   },
 
   methods:{
@@ -242,12 +241,10 @@ export default {
         }
       })
     },
-
     datosVendedor() {
-      
       this.infoVendedor = !this.infoVendedor
-      db.collection('users').doc(this.idUser).update({
-          'propsInteres': firebase.firestore.FieldValue.arrayUnion(this.info.propId)
+      db.collection('users').doc(this.datosUser.uid).update({
+          'propsInteres': firebase.firestore.FieldValue.arrayUnion(this.idPropiedad)
       });
     }
 
