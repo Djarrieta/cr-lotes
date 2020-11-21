@@ -20,17 +20,15 @@
 
             <div class="flex flex-col  mx-6 ">
                 <label>Nombre:</label>
-                <span>
-                    <input type="text" v-model="name"><button @click="saveName" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Guardar</button>
-                </span>
+                <input type="text" v-model="name">
                  
                 <label>WhatsApp:</label>
-                <span>
-                    <input type="text" v-model="tel"><button @click="saveNumber" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Guardar</button>
-                </span> 
+                <input type="text" v-model="tel">
+
                 <label>Correo:</label>
-                <span><input type="text" v-model="email"><button @click="saveEmail" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Guardar</button></span>
-                
+                <span> {{email}} </span>
+
+                <button @click="save" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Guardar</button>
             </div>
         </section>
 
@@ -66,7 +64,6 @@ export default {
         firebase.auth().onAuthStateChanged(user=>{
             if(user){
                 this.user=user
-                this.name=user.displayName
                 if(user.photoURL){
                     this.img=user.photoURL
                 }
@@ -78,51 +75,23 @@ export default {
                 .get()
                 .then((x)=>{
                     if(x.data().phoneNumber){this.tel=x.data().phoneNumber}
+                    if(x.data().name){this.name=x.data().name}
                     if(x.data().favoritos){this.favs=x.data().favoritos}
                 })
             }
         })
     },
     methods:{
-        saveName(){
-            this.user.updateProfile({displayName: this.name})
+
+        save(){
+            db.collection("users").doc(this.uid).update({name:this.name, phoneNumber:this.tel})
             .then(Swal.fire({
                 title: 'Cambios guardados con éxito',
                 confirmButtonText: `OK`,
             }))
             .catch(e=>console.error(e));
-
-            let nombre = db.collection('users').doc(this.uid);
-            nombre.update({
-                'nombre': this.name
-            });
         },
-        saveNumber(){
-            db.collection("users").doc(this.uid).update({phoneNumber:this.tel})
-            .then(Swal.fire({
-                title: 'Cambios guardados con éxito',
-                confirmButtonText: `OK`,
-            }))
-            .catch(e=>console.error(e));
 
-            let telefono = db.collection('users').doc(this.uid);
-            telefono.update({
-                'telefono': this.cel
-            });
-        },
-        saveEmail(){
-            db.collection("users").doc(this.uid).update({email:this.email})
-            .then(Swal.fire({
-                title: 'Cambios guardados con éxito',
-                confirmButtonText: `OK`,
-            }))
-            .catch(e=>console.error(e));
-
-            let email = db.collection('users').doc(this.uid);
-            email.update({
-                'email': this.email
-            });
-        },
         getFiles(){
             this.progress=0.01
             const fileDir=document.getElementById("inpImg").files[0] 

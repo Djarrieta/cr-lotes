@@ -231,8 +231,8 @@ export default {
       .then(map=>{
           let counter=0
           //establece los límites del mapa
-          const minLat=map.getBounds().Ya.i
-          const maxLat=map.getBounds().Ya.j
+          const minLat=map.getBounds().Wa.i
+          const maxLat=map.getBounds().Wa.j
           const minLng=map.getBounds().Sa.i
           const maxLng=map.getBounds().Sa.j
 
