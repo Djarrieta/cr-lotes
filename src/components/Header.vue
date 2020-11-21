@@ -133,13 +133,11 @@ export default {
         }
     },
     created(){
-        const self=this
-        //user
         firebase.auth().onAuthStateChanged(user=>{
             if(user){
-                self.currentUser=user
+                this.currentUser=user
             }else{
-                self.currentUser=""
+                this.currentUser=""
             }
         })
     },

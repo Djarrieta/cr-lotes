@@ -56,12 +56,17 @@ export default {
     data(){
         return {
             infoVendedor: '',
-            idUser: ''
+            idUser: ""
         }
     },
-    mounted: function () {
-        let self = this
-        self.idUser = firebase.auth().currentUser;
+    created(){
+        firebase.auth().onAuthStateChanged(user=>{
+            if(user){
+                this.idUser=user
+            }else{
+                this.idUser=""
+            }
+        })
     },
     filters: {
         precio: function(val){
