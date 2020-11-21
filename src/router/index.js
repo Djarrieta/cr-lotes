@@ -8,6 +8,7 @@ import Publicar from '@/views/Publicar.vue'
 import Profile from '@/views/Profile.vue'
 import Registro from '@/views/Registro.vue'
 import PerfilPropiedad from '@/views/PerfilPropiedad.vue'
+import Error from '@/views/Error.vue'
 import Swal from 'sweetalert2'
 
 Vue.use(VueRouter)
@@ -61,6 +62,11 @@ const routes = [
     path: "/perfil-propiedad/:id", 
     component: PerfilPropiedad, 
     name: 'perfilpropiedad',
+  },
+  { 
+    path: "*", 
+    component: Error, 
+    name: 'Error',
   },
 ]
 
