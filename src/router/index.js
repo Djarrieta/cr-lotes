@@ -75,6 +75,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
 //redirección automática cuando no hay 
 router.beforeEach((to, from, next) => {
   let usuario = firebase.auth().currentUser;
