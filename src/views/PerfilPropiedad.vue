@@ -242,10 +242,21 @@ export default {
       })
     },
     datosVendedor() {
-      this.infoVendedor = !this.infoVendedor
-      db.collection('users').doc(this.datosUser.uid).update({
-          'propsInteres': firebase.firestore.FieldValue.arrayUnion(this.idPropiedad)
-      });
+      if(this.datosUser){
+        this.infoVendedor = !this.infoVendedor
+        db.collection('users').doc(this.datosUser.uid).update({
+            'propsInteres': firebase.firestore.FieldValue.arrayUnion(this.idPropiedad)
+        });
+      }else{
+        Swal.fire({
+              position: 'top-end',
+              icon: 'warning',
+              title: 'Debes estar registrado para ver la información del vendedor.',
+              showConfirmButton: false,
+              timer: 1500
+          });
+      }
+
     }
 
   }
