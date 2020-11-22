@@ -18,13 +18,15 @@ export default {
     },
     mounted() {
         let self = this
-        let prop = db.collection('props').where('propId', '==', self.propId);
-        prop.get()
-            .then(function (docProp) {
-                docProp.forEach(function(doc) {
-                    self.status = doc.data().status
-                });
-            })
+        if(this.propId) {
+            let prop = db.collection('props').where('propId', '==', self.propId);
+            prop.get()
+                .then(function (docProp) {
+                    docProp.forEach(function(doc) {
+                        self.status = doc.data().status
+                    });
+                })
+        }
     },
     methods:{
         vender() {
