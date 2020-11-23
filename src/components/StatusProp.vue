@@ -28,6 +28,7 @@ export default {
                 })
         }
     },
+    
     methods:{
         activar() {
             db.collection('props').doc(this.propId.toString()).update({

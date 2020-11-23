@@ -97,7 +97,6 @@
           </div>
         </div>
       </form>
-      {{ whatsApp }}
     </div>
   </div>
 </template>
@@ -113,7 +112,7 @@ export default {
       return{
         name: "",
         email: "",
-        indicative:"506",
+        indicative:"+506",
         phoneNumber: "",
         password: "",
         password2: "",

@@ -54,6 +54,7 @@
           <template v-if="ownProp === true">
             <div class="px-6 py-5 flex justify-between bg-gray-200">
               <StatusProp :propId="info.propId"></StatusProp>
+              <router-link :to="'/publicar/'+ idPropiedad">Editar</router-link>
               <StatusVendido :propId="info.propId"></StatusVendido>
             </div>
           </template>
