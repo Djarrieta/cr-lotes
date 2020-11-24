@@ -83,6 +83,8 @@ export default {
                     if(x.data().name){this.name=x.data().name}
                     if(x.data().favoritos){this.favs=x.data().favoritos}
                 })
+            } else {
+                this.$router.push({ name: 'Home' })
             }
         })
     },
