@@ -72,7 +72,7 @@
               <GmapMarker
                   v-for="(p,i) in props"
                   :title="p.s1_price"
-                  icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FGroup%2028.png?alt=media&token=40be6ea0-66d6-4a3d-ae8f-0aef1610e325"
+                  icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FmarkerMap.png?alt=media&token=85c32ae4-bb15-46b3-915e-fe55c5e2835d"
                   :key=i
                   :position="{lat:p.s2_lat,lng:p.s2_lng}"
                   :clickable="true"
