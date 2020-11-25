@@ -68,17 +68,25 @@
               :options="{
                   mapTypeControl: false,
                   streetViewControl: false,
-                  rotateControl: false,}">
+                  rotateControl: false,
+                }">
               <GmapMarker
-                  v-for="(p,i) in props"
-                  :title="p.s1_price"
+                  v-for="(p,i) in props"                  
                   icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FmarkerMap.png?alt=media&token=85c32ae4-bb15-46b3-915e-fe55c5e2835d"
                   :key=i
                   :position="{lat:p.s2_lat,lng:p.s2_lng}"
                   :clickable="true"
                   :draggable="false"
-                  @click="selectPin(p.propId)"
-              />
+                  @click="toggleInfoWindow(p, i)"
+              /> 
+              <gmapInfoWindow 
+                  :options="infoOptions"
+                  :position="infoWindowPos"
+                  :opened="infoWinOpen"
+                  @closeclick="infoWinOpen=false"
+              >
+                  <div v-html="infoContent"></div>
+              </gmapInfoWindow>    
           </GmapMap>
         </div>
     </div>
@@ -129,8 +137,24 @@ export default {
         ctns:[],
         dtts:[],
 
-        loading:true,
+        infoContent: '',
+        infoWindowPos: {
+          lat: 0,
+          lng: 0
+        },
+        currentMidx: null,
+        infoWinOpen: false,
+        //optional: offset infowindow so it visually sits nicely on top of our marker
+        infoOptions: {
+          pixelOffset: {
+            width: 0,
+            height: -35
+          }
+        },
+
         showSeeMore:true,
+        loading:true,
+        flagSearch:true,
     }
   },
   watch:{
@@ -161,6 +185,13 @@ export default {
             const e=document.getElementById("selectDtt")
             this.s2_nameDttSelected= e.options[e.selectedIndex].text
         },
+        flagSearch(){
+          if(!this.flagSearch){
+            setTimeout(() => {
+              this.flagSearch=true
+            }, 2500);
+          }
+        }
   },
   mounted(){
     //Escucha cuando cambia el zoom, pero al drag cambia muy rápido, así es que solo ejecuta search a lo sumo cada 1.2s 
@@ -171,15 +202,40 @@ export default {
         doit=false  
         setTimeout(() => {
           //se muestra primero el componente de cargando
-          this.loading=true
-          this.props=[]
-          this.search()
+          if(this.flagSearch){
+            this.loading=true
+            this.props=[]
+            this.search()
+          }
           doit=true
         }, 2000);
       }
     })
   },
   methods:{
+    toggleInfoWindow: function (marker, idx) {
+      this.flagSearch=false
+      this.infoWindowPos = {
+          lat: marker.s2_lat,
+          lng: marker.s2_lng
+        };
+      
+      this.infoContent = this.getInfoWindowContent(marker);
+
+      //check if its the same marker that was selected if yes toggle
+      if (this.currentMidx == idx) {
+        this.infoWinOpen = !this.infoWinOpen;
+      }
+      //if different marker set infowindow to open and reset current marker index
+      else {
+        this.infoWinOpen = true;
+        this.currentMidx = idx;
+      }
+    },
+
+    getInfoWindowContent: function (marker) {
+      return (`<div class="card">${marker.s1_title}</div>`);
+    },
     SelectPrv(){
         this.loading=true
 
