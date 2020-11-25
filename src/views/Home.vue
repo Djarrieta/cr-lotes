@@ -96,7 +96,7 @@
     <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600 text-center">No hay propiedades en venta en esta área. 
     Selecciona otra región con los desplegables o mueve el mapa.</div>
     <!-- see more -->
-    <button v-if="props.length"  @click="searchMore" class="w-full p-2 focus:outline-none">
+    <button v-if="props.length && showSeeMore"  @click="searchMore" class="w-full p-2 focus:outline-none">
       Ver más
     </button>
   </div>
@@ -129,7 +129,8 @@ export default {
         ctns:[],
         dtts:[],
 
-        loading:true
+        loading:true,
+        showSeeMore:true,
     }
   },
   watch:{
@@ -195,6 +196,7 @@ export default {
         this.dtts=distritos.filter(c=>c.canton_id==this.s2_idCtnSelected.id)
     },
     search(){
+      this.showSeeMore=true
       //establece los límites del mapa
       this.$refs.gmap.$mapPromise
       .then(map=>{
@@ -233,6 +235,7 @@ export default {
       this.$refs.gmap.$mapPromise
       .then(map=>{
           let counter=0
+          this.showSeeMore=false
           //establece los límites del mapa
           const minLat=map.getBounds().Wa.i
           const maxLat=map.getBounds().Wa.j
@@ -255,6 +258,7 @@ export default {
                         propLat >= minLat &&
                         propLng >= minLng){
                           this.props.push(prop.data())
+                          this.showSeeMore=true
                           if(counter==this.inicialLoad){return}
                           counter++
                         }

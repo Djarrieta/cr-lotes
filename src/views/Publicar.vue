@@ -54,7 +54,6 @@
       @prev="prev"
       @save="save"
       v-if="indicator===9"/>
-  
   </div>
   
 </template>

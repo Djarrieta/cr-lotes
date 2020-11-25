@@ -120,7 +120,15 @@ export default {
             if(this.data.s1_price){this.s1_price=this.data.s1_price}
         }
     },
-
+    mounted(){
+        if(this.data.s1_title){
+            this.s1_title=this.data.s1_title
+            this.s1_description=this.data.s1_description
+            this.s1_area=this.data.s1_area
+            this.s1_areaUn=this.data.s1_areaUn
+            this.s1_price=this.data.s1_price
+        }
+    },
   methods:{
       next(){
         this.problems=""
