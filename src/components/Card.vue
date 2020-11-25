@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="px-6 py-5 flex justify-between bg-gray-200">
+        <div class="px-6 py-5 flex justify-between bg-gray-200" v-if="prop.uid===idUser.uid">
             <StatusProp :propId="prop.propId"></StatusProp>
             <StatusVendido :propId="prop.propId"></StatusVendido>
         </div>

@@ -9,23 +9,26 @@
 import firebase from "firebase"
 import { db } from "@/main";
 export default {
-    name:"StatusProp",
-    props:["propId"],
+    name: "StatusProp",
+    props: ["propId"],
     data(){
         return {
             status: ''
         }
     },
     mounted() {
-        let self = this        
-        let prop = db.collection('props').where('propId', '==', self.propId);
-        prop.get()
-            .then(function (docProp) {
-                docProp.forEach(function(doc) {
-                    self.status = doc.data().status
-                });
-            })
+        let self = this
+        if(this.propId) {
+            let prop = db.collection('props').where('propId', '==', self.propId);
+            prop.get()
+                .then(function (docProp) {
+                    docProp.forEach(function(doc) {
+                        self.status = doc.data().status
+                    });
+                })
+        }
     },
+    
     methods:{
         activar() {
             db.collection('props').doc(this.propId.toString()).update({

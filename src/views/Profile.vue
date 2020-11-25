@@ -28,12 +28,16 @@
                 <label>Correo:</label>
                 <span> {{email}} </span>
 
-                <button @click="save" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Guardar</button>
+                <button @click="save" class="rounded p-2 m-2 text-gray-100 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Guardar</button>
+
+                <EliminarCuenta :uid="uid"></EliminarCuenta>
             </div>
         </section>
 
         <ListaFavoritos :uid="uid"></ListaFavoritos>
+
         <ListaPropiedades :uid="uid"></ListaPropiedades>
+
     </div>
 </template>
 
@@ -43,17 +47,18 @@ import {db} from "@/main.js"
 import Swal from 'sweetalert2'
 import ListaFavoritos from "@/components/ListaFavoritos"
 import ListaPropiedades from "@/components/ListaPropiedades"
+import EliminarCuenta from "@/components/EliminarCuenta"
 export default {
     name:"Profile",
-    components: { ListaFavoritos, ListaPropiedades },
+    components: { ListaFavoritos, ListaPropiedades, EliminarCuenta },
     data(){
         return{
-            user:"",
-            img:"https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FProfilePic.png?alt=media&token=bdb5182c-1ad1-425e-b754-62fdcec57006",
-            name:"",
-            email:"",
-            tel:"",
-            uid:"",
+            user: "",
+            img: "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FProfilePic.png?alt=media&token=bdb5182c-1ad1-425e-b754-62fdcec57006",
+            name: "",
+            email: "",
+            tel: "",
+            uid: "",
 
             favs:[],
             progress:0
@@ -78,6 +83,8 @@ export default {
                     if(x.data().name){this.name=x.data().name}
                     if(x.data().favoritos){this.favs=x.data().favoritos}
                 })
+            } else {
+                this.$router.push({ name: 'Home' })
             }
         })
     },
@@ -113,7 +120,7 @@ export default {
                     .then((url)=>{
                         this.img=url
                         this.user.updateProfile({
-                        photoURL: this.img
+                            photoURL: this.img
                         });
                     })
                 })
