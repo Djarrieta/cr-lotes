@@ -56,6 +56,7 @@
               <StatusProp :propId="info.propId"></StatusProp>
               <router-link :to="'/publicar/'+ idPropiedad">Editar</router-link>
               <StatusVendido :propId="info.propId"></StatusVendido>
+              <Subastar :propId="info.propId"></Subastar>
             </div>
           </template>
         </div>
@@ -175,9 +176,10 @@ import Favorito from "@/components/Favorito"
 import Swal from 'sweetalert2'
 import StatusProp from "@/components/StatusProp"
 import StatusVendido from "@/components/StatusVendido"
+import Subastar from "@/components/Subastar"
 export default {
     name: "PerfilPropiedad",
-    components: { Favorito, StatusProp, StatusVendido },
+    components: { Favorito, StatusProp, StatusVendido, Subastar },
     data() {
     return {
       datosUser: "",

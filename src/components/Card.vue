@@ -40,6 +40,7 @@
         <div class="px-6 py-5 flex justify-between bg-gray-200" v-if="prop.uid===idUser.uid">
             <StatusProp :propId="prop.propId"></StatusProp>
             <StatusVendido :propId="prop.propId"></StatusVendido>
+            <Subastar :propId="prop.propId"></Subastar>
         </div>
   </section>
 </template>
@@ -49,9 +50,10 @@ import firebase from "firebase"
 import Favorito from "@/components/Favorito"
 import StatusProp from "@/components/StatusProp"
 import StatusVendido from "@/components/StatusVendido"
+import Subastar from "@/components/Subastar"
 export default {
     name:"Card",
-    components: { Favorito, StatusProp, StatusVendido },
+    components: { Favorito, StatusProp, StatusVendido, Subastar },
     props:["prop"],
     data(){
         return {

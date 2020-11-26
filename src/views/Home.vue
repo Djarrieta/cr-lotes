@@ -205,6 +205,7 @@ export default {
           if(this.flagSearch){
             this.loading=true
             this.props=[]
+            this.infoWinOpen = false;
             this.search()
           }
           doit=true
