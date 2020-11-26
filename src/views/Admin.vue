@@ -61,33 +61,6 @@
                 </tr>
             </tbody>
         </section>
-        <!-- Propiedades a subastar-->
-        <section>
-          <h1 class="text-4xl text-gray-600">Propiedades de {{ selectedUser.name}}</h1>
-            <table >
-                <thead class="flex">
-                    <th class="mx-2 w-56 text-left">Id</th>
-                    <th class="mx-2 w-56 text-left">Estado</th>
-                    <th class="mx-2 w-56 text-left">Precio</th>
-                    <th class="mx-2">Opciones</th>
-                </thead>
-            </table>
-            <tbody>
-                <tr 
-                    v-for="(p,n) in props" 
-                    :key=n
-                    class="hover:bg-gray-300 cursor-pointer">
-                    <td class="border-b w-56 text-left">{{p.propId}}</td>
-                    <td class="border-b w-56 text-left">{{p.status}}</td>
-                    <td class="border-b w-56 text-left">{{p.s1_price}}</td>
-                    <td class="border-b">
-                        <button 
-                            class="m-1 px-1 rounded bg-red-600 text-xs">Borrar
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </section>
   </div>
 </template>
 
