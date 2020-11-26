@@ -55,8 +55,8 @@
                     <td class="border-b w-56 text-left">{{p.s1_price}}</td>
                     <td class="border-b">
                         <button 
-                            class="m-1 px-1 rounded bg-red-600 text-xs">Borrar
-                        <button>
+                            class="m-1 px-1 rounded bg-red-600 text-xs"> Borrar
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -83,7 +83,7 @@
                     <td class="border-b">
                         <button 
                             class="m-1 px-1 rounded bg-red-600 text-xs">Borrar
-                        <button>
+                        </button>
                     </td>
                 </tr>
             </tbody>
