@@ -7,6 +7,7 @@ import SignUp from '@/views/SignUp.vue'
 import Publicar from '@/views/Publicar.vue'
 import Profile from '@/views/Profile.vue'
 import Registro from '@/views/Registro.vue'
+import Admin from '@/views/Admin.vue'
 import PerfilPropiedad from '@/views/PerfilPropiedad.vue'
 import Error from '@/views/Error.vue'
 import Swal from 'sweetalert2'
@@ -54,6 +55,14 @@ const routes = [
     path: '/publicar/:id',
     name: 'Publicar',
     component: Publicar,
+    meta:{
+      autentificado:true
+    }
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
     meta:{
       autentificado:true
     }

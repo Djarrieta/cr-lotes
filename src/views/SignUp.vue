@@ -136,30 +136,17 @@ export default {
     methods:{
       signUp(){
         const self=this
-        if(!this.name){
-          this.problems="Nombre inválido."
-          Swal.fire({
-              position: 'top-end',
-              icon: 'warning',
-              title: this.problems,
-              showConfirmButton: false,
-              timer: 1500
-          });
-          return
+    
+        if(this.password!=this.password2){
+            this.problems="Las contraseñas no coinciden."
         }
         if(!this.phoneNumber){
             this.problems="Número de teléfono no válido."
-            Swal.fire({
-                position: 'top-end',
-                icon: 'warning',
-                title: this.problems,
-                showConfirmButton: false,
-                timer: 1500
-            });
-            return
         }
-        if(this.password!=this.password2){
-            this.problems="Las contraseñas no coinciden."
+        if(!this.name){
+          this.problems="Nombre inválido."
+        }
+        if(this.problems){
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -167,7 +154,7 @@ export default {
                 showConfirmButton: false,
                 timer: 1500
             });
-            return
+          return
         }
         firebase.auth()
         .createUserWithEmailAndPassword(this.email,this.password)

@@ -83,6 +83,11 @@
                                 v-if="currentUser"
                                 class="profileMenuElement">
                                 Publicar</router-link>
+                            <router-link 
+                                to="/admin" 
+                                v-if="currentUser && admin"
+                                class="profileMenuElement">
+                                Administrar</router-link>
                             <a 
                                 to="/" 
                                 v-if="currentUser"
@@ -116,7 +121,8 @@ export default {
             profileMenuVisible:false,
             leftMenuVisible:false,
             currentUser:"",
-            displayName:""
+            displayName:"",
+            admin:false
         }
     },
     computed:{
@@ -139,7 +145,9 @@ export default {
             if(user){
                 this.currentUser=user
                 db.collection("users").doc(this.currentUser.uid).get().then(u=>{
+                    
                     this.displayName=u.data().name
+                    if(u.data().admin){this.admin=u.data().admin}
                 })
             }else{
                 this.currentUser=""
@@ -157,6 +165,7 @@ export default {
             firebase.auth().signOut()
             .catch(e=>console.error(e))
             this.profileMenuVisible=false
+            this.admin=false
         },
     }
 }
