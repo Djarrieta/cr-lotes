@@ -8,6 +8,7 @@
 <script>
 import firebase from "firebase"
 import { db } from "@/main";
+import Swal from 'sweetalert2'
 export default {
     name: "StatusProp",
     props: ["propId"],
@@ -36,6 +37,13 @@ export default {
                 'dateDesac': ''
             });
             this.status = 'complete'
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Está propiedad está a la venta nuevamente.',
+                showConfirmButton: false,
+                timer: 1500
+            })
         },
         desactivar() {
             let docRef = db.collection('props').doc(this.propId.toString());
@@ -43,6 +51,13 @@ export default {
                 'status': 'desactivar',
                 'dateDesac': firebase.firestore.FieldValue.serverTimestamp()
             });
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Está propiedad se eliminará completamente en 4 meses.',
+                showConfirmButton: false,
+                timer: 1500
+            })
             this.status = 'desactivar'
         }
     }
