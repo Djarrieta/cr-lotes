@@ -5,8 +5,6 @@
       <span>Confirmación</span>
       <p>¿Está seguro que desea guardar esta nueva nueva publicación?</p>
       
-      <!-- {{data}} -->
-
       <h1 class="text-xl md:text-2xl font-bold">
         {{data.s1_title}}
       </h1>

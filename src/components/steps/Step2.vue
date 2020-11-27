@@ -136,7 +136,7 @@ export default {
                 id:p.id,
                 pos:p.coordenadas
             }
-            this.SelectPrv()
+            this.SelectPrv()        
         }
       if(this.data.s2_idCtnSelected)
         {
@@ -182,8 +182,13 @@ export default {
           this.center={lat,lng}
           this.zoom=10
           
-          const e=document.getElementById("selectPrv")
-          this.s2_namePrvSelected= e.options[e.selectedIndex].text
+          const p=provincias.filter(p=>p.id==this.data.s2_idPrvSelected)[0]
+            if(p){
+                this.s2_namePrvSelected= p.provincia
+            }else{
+                const e=document.getElementById("selectPrv")
+                this.s2_namePrvSelected= e.options[e.selectedIndex].text
+            }  
       },
       s2_idCtnSelected(newId){
           const lat =Number(newId.pos.split(", ")[0])
@@ -191,17 +196,27 @@ export default {
           this.center={lat,lng}
           this.zoom=12
 
-          const e=document.getElementById("selectCtn")
-          this.s2_nameCtnSelected= e.options[e.selectedIndex].text
+            const c=cantones.filter(c=>c.id==this.data.s2_idCtnSelected)[0]
+            if(c){
+                this.s2_nameCtnSelected= c.canton
+            }else{
+                const e=document.getElementById("selectCtn")
+                this.s2_nameCtnSelected= e.options[e.selectedIndex].text
+            }  
+
       },
       s2_idDttSelected(newId){
           const lat =Number(newId.pos.split(", ")[0])
           const lng =Number(newId.pos.split(", ")[1])
           this.center={lat,lng}
           this.zoom=14
-
-          const e=document.getElementById("selectDtt")
-          this.s2_nameDttSelected= e.options[e.selectedIndex].text
+            const d=distritos.filter(d=>d.id==this.data.s2_idDttSelected)[0]
+            if(d){
+                this.s2_nameDttSelected= d.distrito
+            }else{
+                const e=document.getElementById("selectDtt")
+                this.s2_nameDttSelected= e.options[e.selectedIndex].text
+            } 
       },
         problems:function(){
             setTimeout(() => {

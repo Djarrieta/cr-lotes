@@ -118,6 +118,7 @@ export default {
               uid:this.currentUser.uid,
           }).then(()=>{
             Swal.fire('Guardado!', '', 'success')
+            this.$router.push({ name: 'perfilpropiedad', params: { id: this.data.propId.toString()} })
           }).catch(e=>{
             Swal.fire('Hubo un error y no se guardaron los cambios.', '', 'info')
             console.error(e)})
