@@ -1,5 +1,5 @@
 <template>
-    <nav class="bg-gray-800">
+    <nav class="bg-primary">
         <div class="container m-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex items-center justify-between h-16">
                 <!-- left menu -->
@@ -25,7 +25,7 @@
                 <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex-shrink-0">
                         <!-- small logo -->
-                        <router-link to="/" class="hidden sm:block lg:hidden h-8 w-auto text-gray-200 text-2xl  font-bold">
+                        <router-link to="/" class="hidden sm:block lg:hidden h-8 w-auto text-secundary text-2xl  font-bold">
                             CR
                         </router-link>
 

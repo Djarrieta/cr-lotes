@@ -26,7 +26,12 @@ module.exports = {
       't8':'67%',
       'l8':'39%',
     },
-    extend: {},
+    extend: {
+      colors:{
+        'primary':'#E61E50',
+        'secundary':'#D80665'
+      }
+    },
   },
   variants: {},
   plugins: [],

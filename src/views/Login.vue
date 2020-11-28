@@ -1,5 +1,4 @@
 <template>
-
   <div class="flex items-center justify-center sm:px-6 lg:px-8 mt-10">
     <div class="max-w-2xl">
       <div class="flex flex-col w-full">
