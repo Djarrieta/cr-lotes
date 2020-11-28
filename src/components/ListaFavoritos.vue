@@ -1,5 +1,11 @@
 <template>
   <section>
+    <!-- loading -->
+    <div v-if="loading" class="flex justify-center items-center opacity-25">
+      <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+    </div>
+
+    <template v-if="favoritos.length > 0 && loading===false">
       <h2>Lista de favoritos</h2>
       <table>
           <thead>
@@ -31,6 +37,11 @@
             </tr>
           </tbody>
       </table>
+    </template>
+
+    <template v-else-if="favoritos.length === 0 && loading===false">
+      <p>No tiene ninguna propiedad como favorita.</p>
+    </template>
   </section>
 </template>
 
@@ -47,7 +58,8 @@ export default {
             idUser: '',
             status: false,
             favoritos: [],
-            propiedadesAll: []
+            propiedadesAll: [],
+            loading: true
         }
     },
     created() {
@@ -58,6 +70,7 @@ export default {
           this.idUser = this.uid
         }
       })
+      
     },
     mounted() {
       let self = this
@@ -69,23 +82,41 @@ export default {
             querySnapshot.forEach(function(doc) {
               if(doc.id === self.uid) {
                   self.favoritos = doc.data().favoritos
+
+                  // Seleccionar solo las propiedades que están en favorito
+                  let propiedades = db.collection('props');
+                  console.log(self.favoritos.length)
+                  if(self.favoritos.length > 0) {
+                    propiedades
+                      .get()
+                      .then(function(querySnapshot) {
+                        querySnapshot.forEach(function(doc) {
+                            if(self.favoritos.includes(doc.data().propId)) {
+                              self.propiedadesAll.push(doc.data())
+                            }
+                        });
+                      })
+                  }
               }
             });
+            
+            self.loading = false
         })
 
         // Seleccionar solo las propiedades que están en favorito
-        let propiedades = db.collection('props');
-        if(self.favoritos.length > 0) {
-          propiedades
-            .get()
-            .then(function(querySnapshot) {
-              querySnapshot.forEach(function(doc) {
-                  if(self.favoritos.includes(doc.data().propId)) {
-                    self.propiedadesAll.push(doc.data())
-                  }
-              });
-            })
-        }
+        // let propiedades = db.collection('props');
+        // console.log(self.favoritos.length)
+        // if(self.favoritos.length > 0) {
+        //   propiedades
+        //     .get()
+        //     .then(function(querySnapshot) {
+        //       querySnapshot.forEach(function(doc) {
+        //           if(self.favoritos.includes(doc.data().propId)) {
+        //             self.propiedadesAll.push(doc.data())
+        //           }
+        //       });
+        //     })
+        // }
     
     
     
