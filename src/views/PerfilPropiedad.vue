@@ -10,91 +10,67 @@
       <section class="container mx-auto mt-5">
       </section>
       
-      <section class="lg:flex my-5 container m-auto">
+      <section class="lg:flex my-5 md:container m-auto">
         <!-- Fotos -->
-        <div id="fotos" class="lg:w-3/6 object-center">
-        <ul class="" id="slideshowFotos">
-          <li v-for="foto in info.s8_pictures" :key="foto.title">
-            <img
-            class="w-full h-40 object-scale-down"
-            :src="foto.fileUrl"
-            :alt="foto.title"
-            />
-          </li>
-        </ul>
-        <!-- botones -->
-        <div v-if="ownProp"  class="flex justify-center">
-          <button @click="activateProp" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">{{info.status==="complete" ? "Inactivar" : "Activar"}} </button>
-          <router-link :to="'/publicar/'+ idPropiedad" class="rounded p-2 m-2 text-gray-400 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Editar</router-link>
+        <div id="fotos" class="mx-5 lg:w-4/6 flex">
+          <ul class="w-1/6">
+            <li v-for="foto in info.s8_pictures" :key="foto.title">
+              <img
+                class="w-full h-30 object-cover border rounded-lg md:mb-2 cursor-pointer"
+                :src="foto.fileUrl"
+                :alt="foto.title"
+                @click="showPhoto(foto.fileUrl)"
+              />
+            </li>
+          </ul>
+          <div class="w-5/6 ml-2 lg:ml-0 lg:px-5">
+            <img :src="fotoGrande" alt="" class="w-full h-30 object-cover border rounded-lg shadow">
           </div>
         </div>
       
         <!-- Datos -->
-        <div class="lg:w-3/6 lg:ml-10">
-          <div class="rounded overflow-hidden shadow-lg px-10 py-10">
-        
-            <Favorito :propId="info.propId" />
-        
-            <h1 class="text-lg uppercase">{{ info.s1_title }}</h1>
+        <div class="lg:w-2/6">
+          <div class="px-5 pt-5 md:px-10 md:pt-10 mx-5 mt-5 lg:mx-0 md:mt-10 lg:mt-0 rounded-md overflow-hidden border bg-white shadow">
+            <h1 class="text-lg font-bold uppercase">{{ info.s1_title }}</h1>
             <p>{{ info.s1_description }}</p>
+            <p class="font-medium text-lg text-primary my-2" v-if="info.s1_price">{{ info.s1_price | numberFormat }} ₡</p>
             <p>
               <span class="block"><b>Provincia:</b> {{ info.s2_namePrvSelected }}</span>
               <span class="block"><b>Cantón:</b> {{ info.s2_nameCtnSelected }}</span>
               <span class="block"><b>Distrito:</b> {{ info.s2_nameDttSelected }}</span>
               <span class="block"><b>Dirección:</b> {{ info.s2_address }}</span>
-              <span class="block"><b>Precio:</b> {{ info.s1_price | precio }}</span>
             </p>
-            <h3 class="block text-lg">Esta propiedad cuenta con:</h3>
-            <ul class="grid grid-cols-3 gap-x-4 gap-y-2">
-              <li class="min-h-8 px-2 bg-gray-200 py-2" v-for="contaran in info.s6_assets" :key="contaran">
-                {{ contaran }}
-              </li>
-            </ul>
-          </div>
-          <template v-if="ownProp === true">
-            <div class="px-6 py-5 flex justify-between bg-gray-200">
-              <StatusProp :propId="info.propId"></StatusProp>
-              <router-link :to="'/publicar/'+ idPropiedad">Editar</router-link>
-              <StatusVendido :propId="info.propId"></StatusVendido>
-              <Subastar :propId="info.propId"></Subastar>
+            <div class="flex mt-3 border-t-2 pt-2 pb-2 md:pb-8">
+              <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://cr-lotes.com/perfil-propiedad/'+info.propId" target="_blank" class="flex-1 text-right" title="Compartir por WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+              <Favorito class="flex-1 text-left pl-10" :propId="info.propId" title="Favorito" />
             </div>
-          </template>
+          </div>
         </div>
       </section>
-      
-      <!-- Datos del vendedor -->
+
       <template v-if="ownProp === true">
-        <section class="container mx-auto mt-10 rounded shadow-lg px-10 py-10 bg-gray-200">
-            <h2>Datos del vendedor</h2>
-            <div class="flex">
-              <span>Nombre: {{dataVendedor.name}}</span>
-              <span>Email: {{dataVendedor.email}}</span>
-              <span>WhatsApp: {{dataVendedor.phoneNumber}}</span>
-            </div>
-        </section>
-      </template>
-      <template v-else>
-        <section class="container mx-auto mt-10 rounded shadow-lg px-10 py-10 bg-gray-200">
-          <button @click="datosVendedor" v-if="!showInfoVendedor">Datos del vendedor</button>
-          <div v-else>
-            <h2>Datos del vendedor</h2>
-            <div class="flex">
-              <span>Nombre: {{dataVendedor.name}}</span>
-              <span>Email: {{dataVendedor.email}}</span>
-              <span>WhatsApp: {{dataVendedor.phoneNumber}}</span>
-            </div>
+        <section class="my-5 lg:container m-auto mt-10 py-10 border-b-2 border-t-2">
+          <h2 class="mx-5 lg:mx-0 text-2xl font-bold pb-5">Opciones de vendedor</h2>
+          <div class="mx-5 lg:mx-0 md:flex md:justify-between space-y-4 md:space-y-0">
+            <StatusProp :propId="info.propId"></StatusProp>
+            <section><router-link :to="'/publicar/'+ idPropiedad">Editar</router-link></section>
+            <StatusVendido :propId="info.propId"></StatusVendido>
+            <Subastar :propId="info.propId"></Subastar>
           </div>
         </section>
       </template>
-      
+
       <!-- mapa -->
-      <section class="container mx-auto mt-10">
+      <section class="md:container mx-auto mt-10 py-10">
+        <h2 class="mx-5 lg:mx-2 text-2xl font-bold pb-5">Ubicación</h2>
         <GmapMap
         :center="selectedCenter"
         :zoom="selectedZoom"
         mapTypeControl="false"
         streetViewControl="false"
-        class="w-full h-64"
+        class="w-full h-64 rounded-lg shadow-lg"
         ref="mapRef"
         >
         <GmapMarker
@@ -105,65 +81,92 @@
         </GmapMap>
       </section>
       
+      <!-- Datos del vendedor -->
+      <template v-if="ownProp === true">
+        <section class="md:container md:mx-auto mt-10 px-5 lg:px-0 py-10 border-b-2 border-t-2">
+            <h2 class="text-2xl font-bold pb-5">Datos del vendedor</h2>
+            <div class="lg:mx-0 md:flex justify-between space-y-4 md:space-y-0">
+              <span class="block"><b class="text-lg"><i class="fas fa-house-user"></i> Nombre:</b> <br> {{dataVendedor.name}}</span>
+              <span class="block"><b class="text-lg"><i class="far fa-envelope"></i> Email:</b> <br> {{dataVendedor.email}}</span>
+              <span class="block"><b class="text-lg"><i class="fab fa-whatsapp"></i> WhatsApp:</b> <br> {{dataVendedor.phoneNumber}}</span>
+            </div>
+        </section>
+      </template>
+      <template v-else>
+        <section class="lg:container mx-5 lg:mx-auto my-10 py-10 border-b-2 border-t-2">
+          <button @click="datosVendedor" v-if="!showInfoVendedor" 
+            class="px-5 py-3 border w-full lg:w-auto border-primary rounded-md text-primary font-medium">
+              Ver datos del vendedor
+          </button>
+          <div v-else>
+            <h2 class="text-2xl font-bold">Datos del vendedor</h2>
+            <div class="lg:mx-0 md:flex justify-between space-y-4 md:space-y-0">
+              <span class="block"><b class="text-lg"><i class="fas fa-house-user"></i> Nombre:</b> <br> {{dataVendedor.name}}</span>
+              <span class="block"><b class="text-lg"><i class="far fa-envelope"></i> Email:</b> <br> {{dataVendedor.email}}</span>
+              <span class="block"><b class="text-lg"><i class="fab fa-whatsapp"></i> WhatsApp:</b> <br> {{dataVendedor.phoneNumber}}</span>
+            </div>
+          </div>
+        </section>
+      </template>
+      
       <!-- Detalles -->
-      <section class="container mx-auto mt-10">
-        <ul>
-          <li class=""><a href="">Detalles</a></li>
-          <li v-if="datosUser.uid"><a href="">Documentos</a></li>
-        </ul>
-        <ul class="">
-          <li class="">
-            <table class="">
-              <tbody>
-                <tr v-if="info.s2_namePrvSelected">
-                  <td class="font-bold">Provincia</td>
-                  <td>{{info.s2_namePrvSelected}}</td>
-                </tr>
-                <tr v-if="info.s2_nameDttSelected">
-                  <td class="font-bold">Distrito</td>
-                  <td>{{info.s2_nameDttSelected}}</td>
-                </tr>
-                <tr  v-if="info.s2_nameCtnSelected">
-                  <td class="font-bold">Cantón</td>
-                  <td>{{info.s2_nameCtnSelected}}</td>
-                </tr>
-                <tr v-if="info.s1_area">
-                  <td class="font-bold">Área de terreno</td>
-                  <td>{{info.s1_area}} {{ info.s1_areaUn }}</td>
-                </tr>
-                <tr v-if="info.s6_assets">
-                  <td class="font-bold">La propiedad cuenta con:</td>
-                  <td>
-                    <ul class="pl-0">
-                      <li v-for="(cuenta, indexCuenta) in info.s6_assets" :key="indexCuenta">{{ cuenta }}</li>
-                    </ul>
-                  </td>
-                </tr>
-                <tr v-if="info.s4_inclination">
-                  <td class="font-bold">Inclinación del terreno:</td>
-                  <td>
-                  <!-- <img class="h-40 bg-white" :src="'/images/'+info.topografia+'.png'" /> -->
-                  {{info.s4_inclination}}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </li>
-          <li v-if="datosUser.uid">
-            <table class="">
-              <tbody>
-                <tr v-for="file in info.s7_files" :key="file.code">
-                  <td>
-                    {{file.title}}
-                  </td>
-                  <td>
-                    <a class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-4 ml-5 rounded" target="_blank" :href="file.fileUrl">Ver documento</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </li>
-        </ul>
+      <section class="lg:container mx-5 lg:mx-auto mt-10 py-10">
+        <h2 class="text-2xl font-bold pb-5">Detalles de la propiedad</h2>
+        <table class="table-fixed w-full">
+          <tbody>
+            <tr v-if="info.s2_namePrvSelected" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Provincia</td>
+              <td class="p-2">{{info.s2_namePrvSelected}}</td>
+            </tr>
+            <tr v-if="info.s2_nameDttSelected" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Distrito</td>
+              <td class="p-2">{{info.s2_nameDttSelected}}</td>
+            </tr>
+            <tr  v-if="info.s2_nameCtnSelected" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Cantón</td>
+              <td class="p-2">{{info.s2_nameCtnSelected}}</td>
+            </tr>
+            <tr v-if="info.s1_area" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Área de terreno</td>
+              <td class="p-2">{{info.s1_area}} {{ info.s1_areaUn }}</td>
+            </tr>
+            <tr v-if="info.s6_assets" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">La propiedad cuenta con:</td>
+              <td class="p-2">
+                <ul class="pl-0">
+                  <li v-for="(cuenta, indexCuenta) in info.s6_assets" :key="indexCuenta">{{ cuenta }}</li>
+                </ul>
+              </td>
+            </tr>
+            <tr v-if="info.s4_inclination" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Inclinación del terreno:</td>
+              <td class="p-2">
+              <!-- <img class="h-40 bg-white" :src="'/images/'+info.topografia+'.png'" /> -->
+              {{info.s4_inclination}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </section>
+      <section v-if="mostrarDocs" class="lg:container mx-5 lg:mx-auto mt-10 py-10 border-t-2">
+          <!-- <template v-if="datosUser.uid"> -->
+          <h2 class="text-2xl font-bold pb-5">Documentos de la propiedad</h2>
+          <table class="table-fixed w-full">
+            <tbody>
+              <tr v-for="file in info.s7_files" :key="file.code" class="border">
+                <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">
+                  {{file.title}}
+                </td>
+                <td class="p-2">
+                  <a class="text-primary font-medium" target="_blank" :href="file.fileUrl">
+                    <i class="far fa-file-alt"></i> Ver documento
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        <!-- </template> -->
       </section>
     </div>
   </main>
@@ -186,18 +189,23 @@ export default {
       ownProp:false,
       info: [],
       selectedCenter: { lat: 0, lng:0 },
-      selectedZoom: 14,
+      selectedZoom: 16,
       idPropiedad: '',
       showInfoVendedor: false,
       propsInteres: [],
       dataVendedor: [],
-      loading: true
+      loading: true,
+      fotoGrande: '',
+      mostrarDocs: false
     };
   },
   filters: {
-    precio: function(value){
-      let precioFormateado = new Intl.NumberFormat().format(value)
-      return precioFormateado + "₡"
+    numberFormat: function(value){
+      if(value) 
+      {
+        let val = (value/1).toFixed(0).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      }
     }
   },
   created () {
@@ -210,6 +218,8 @@ export default {
       .then(docProp=> {
         self.info = docProp.data()
         self.selectedCenter = { lat: docProp.data().s2_lat, lng: docProp.data().s2_lng };
+        self.fotoGrande = self.info.s8_pictures[0].fileUrl;
+        self.mostrarDocs = self.info.s7_files.length
       }).catch(e=>console.error(e))
 
     // Capturar datos usuario
@@ -232,7 +242,7 @@ export default {
                 db.collection("users")
                   .doc(self.info.uid)
                   .get()
-                  .then(x=>self.dataVendedor=x.data())                  
+                  .then(x=>self.dataVendedor=x.data())
             }).catch(e=>console.error(e))
         }else{
             self.datosUser = ""
@@ -241,7 +251,8 @@ export default {
   },
 
   mounted() {
-    this.loading = false
+    this.loading = false;
+    this.showPhoto()
   },
 
   methods:{
@@ -251,6 +262,10 @@ export default {
       }else if(this.info.status==="inactive"){
         this.activatePropFirebase("complete")
       }
+    },
+
+    showPhoto(data) {
+      this.fotoGrande = data
     },
     
     activatePropFirebase(newStatus){
@@ -276,6 +291,7 @@ export default {
         }
       })
     },
+
     datosVendedor() {
       if(this.datosUser){
         this.infoVendedor = !this.infoVendedor
