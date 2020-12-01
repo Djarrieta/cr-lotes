@@ -90,7 +90,7 @@
               :options="infoOptions"
               :position="infoWindowPos"
               :opened="infoWinOpen"
-              @closeclick="infoWinOpen=false"
+              @closeclick="infoWinOpen=false; selectedMarker=''"
           >
               <div v-html="infoContent"></div>
           </gmapInfoWindow>    
@@ -101,7 +101,7 @@
       <div class="w-full sm:w-1/3 lg:w-1/2 h-full overflow-y-scroll text-center">
         <ul v-if="!loading" class="grid grid-cols-1  lg:grid-cols-2 xl:gap-4 gap-2 justify-items-stretch">
             <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
-                <Card :prop="prop"></Card>
+                <Card :prop="prop"  :class="selectedMarker == prop.propId ? 'bg-primary' : 'none'"></Card>
             </li>
         </ul>
         <!-- loading -->
@@ -161,6 +161,7 @@ export default {
             height: -35
           }
         },
+        selectedMarker:"",
 
         showSeeMore:true,
         loading:true,
@@ -202,6 +203,7 @@ export default {
   },
   methods:{
     toggleInfoWindow: function (marker, idx) {
+      this.selectedMarker=marker.propId
       this.flagSearch=false
       this.infoWindowPos = {
           lat: marker.s2_lat,
