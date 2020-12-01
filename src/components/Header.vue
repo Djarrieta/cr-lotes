@@ -1,11 +1,11 @@
 <template>
-    <nav class="bg-primary">
+    <nav class="bg-white shadow-xs">
         <div class="container m-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex items-center justify-between h-16">
                 <!-- left menu -->
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- small logo -->
-                    <router-link to="/" class="block lg:hidden text-gray-200 text-2xl font-bold mr-2">
+                    <router-link to="/" class="block lg:hidden text-primary text-2xl font-bold mr-2">
                         CR
                     </router-link>
 
@@ -25,20 +25,20 @@
                 <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex-shrink-0">
                         <!-- small logo -->
-                        <router-link to="/" class="hidden sm:block lg:hidden h-8 w-auto text-secundary text-2xl  font-bold">
+                        <router-link to="/" class="hidden sm:block lg:hidden h-8 w-auto text-primary text-2xl  font-bold">
                             CR
                         </router-link>
 
                         <!-- big logo -->
-                        <router-link to="/" class="hidden lg:block h-8 w-auto text-blue-50 text-2xl font-bold text-gray-200 uppercase">
+                        <router-link to="/" class="hidden lg:block h-8 w-auto text-blue-50 text-2xl font-bold text-primary uppercase">
                             CR-Lotes
                         </router-link>
                     </div>
                     <!-- Left menu visible on md and bigger-->
                     <div v-if="!currentUser" class="hidden sm:block sm:ml-6">
                         <div class="flex">
-                            <router-link to="/login" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Ingresar</router-link>
-                            <router-link to="/signup" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Registrarse</router-link>
+                            <router-link to="/login" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Ingresar</router-link>
+                            <router-link to="/signup" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Registrarse</router-link>
                         </div>
                     </div>
                 </div>

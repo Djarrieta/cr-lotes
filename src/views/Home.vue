@@ -1,112 +1,121 @@
 <template>
-  <div class="container mx-auto flex flex-col">
-    <div class="grid sm:grid-cols-2 w-full h-full bg-gray-200 rounded-lg shadow-inner p-2 my-4">
-        <div class="flex flex-col p-4">
-            <!-- provincias -->
-            <div class="my-1">
-                <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Provincia</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded">
-                    <select 
-                        id="selectPrv"
-                        class=" focus:outline-none w-full bg-gray-200"
-                        v-model="s2_idPrvSelected"
-                        @click="SelectPrv">
-                        <option disabled value="0"
-                        class="">Selecciona</option>
 
-                        <option v-for="p in prvs"
-                            :key="p.id"
-                            :value="{id:p.id,
-                            pos:p.coordenadas}">{{ p.provincia }}</option>
-                    </select>
-                </div>
-            </div>
-            <!-- cantones -->
-            <div class="my-1">
-                <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Cantón</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded">
-                    <select 
-                        id="selectCtn"
-                        class=" focus:outline-none w-full bg-gray-200"
-                        v-model="s2_idCtnSelected"
-                        @click="SelectCtn">
-                        <option disabled value="0"
-                        class="">Selecciona</option>
-                        <option v-for="p in ctns"
-                            :key="p.id"
-                            :value="{id:p.id,
-                            pos:p.coordenadas}">{{ p.canton }}</option>
-                    </select>
-                </div>
-            </div>
-            <!-- distritos -->
-            <div class="my-1">
-                <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Distrito</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded">
-                    <select 
-                        id="selectDtt"
-                        class=" focus:outline-none w-full bg-gray-200"
-                        v-model="s2_idDttSelected">
-                        <option disabled value="0"
-                        class="">Selecciona</option>
-                        <option v-for="p in dtts"
-                            :key="p.id"
-                            :value="{id:p.id,
-                            pos:p.coordenadas}">{{ p.distrito }}</option>
-                    </select>
-                </div>
+  <div class="w-full sm:h-screen">
+    <!-- filtros -->
+    <div class="w-full bg-gray-200 rounded shadow-inner py-2 sm:flex sm:items-center">
+        <!-- provincias -->
+        <div class="my-1 sm:w-1/4">
+            <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Provincia</label>
+            <div class="border  border-gray-300 py-2 px-1 rounded">
+                <select 
+                    id="selectPrv"
+                    class=" focus:outline-none w-full bg-gray-200"
+                    v-model="s2_idPrvSelected"
+                    @change="SelectPrv">
+                    <option disabled value="0"
+                    class="">Selecciona</option>
+
+                    <option v-for="p in prvs"
+                        :key="p.id"
+                        :value="{id:p.id,
+                        pos:p.coordenadas}">{{ p.provincia }}</option>
+                </select>
             </div>
         </div>
-        <div class="py-4">
-          <GmapMap
-              class="w-full h-64 sm:h-full"
-              ref="gmap"
-              :center="center"
-              :zoom="zoom"
-              
-              map-type-id="roadmap"
-              :options="{
-                  mapTypeControl: false,
-                  streetViewControl: false,
-                  rotateControl: false,
-                }">
-              <GmapMarker
-                  v-for="(p,i) in props"                  
-                  icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FmarkerMap.png?alt=media&token=85c32ae4-bb15-46b3-915e-fe55c5e2835d"
-                  :key=i
-                  :position="{lat:p.s2_lat,lng:p.s2_lng}"
-                  :clickable="true"
-                  :draggable="false"
-                  @click="toggleInfoWindow(p, i)"
-              /> 
-              <gmapInfoWindow 
-                  :options="infoOptions"
-                  :position="infoWindowPos"
-                  :opened="infoWinOpen"
-                  @closeclick="infoWinOpen=false"
-              >
-                  <div v-html="infoContent"></div>
-              </gmapInfoWindow>    
-          </GmapMap>
+        <!-- cantones -->
+        <div class="my-1 sm:w-1/4">
+            <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Cantón</label>
+            <div class="border  border-gray-300 py-2 px-1 rounded">
+                <select 
+                    id="selectCtn"
+                    class=" focus:outline-none w-full bg-gray-200"
+                    v-model="s2_idCtnSelected"
+                    @change="SelectCtn">
+                    <option disabled value="0"
+                    class="">Selecciona</option>
+                    <option v-for="p in ctns"
+                        :key="p.id"
+                        :value="{id:p.id,
+                        pos:p.coordenadas}">{{ p.canton }}</option>
+                </select>
+            </div>
+        </div>
+        <!-- distritos -->
+        <div class="my-1 sm:w-1/4">
+            <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Distrito</label>
+            <div class="border  border-gray-300 py-2 px-1 rounded">
+                <select 
+                    @change="SelectDtt"
+                    id="selectDtt"
+                    class=" focus:outline-none w-full bg-gray-200"
+                    v-model="s2_idDttSelected">
+                    <option disabled value="0"
+                    class="">Selecciona</option>
+                    <option v-for="p in dtts"
+                        :key="p.id"
+                        :value="{id:p.id,
+                        pos:p.coordenadas}">{{ p.distrito }}</option>
+                </select>
+            </div>
+        </div>
+        <!-- Boton Buscar -->
+        <div class="w-full px-2 my-2 sm:w-1/4 ">
+          <button @click="search" class="w-full border border-gray-600 rounded-full py-1 bg-gray-300 hover:bg-gray-400 focus:outline-none sm:py-4">Buscar</button>
         </div>
     </div>
-    <!-- Cards -->
-    <ul v-if="!loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-stretch">
-        <li class="w-full" v-for="(prop, n) in props" :key="n">
-            <Card :prop="prop"></Card>
-        </li>
-    </ul>
-    <!-- loading -->
-    <div v-if="loading" class="flex justify-center items-center opacity-25">
-      <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+    <div class="w-full sm:flex sm:h-full ms:mb-16 overflow-hidden ">
+      <!-- Mapa -->
+      <GmapMap
+          class="w-full sm:w-2/3 lg:w-1/2 h-64 sm:h-full"
+          ref="mapRef"
+          :center="center"
+          :zoom="zoom"
+          
+          map-type-id="roadmap"
+          :options="{
+              mapTypeControl: false,
+              streetViewControl: false,
+              rotateControl: false,
+            }">
+          <GmapMarker
+              v-for="(p,i) in props"                  
+              icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
+              :key=i
+              :position="{lat:p.s2_lat,lng:p.s2_lng}"
+              :clickable="true"
+              :draggable="false"
+              @click="toggleInfoWindow(p, i)"
+          /> 
+          <gmapInfoWindow 
+              :options="infoOptions"
+              :position="infoWindowPos"
+              :opened="infoWinOpen"
+              @closeclick="infoWinOpen=false"
+          >
+              <div v-html="infoContent"></div>
+          </gmapInfoWindow>    
+      </GmapMap>
+
+      <!-- Cards -->
+      <div class="w-full sm:w-1/3 lg:w-1/2 h-full overflow-y-scroll">
+        <ul v-if="!loading" class="grid grid-cols-1  lg:grid-cols-3 gap-2 justify-items-stretch">
+            <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
+                <Card :prop="prop"></Card>
+            </li>
+        </ul>
+        <!-- loading -->
+        <div v-if="loading" class="flex justify-center items-center opacity-25">
+          <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+        </div>
+        <!-- Alerta sin resultados -->
+        <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600 text-center">No hay propiedades en venta en esta área. 
+        Selecciona otra región con los desplegables o mueve el mapa.</div>
+        <!-- see more -->
+        <button v-if="props.length && showSeeMore"  @click="searchMore" class="w-full p-2 focus:outline-none">
+          Ver más
+        </button>
+      </div>
     </div>
-    <!-- Alerta sin resultados -->
-    <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600 text-center">No hay propiedades en venta en esta área. 
-    Selecciona otra región con los desplegables o mueve el mapa.</div>
-    <!-- see more -->
-    <button v-if="props.length && showSeeMore"  @click="searchMore" class="w-full p-2 focus:outline-none">
-      Ver más
-    </button>
   </div>
 </template>
 
@@ -123,8 +132,8 @@ export default {
   data(){
     return{
         props: [],
-        inicialLoad:3,
-        loadMore:3,
+        inicialLoad:6,
+        loadMore:6,
 
         center:{lat: 10,lng: -83},
         zoom:7,
@@ -154,8 +163,12 @@ export default {
 
         showSeeMore:true,
         loading:true,
-        flagSearch:true,
     }
+  },
+  mounted(){
+    setTimeout(() => {
+      this.search()
+    }, 1000); 
   },
   watch:{
         s2_idPrvSelected(newId){
@@ -185,34 +198,8 @@ export default {
             const e=document.getElementById("selectDtt")
             this.s2_nameDttSelected= e.options[e.selectedIndex].text
         },
-        flagSearch(){
-          if(!this.flagSearch){
-            setTimeout(() => {
-              this.flagSearch=true
-            }, 2500);
-          }
-        }
   },
-  mounted(){
-    //Escucha cuando cambia el zoom, pero al drag cambia muy rápido, así es que solo ejecuta search a lo sumo cada 1.2s 
-    const googleMap=this.$refs.gmap
-    let doit=true
-    googleMap.$on('bounds_changed', () => {
-      if(doit){
-        doit=false  
-        setTimeout(() => {
-          //se muestra primero el componente de cargando
-          if(this.flagSearch){
-            this.loading=true
-            this.props=[]
-            this.infoWinOpen = false;
-            this.search()
-          }
-          doit=true
-        }, 2000);
-      }
-    })
-  },
+
   methods:{
     toggleInfoWindow: function (marker, idx) {
       this.flagSearch=false
@@ -233,29 +220,41 @@ export default {
         this.currentMidx = idx;
       }
     },
-
     getInfoWindowContent: function (marker) {
       return (`<div class="card">${marker.s1_title}</div>`);
     },
     SelectPrv(){
-        this.loading=true
+      this.loading=true
 
-        this.props= []
-        this.ctns=[]
-        this.dtts=[]
-        this.ctns=cantones.filter(c=>c.provincia_id==this.s2_idPrvSelected.id)
+      this.props= []
+      this.ctns=[]
+      this.dtts=[]
+      this.ctns=cantones.filter(c=>c.provincia_id==this.s2_idPrvSelected.id)
+      setTimeout(() => {
+        this.search()
+      }, 1000); 
     },
     SelectCtn(){
-        this.loading=true
-        
-        this.props= []
-        this.dtts=[]
-        this.dtts=distritos.filter(c=>c.canton_id==this.s2_idCtnSelected.id)
+      this.loading=true
+      
+      this.props= []
+      this.dtts=[]
+      this.dtts=distritos.filter(c=>c.canton_id==this.s2_idCtnSelected.id)
+
+      setTimeout(() => {
+        this.search()
+      }, 1000); 
+    },
+    SelectDtt(){
+      setTimeout(() => {
+        this.search()
+      }, 1000); 
     },
     search(){
       this.showSeeMore=true
+      this.loading=true
       //establece los límites del mapa
-      this.$refs.gmap.$mapPromise
+      this.$refs.mapRef.$mapPromise
       .then(map=>{
           let counter=0
           const minLat=map.getBounds().Wa.i
@@ -288,8 +287,9 @@ export default {
           })
     },
     searchMore(){
+      this.infoWinOpen = false;
       const lastCod= this.props[this.props.length-1].propId
-      this.$refs.gmap.$mapPromise
+      this.$refs.mapRef.$mapPromise
       .then(map=>{
           let counter=0
           this.showSeeMore=false
