@@ -96,22 +96,23 @@
           </gmapInfoWindow>    
       </GmapMap>
 
+
       <!-- Cards -->
-      <div class="w-full sm:w-1/3 lg:w-1/2 h-full overflow-y-scroll">
-        <ul v-if="!loading" class="grid grid-cols-1  lg:grid-cols-3 gap-2 justify-items-stretch">
+      <div class="w-full sm:w-1/3 lg:w-1/2 h-full overflow-y-scroll text-center">
+        <ul v-if="!loading" class="grid grid-cols-1  lg:grid-cols-2 xl:gap-4 gap-2 justify-items-stretch">
             <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
                 <Card :prop="prop"></Card>
             </li>
         </ul>
         <!-- loading -->
-        <div v-if="loading" class="flex justify-center items-center opacity-25">
+        <div v-if="loading" class="flex justify-center items-center opacity-25 mt-4">
           <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
         </div>
         <!-- Alerta sin resultados -->
         <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600 text-center">No hay propiedades en venta en esta área. 
         Selecciona otra región con los desplegables o mueve el mapa.</div>
         <!-- see more -->
-        <button v-if="props.length && showSeeMore"  @click="searchMore" class="w-full p-2 focus:outline-none">
+        <button v-if="props.length && showSeeMore"  @click="searchMore" class="w-3/4 p-2 focus:outline-none bg-gray-200 shadow-inner my-2 mx-auto rounded-full">
           Ver más
         </button>
       </div>
@@ -199,7 +200,6 @@ export default {
             this.s2_nameDttSelected= e.options[e.selectedIndex].text
         },
   },
-
   methods:{
     toggleInfoWindow: function (marker, idx) {
       this.flagSearch=false
@@ -221,7 +221,23 @@ export default {
       }
     },
     getInfoWindowContent: function (marker) {
-      return (`<div class="card">${marker.s1_title}</div>`);
+      let precioFormateado = new Intl.NumberFormat().format(marker.s1_price)
+      precioFormateado+= "₡"
+
+      return (
+        `<div class="text-center">
+          <img class="w-32" src="${marker.s8_pictures[0].fileUrl}">
+          <div class="flex justify-between items-center mt-2">
+            <p class="font-lg text-md text-orange-600 mb-2">
+                    ${ precioFormateado }
+            </p>
+
+            <span  class="bg-blue-800 rounded-full px-2 text-xs text-gray-100" @click=selectPin(${marker.propId}>
+              Detalles</span>
+          </div>
+        </div>
+        `
+      );
     },
     SelectPrv(){
       this.loading=true
