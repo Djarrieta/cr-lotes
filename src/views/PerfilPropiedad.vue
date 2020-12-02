@@ -149,7 +149,7 @@
                   <div 
                     v-for="(cuenta, indexCuenta) in info.s6_assets" 
                     :key="indexCuenta"
-                    class="bg-gray-500 rounded-lg sm:rounded-full mb-1 mx-1 px-1 sm:px-2 text-gray-100 text-center" >
+                    class=" text-xs sm:text-base bg-gray-500  shadow-xs rounded-lg sm:rounded-full mb-1 mx-1 px-1 sm:px-2 text-gray-100 text-center" >
                       {{ cuenta }}</div>
               </td>
             </tr>
