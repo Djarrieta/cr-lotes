@@ -33,7 +33,7 @@
                 </p>
                 <div class="mt-5 lg:mt-0">
                     <router-link :to="'/perfil-propiedad/'+prop.propId" class="px-4 py-2 rounded-md mr-5 border-2 border-primary text-primary h-6">Detalles</router-link>
-                    <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+prop.propId" class="text-gray-900 hover:text-primary" target="_blank" title="Compartir en WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+prop.propId" class="text-gray-900 hover:text-primary" target="_blank" title="Compartir en WhatsApp"><i class="fas fa-share-alt"></i></a>
                 </div>
             </div>
         </div>
