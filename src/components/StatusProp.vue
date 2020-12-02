@@ -1,7 +1,7 @@
 <template>
   <section>
-      <button @click="desactivar" v-if="status != 'desactivar'">Desactivar</button>
-      <button @click="activar" v-else>Volver a activar</button>
+      <i @click="desactivar" v-if="status != 'desactivar'" title="Desactivar" class="fas fa-ban cursor-pointer text-green-500"></i>
+      <i @click="activar" v-else title="Volver a activar" class="fas fa-ban cursor-pointer text-red-500"></i>
   </section>
 </template>
 
