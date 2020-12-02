@@ -62,7 +62,7 @@
         </div>
         <!-- Boton Buscar -->
         <div class="w-full px-2 mt-5 md:w-1/4 ">
-          <button @click="search" class="w-full border border-primary border-gray-300 rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary"><i class="fas fa-sync text-primary"></i> Refrescar lista</button>
+          <button @click="search" class="w-full border border-primary rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary"><i class="fas fa-sync text-primary"></i> Refrescar lista</button>
         </div>
     </div>
     <div class="w-full md:flex md:h-full ms:mb-16 overflow-hidden ">

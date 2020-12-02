@@ -9,9 +9,9 @@
             <!-- Título -->
             <div class="my-1">
                 <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Título</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded">
+                <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
                     <input 
-                        class="focus:outline-none w-full bg-gray-100 px-2"
+                        class="focus:outline-none w-full bg-white px-2"
                         v-model="s1_title"
                         type="text"
                         placeholder="TÍTULO">
@@ -20,10 +20,10 @@
             </div>
             <div class="my-1">
                 <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Descripción</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded">
+                <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
                     <textarea
                     v-model="s1_description"
-                    class="rounded-lg w-full h-32 bg-gray-100 focus:outline-none"
+                    class="rounded-lg w-full h-32 bg-white focus:outline-none"
                     style="resize:none"
                     placeholder="Descripción corta"/>
 
@@ -32,10 +32,10 @@
             <!-- Area -->
             <div class="my-1">
                 <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Area</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded">
+                <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
                     <div class="flex">
                         <input 
-                            class="focus:outline-none w-full bg-gray-100 px-2"
+                            class="focus:outline-none w-full bg-white px-2"
                             v-model="s1_area"
                             type="number">
                         <select 
@@ -57,9 +57,9 @@
             <!-- Precio -->
             <div class="my-1">
                 <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Precio</label>
-                <div class="border  border-gray-300  px-1 rounded">
+                <div class="border  border-gray-300  px-1 rounded bg-white">
                     <input 
-                        class="focus:outline-none w-full bg-gray-100 px-2"
+                        class="focus:outline-none w-full bg-white px-2"
                         v-model="s1_price"
                         type="number">
                     <span class=" text-xs text-gray-400">{{ s1_price | numberFormat }} ₡ </span>

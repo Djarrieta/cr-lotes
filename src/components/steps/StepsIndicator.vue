@@ -7,7 +7,7 @@
       <div class="relative mb-2">
         <!-- circle -->
         <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center" 
-        :class="indicator>=1 ? 'bg-green-400' : 'none'">
+        :class="indicator>=1 ? 'bg-primary' : 'none'">
           <span class="text-center text-gray-600 w-full p-1">
             <!-- icon -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -25,12 +25,12 @@
           <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
             <!-- bar -->
             <div class="w-full bg-white py-1 rounded" 
-            :class="indicator>=2 ? 'bg-green-400' : 'none'"></div>
+            :class="indicator>=2 ? 'bg-primary' : 'none'"></div>
           </div>
         </div>
         <!-- circle -->
         <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center" 
-        :class="indicator>=2 ? 'bg-green-400' : 'none'">
+        :class="indicator>=2 ? 'bg-primary' : 'none'">
           <span class="text-center text-gray-600 w-full p-1">
             <!-- icon -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -48,12 +48,12 @@
           <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
             <!-- bar -->
             <div class="w-full bg-white py-1 rounded" 
-            :class="indicator>=3 ? 'bg-green-400' : 'none'"></div>
+            :class="indicator>=3 ? 'bg-primary' : 'none'"></div>
           </div>
         </div>
         <!-- circle -->
         <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center" 
-        :class="indicator>=3 ? 'bg-green-400' : 'none'">
+        :class="indicator>=3 ? 'bg-primary' : 'none'">
           <span class="text-center text-gray-600 w-full p-1">
             <!-- icon -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -70,12 +70,12 @@
           <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
             <!-- bar -->
             <div class="w-full bg-white py-1 rounded" 
-            :class="indicator>=4 ? 'bg-green-400' : 'none'"></div>
+            :class="indicator>=4 ? 'bg-primary' : 'none'"></div>
           </div>
         </div>
         <!-- circle -->
         <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center" 
-        :class="indicator>=4 ? 'bg-green-400' : 'none'">
+        :class="indicator>=4 ? 'bg-primary' : 'none'">
           <span class="text-center text-gray-600 w-full p-1">
             <!-- icon -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,12 +92,12 @@
           <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
             <!-- bar -->
             <div class="w-full bg-white py-1 rounded" 
-            :class="indicator>=5 ? 'bg-green-400' : 'none'"></div>
+            :class="indicator>=5 ? 'bg-primary' : 'none'"></div>
           </div>
         </div>
         <!-- circle -->
         <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center" 
-        :class="indicator>=5 ? 'bg-green-400' : 'none'">
+        :class="indicator>=5 ? 'bg-primary' : 'none'">
           <span class="text-center text-gray-600 w-full p-1">
             <!-- icon -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -114,12 +114,12 @@
           <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
             <!-- bar -->
             <div class="w-full bg-white py-1 rounded" 
-            :class="indicator>=6 ? 'bg-green-400' : 'none'"></div>
+            :class="indicator>=6 ? 'bg-primary' : 'none'"></div>
           </div>
         </div>
         <!-- circle -->
         <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center" 
-        :class="indicator>=6 ? 'bg-green-400' : 'none'">
+        :class="indicator>=6 ? 'bg-primary' : 'none'">
           <span class="text-center text-gray-600 w-full p-1">
             <!-- icon -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,12 +136,12 @@
           <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
             <!-- bar -->
             <div class="w-full bg-white py-1 rounded" 
-            :class="indicator>=7 ? 'bg-green-400' : 'none'"></div>
+            :class="indicator>=7 ? 'bg-primary' : 'none'"></div>
           </div>
         </div>
         <!-- circle -->
         <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center" 
-        :class="indicator>=7 ? 'bg-green-400' : 'none'">
+        :class="indicator>=7 ? 'bg-primary' : 'none'">
           <span class="text-center text-gray-600 w-full p-1">
             <!-- icon -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -158,12 +158,12 @@
           <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
             <!-- bar -->
             <div class="w-full bg-white py-1 rounded" 
-            :class="indicator>=8 ? 'bg-green-400' : 'none'"></div>
+            :class="indicator>=8 ? 'bg-primary' : 'none'"></div>
           </div>
         </div>
         <!-- circle -->
         <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center" 
-        :class="indicator>=8 ? 'bg-green-400' : 'none'">
+        :class="indicator>=8 ? 'bg-primary' : 'none'">
           <span class="text-center text-gray-600 w-full p-1">
             <!-- icon -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

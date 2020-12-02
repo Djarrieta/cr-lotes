@@ -4,7 +4,7 @@
     <p>¿Tu terreno está en su mayoría por encima, por debajo o al nivel de la calle?</p>
     <Buttons @next="next" @prev="prev"/>
     <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
-    <span> {{ s5_nivel }} </span>
+    <span class="pl-2 text-lg text-primary"> Has seleccionado Lote con {{ s5_nivel }} </span>
     <div class="grid grid-cols-1 md:grid-cols-2 ">
         <div v-for="(i,n) in info" :key="n" class="p-4 m-2  rounded-lg shadow" :class="i.value==s5_nivel ? ' bg-gray-600' : 'bg-white'">
             <label >
@@ -24,7 +24,7 @@ export default {
     components:{Buttons},
     data(){
         return{
-            s5_nivel:null,
+            s5_nivel:"Nivel por encima de la calle",
             info:[
                 {
                     url:"https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fnivel%2Fnivel_%2B1.jpeg?alt=media&token=acfa1ed1-c1e1-437a-aa55-913ebaa034a9",

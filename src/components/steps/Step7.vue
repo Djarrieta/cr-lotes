@@ -25,7 +25,7 @@
             <a href="#" 
                 class="bg-red-400 text-xs text-gray-100 rounded-full px-2"
                 v-if="i.fileUrl"
-                @click="deleteFile(n)">x</a>
+                @click="deleteFile(n)"><i class="fas fa-trash py-2"></i></a>
             <input 
                 v-if="!i.fileUrl"
                 type='file' 

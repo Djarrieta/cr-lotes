@@ -6,7 +6,7 @@
     </p>
     <Buttons @next="next" @prev="prev"/>
     <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
-    <span> {{ s4_inclination }} </span>
+    <span class="pl-2 text-lg text-primary"> Has seleccionado {{ s4_inclination }} </span>
     <div class="grid grid-cols-2 md:grid-cols-3">
         <div v-for="(i,n) in info" :key="n" class="p-4 m-2  rounded-lg shadow" :class="i.value==s4_inclination ? ' bg-gray-600' : 'bg-white'">
             <label >
@@ -26,7 +26,7 @@ export default {
     components:{Buttons},
     data(){
         return{
-            s4_inclination:"",
+            s4_inclination:"Inclinación hasta 5 grados",
             info:[
                 {
                     url:"https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_5.jpeg?alt=media&token=77d52d10-1916-459b-aa91-11ddf01a84af",

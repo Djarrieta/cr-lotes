@@ -8,10 +8,10 @@
             <!-- provincias -->
             <div class="my-1">
                 <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Provincia</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded">
+                <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
                     <select 
                         id="selectPrv"
-                        class=" focus:outline-none w-full bg-gray-100"
+                        class=" focus:outline-none w-full bg-white"
                         v-model="s2_idPrvSelected"
                         @click="SelectPrv">
                         <option disabled value="0"
@@ -27,10 +27,10 @@
             <!-- cantones -->
             <div class="my-1">
                 <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Cantón</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded">
+                <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
                     <select 
                         id="selectCtn"
-                        class=" focus:outline-none w-full bg-gray-100"
+                        class=" focus:outline-none w-full  bg-white"
                         v-model="s2_idCtnSelected"
                         @click="SelectCtn">
                         <option disabled value="0"
@@ -45,10 +45,10 @@
             <!-- distritos -->
             <div class="my-1">
                 <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Distrito</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded">
+                <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
                     <select 
                         id="selectDtt"
-                        class=" focus:outline-none w-full bg-gray-100"
+                        class=" focus:outline-none w-full  bg-white"
                         v-model="s2_idDttSelected">
                         <option disabled value="0"
                         class="">Selecciona</option>
@@ -62,9 +62,9 @@
             <!-- Dirección -->
             <div class="my-1">
                 <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Dirección</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded">
+                <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
                     <input 
-                        class="focus:outline-none w-full bg-gray-100 px-2"
+                        class="focus:outline-none w-full  bg-white px-2"
                         v-model="s2_address"
                         type="text"
                         placeholder="Cl 12#34-56">
@@ -73,7 +73,7 @@
             <!-- Coordenadas -->
             <div class="my-1">
                 <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Coordenadas</label>
-                <div class="border  border-gray-300 py-2 px-1 rounded flex flex-col">
+                <div class="border  border-gray-300 py-2 px-1 rounded flex flex-col  bg-white">
                     <span class="text-gray-500 pl-2">Latitud {{center.lat}} </span>
                     <span class="text-gray-500 pl-2">Longitud {{center.lng}}</span>
                 </div>

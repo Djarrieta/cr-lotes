@@ -11,8 +11,9 @@
             @click="addAsset(i)"
             class="rounded-full px-2 py-1 mx-1 my-2 focus:outline-none"
             :class="s6_assets.includes(i) ? 'bg-gray-600 ' : 'bg-gray-300 '">
-            <span v-if="!s6_assets.includes(i)" class="pr-1 font-bold text-lg">+</span>
-            <span v-if="s6_assets.includes(i)" class="pr-1 font-bold text-lg  text-gray-100">x</span>
+            <i v-if="!s6_assets.includes(i)" class="fas fa-plus-circle mr-1"></i>
+            <i  v-if="s6_assets.includes(i)" class="fas fa-minus-circle mr-1 text-gray-100"></i>
+            
             <span :class="s6_assets.includes(i) ? ' text-gray-100 ' : 'none'">{{i}}</span>
         </button>
 
