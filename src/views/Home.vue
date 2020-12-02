@@ -62,42 +62,45 @@
         </div>
         <!-- Boton Buscar -->
         <div class="w-full px-2 mt-5 md:w-1/4 ">
-          <button @click="search" class="w-full border border-primary rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary"><i class="fas fa-sync text-primary"></i> Refrescar lista</button>
+          <button @click="search" class="w-full border border-primary rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary"><i class="fas fa-sync text-primary mr-1"></i> Refrescar lista</button>
         </div>
     </div>
     <div class="w-full md:flex md:h-full ms:mb-16 overflow-hidden ">
       <!-- Mapa -->
-      <GmapMap
-          class="w-full md:w-1/2 lg:w-1/2 h-64 md:h-auto"
-          ref="mapRef"
-          :center="center"
-          :zoom="zoom"
-          
-          map-type-id="roadmap"
-          :options="{
-              mapTypeControl: false,
-              streetViewControl: false,
-              rotateControl: false,
-            }">
-          <GmapMarker
-              v-for="(p,i) in props"                  
-              icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
-              :key=i
-              :position="{lat:p.s2_lat,lng:p.s2_lng}"
-              :clickable="true"
-              :draggable="false"
-              @click="toggleInfoWindow(p, i)"
-          /> 
-          <gmapInfoWindow 
-              :options="infoOptions"
-              :position="infoWindowPos"
-              :opened="infoWinOpen"
-              @closeclick="infoWinOpen=false; selectedMarker=''"
-          >
-              <div v-html="infoContent"></div>
-          </gmapInfoWindow>    
-      </GmapMap>
-
+      <div class="relative w-full md:w-1/2 lg:w-1/2 h-64 md:h-auto">
+        <button @click="search" class="hidden md:block absolute bottom-0 z-10 bg-white m-2 rounded-lg border border-primary px-4 py-1 text-primary font-bold"><i class="fas fa-sync text-primary mr-1"></i>Buscar en esta área</button>
+        <GmapMap
+            class="w-full h-full"
+            ref="mapRef"
+            :center="center"
+            :zoom="zoom"
+            
+            map-type-id="roadmap"
+            :options="{
+                mapTypeControl: false,
+                streetViewControl: false,
+                rotateControl: false,
+              }">
+              
+            <GmapMarker
+                v-for="(p,i) in props"                  
+                icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
+                :key=i
+                :position="{lat:p.s2_lat,lng:p.s2_lng}"
+                :clickable="true"
+                :draggable="false"
+                @click="toggleInfoWindow(p, i)"
+            /> 
+            <gmapInfoWindow 
+                :options="infoOptions"
+                :position="infoWindowPos"
+                :opened="infoWinOpen"
+                @closeclick="infoWinOpen=false; selectedMarker=''"
+            >
+                <div v-html="infoContent"></div>
+            </gmapInfoWindow>    
+        </GmapMap>
+      </div>
 
       <!-- Cards -->
       <div class="w-full md:w-1/2 lg:w-1/2 h-full overflow-y-scroll text-center">

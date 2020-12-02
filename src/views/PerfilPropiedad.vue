@@ -209,6 +209,7 @@ import Subastar from "@/components/Subastar"
 export default {
     name: "PerfilPropiedad",
     components: { Favorito, StatusProp, StatusVendido, Subastar },
+    props:["infoConfirmacion"],
     data() {
     return {
       datosUser: "",
@@ -237,17 +238,25 @@ export default {
 
   created () {
     let self = this
-    //datos propiedad
-    this.idPropiedad = this.$route.params.id;
-    let dPropiedad = db.collection("props").doc(this.idPropiedad);
-    dPropiedad
-      .get()
-      .then(docProp=> {
-        self.info = docProp.data()
-        self.selectedCenter = { lat: docProp.data().s2_lat, lng: docProp.data().s2_lng };
-        self.fotoGrande = self.info.s8_pictures[0].fileUrl;
-        self.mostrarDocs = self.info.s7_files.length
-      }).catch(e=>console.error(e))
+    //si este componente está metido dentro de confirmación de publicación cargan datos como props si no las busca en con el id
+    if(this.infoConfirmacion){
+      this.info = this.infoConfirmacion
+      this.selectedCenter = { lat: this.info.s2_lat, lng: this.info.s2_lng };
+      this.fotoGrande = this.info.s8_pictures[0].fileUrl;
+      this.mostrarDocs = this.info.s7_files.length
+    }else{
+      //datos propiedad
+      this.idPropiedad = this.$route.params.id;
+      let dPropiedad = db.collection("props").doc(this.idPropiedad);
+      dPropiedad
+        .get()
+        .then(docProp=> {
+          self.info = docProp.data()
+          self.selectedCenter = { lat: docProp.data().s2_lat, lng: docProp.data().s2_lng };
+          self.fotoGrande = self.info.s8_pictures[0].fileUrl;
+          self.mostrarDocs = self.info.s7_files.length
+        }).catch(e=>console.error(e))
+    }
 
     // Capturar datos usuario
     firebase.auth().onAuthStateChanged( user => {
