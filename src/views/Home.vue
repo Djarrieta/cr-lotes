@@ -236,8 +236,8 @@ export default {
                     ${ precioFormateado }
             </p>
 
-            <span  class="bg-blue-800 rounded-full px-2 text-xs text-gray-100" @click=selectPin(${marker.propId}>
-              Detalles</span>
+            <a  href="/perfil-propiedad/${marker.propId}" class="bg-blue-800 rounded-full px-2 text-xs text-gray-100">
+              Detalles</a>
           </div>
         </div>
         `
