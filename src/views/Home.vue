@@ -111,7 +111,7 @@
         </ul>
         <!-- loading -->
         <div v-if="loading" class="flex justify-center items-center opacity-25 mt-4">
-          <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+          <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
         </div>
         <!-- Alerta sin resultados -->
         <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600 text-center">No hay propiedades en venta en esta área. 

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>Verifica que los datos que quieres guardar están bien y pulsa el botón Guardar</p>
     <Buttons @save="save" @prev="prev" last="true"/>
     <PerfilPropiedad :infoConfirmacion="data"/>
   </div>
