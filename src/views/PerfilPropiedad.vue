@@ -128,7 +128,7 @@
             </tr>
             <tr v-if="info.s1_area" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Área de terreno</td>
-              <td class="p-2">{{info.s1_area}} {{ info.s1_areaUn }}</td>
+              <td class="p-2">{{ info.s1_area | numberFormat }} {{ info.s1_areaUn }}</td>
             </tr>
             <tr v-if="info.s6_assets" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">La propiedad cuenta con:</td>

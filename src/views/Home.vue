@@ -1,34 +1,36 @@
 <template>
 
-  <div class="w-full sm:h-screen">
+  <div class="w-full" id="contenedor">
     <!-- filtros -->
-    <div class="w-full bg-gray-200 rounded shadow-inner py-2 sm:flex sm:items-center">
+    <div class="container mx-auto py-2 md:flex md:items-center">
         <!-- provincias -->
-        <div class="my-1 sm:w-1/4">
-            <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Provincia</label>
-            <div class="border  border-gray-300 py-2 px-1 rounded">
+        <div class="my-1 md:w-1/4">
+            <label class="w-16 pl-1 text-base font-bold">Provincia</label>
+            <div class="px-1">
                 <select 
                     id="selectPrv"
-                    class=" focus:outline-none w-full bg-gray-200"
+                    class="focus:outline-none w-full py-3 border-2"
                     v-model="s2_idPrvSelected"
                     @change="SelectPrv">
                     <option disabled value="0"
                     class="">Selecciona</option>
 
                     <option v-for="p in prvs"
-                        :key="p.id"
-                        :value="{id:p.id,
-                        pos:p.coordenadas}">{{ p.provincia }}</option>
+                      :key="p.id"
+                      :value="{ id: p.id,
+                                pos:  p.coordenadas
+                              }"> {{ p.provincia }}
+                    </option>
                 </select>
             </div>
         </div>
         <!-- cantones -->
-        <div class="my-1 sm:w-1/4">
-            <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Cantón</label>
-            <div class="border  border-gray-300 py-2 px-1 rounded">
+        <div class="my-1 md:w-1/4">
+            <label class="w-16 pl-1 text-base font-bold">Cantón</label>
+            <div class="px-1">
                 <select 
                     id="selectCtn"
-                    class=" focus:outline-none w-full bg-gray-200"
+                    class="focus:outline-none w-full py-3 border-2"
                     v-model="s2_idCtnSelected"
                     @change="SelectCtn">
                     <option disabled value="0"
@@ -41,13 +43,13 @@
             </div>
         </div>
         <!-- distritos -->
-        <div class="my-1 sm:w-1/4">
-            <label class="w-16 ml-2 pl-1 bg-gray-200  text-xs font-bold">Distrito</label>
-            <div class="border  border-gray-300 py-2 px-1 rounded">
+        <div class="my-1 md:w-1/4">
+            <label class="w-16 pl-1 text-base font-bold">Distrito</label>
+            <div class="px-1">
                 <select 
                     @change="SelectDtt"
                     id="selectDtt"
-                    class=" focus:outline-none w-full bg-gray-200"
+                    class="focus:outline-none w-full py-3 border-2"
                     v-model="s2_idDttSelected">
                     <option disabled value="0"
                     class="">Selecciona</option>
@@ -59,14 +61,14 @@
             </div>
         </div>
         <!-- Boton Buscar -->
-        <div class="w-full px-2 my-2 sm:w-1/4 ">
-          <button @click="search" class="w-full border border-gray-600 rounded-full py-1 bg-gray-300 hover:bg-gray-400 focus:outline-none sm:py-4">Buscar</button>
+        <div class="w-full px-2 mt-5 md:w-1/4 ">
+          <button @click="search" class="w-full border border-primary border-gray-300 rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary"><i class="fas fa-sync text-primary"></i> Refrescar lista</button>
         </div>
     </div>
-    <div class="w-full sm:flex sm:h-full ms:mb-16 overflow-hidden ">
+    <div class="w-full md:flex md:h-full ms:mb-16 overflow-hidden ">
       <!-- Mapa -->
       <GmapMap
-          class="w-full sm:w-2/3 lg:w-1/2 h-64 sm:h-full"
+          class="w-full md:w-1/2 lg:w-1/2 h-64 md:h-auto"
           ref="mapRef"
           :center="center"
           :zoom="zoom"
@@ -98,8 +100,8 @@
 
 
       <!-- Cards -->
-      <div class="w-full sm:w-1/3 lg:w-1/2 h-full overflow-y-scroll text-center">
-        <ul v-if="!loading" class="grid grid-cols-1  lg:grid-cols-2 xl:gap-4 gap-2 justify-items-stretch">
+      <div class="w-full md:w-1/2 lg:w-1/2 h-full overflow-y-scroll text-center">
+        <ul v-if="!loading" class="grid grid-cols-1 xl:grid-cols-2 2xl:gap-4 gap-2 gap-y-6 justify-items-stretch">
             <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
                 <Card :prop="prop"  :class="selectedMarker == prop.propId ? 'bg-primary' : 'none'"></Card>
             </li>
@@ -243,7 +245,6 @@ export default {
     },
     SelectPrv(){
       this.loading=true
-
       this.props= []
       this.ctns=[]
       this.dtts=[]
@@ -348,3 +349,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  #contenedor {
+    height: calc(100vh - 10.2rem);
+  }
+</style>

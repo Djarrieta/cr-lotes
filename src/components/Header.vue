@@ -1,12 +1,12 @@
 <template>
     <nav class="bg-white shadow-xs">
-        <div class="container m-auto px-2 sm:px-6 lg:px-8">
+        <div class="container m-auto">
             <div class="relative flex items-center justify-between h-16">
                 <!-- left menu -->
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- small logo -->
                     <router-link to="/" class="block lg:hidden text-primary text-2xl font-bold mr-2">
-                        CR
+                        CRL
                     </router-link>
 
 <!--                     <button @click="showLeftMenu" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false"> -->
@@ -26,11 +26,11 @@
                     <div class="flex-shrink-0">
                         <!-- small logo -->
                         <router-link to="/" class="hidden sm:block lg:hidden h-8 w-auto text-primary text-2xl  font-bold">
-                            CR
+                            CRL
                         </router-link>
 
                         <!-- big logo -->
-                        <router-link to="/" class="hidden lg:block h-8 w-auto text-blue-50 text-2xl font-bold text-primary uppercase">
+                        <router-link to="/" class="hidden lg:block h-8 w-auto text-3xl font-extrabold text-primary uppercase">
                             CR-Lotes
                         </router-link>
                     </div>

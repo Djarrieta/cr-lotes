@@ -3,7 +3,7 @@
       <!-- Foto -->
       <img
             v-if="prop.s8_pictures[0].fileUrl"
-            class="w-full h-48 object-scale-down object-center bg-gray-100"
+            class="w-full h-48 object-cover object-center bg-gray-100"
             :src="prop.s8_pictures[0].fileUrl"
         /> 
         <!-- Detalles -->
@@ -12,28 +12,28 @@
                 <span class="text-white"><i class="fas fa-map-marked-alt text-white"></i> {{ prop.s2_namePrvSelected }} - {{ prop.s2_nameCtnSelected }}</span>
                 <span class="flex">
                     <router-link :to="'/publicar/'+ prop.propId"> <i v-if="prop.uid === idUser.uid" class="fas fa-edit text-gray-900 cursor-pointer mr-2"></i></router-link>
-                    <Favorito v-if="prop.uid != idUser.uid" :propId="prop.propId" /> 
+                    <Favorito v-if="prop.uid != idUser.uid" :propId="prop.propId" title="Favorito" /> 
                 </span>
             </p>
         </div>
-        <div class="px-6 py-5 bg-gray-200">
+        <div class="px-6 py-5 bg-gray-200 text-left">
             <p class="font-bold text-md mb-2 uppercase">
                 {{ prop.s1_title }}
             </p>
             <p class="font-medium text-md text-orange-600 mb-2">
-                {{ prop.s1_price  | precio }}
+                {{ prop.s1_price  | precio }} ₡
             </p>
-            <p class="text-gray-700 text-xs">
+            <p class="text-gray-700 text-base">
 
                 {{ prop.s1_description.substring(0,70)+" ..." }}
             </p>
             <div class="flex justify-between mt-5">
                 <p>
-                    <i class="fas fa-ruler-combined"></i> {{prop.s1_area}} {{prop.s1_areaUn}}
+                    <i class="fas fa-ruler-combined"></i> {{prop.s1_area | numberFormat}} {{prop.s1_areaUn}}
                 </p>
                 <div>
                     <router-link :to="'/perfil-propiedad/'+prop.propId" class="bg-gray-900 px-4 py-2 rounded-sm mr-5 text-white hover:text-white h-6">Detalles</router-link>
-                    <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+prop.propId" class="text-gray-900 hover:text-orange-700" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+prop.propId" class="text-gray-900 hover:text-orange-700" target="_blank" title="Compartir en WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
@@ -71,10 +71,15 @@ export default {
         })
     },
     filters: {
-        precio: function(val){
-            let precioFormateado = new Intl.NumberFormat().format(val)
-            return precioFormateado + "₡"
-        }
+        precio: function(value){
+            // let precioFormateado = new Intl.NumberFormat().format(val)
+            let val = (value/1).toFixed(0).replace('.', ',')
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        },
+        numberFormat: function(value){
+          let val = (value/1).toFixed(0).replace('.', ',')
+          return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      }
     }
 }
 </script>
