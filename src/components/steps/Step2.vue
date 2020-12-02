@@ -91,6 +91,7 @@
                 rotateControl: false,}">
             <GmapMarker
                 :position="center"
+                icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
                 :clickable="true"
                 :draggable="true"
                 @dragend="getMarkerPosition($event.latLng)"

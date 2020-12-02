@@ -83,6 +83,7 @@
         <GmapMarker
         :position="selectedCenter"
         :draggable="false"
+        icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
         ref="GoogleMrkr"
         />
         </GmapMap>
