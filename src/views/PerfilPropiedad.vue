@@ -30,7 +30,7 @@
           </ul>
           <!-- Imagen Grande -->
           <div class="w-11/12 ml-2 lg:ml-0 lg:px-5  max-h-screen">
-            <img :src="fotoGrande" alt="" class="w-full sm:h-full sm:w-auto border object-cover rounded-lg shadow ">
+            <img :src="fotoGrande" alt="" class="w-full sm:max-h-full sm:w-auto border object-cover rounded-lg shadow ">
           </div>
         </div>
       
@@ -88,7 +88,7 @@
         </GmapMap>
       </section>
       
-      <!-- Datos del vendedor -->
+      <!-- Datos del vendedor si es propia -->
       <template v-if="ownProp === true">
         <section class="md:container md:mx-auto mt-10 px-5 lg:px-0 py-10 border-b-2 border-t-2">
             <h2 class="text-2xl font-bold pb-5">Datos del vendedor</h2>
@@ -99,7 +99,7 @@
             </div>
         </section>
       </template>
-      <!-- datos vendedor -->
+      <!-- datos vendedor públicos -->
       <template v-else>
         <section class="lg:container mx-5 lg:mx-auto my-10 py-10 border-b-2 border-t-2">
           <button @click="datosVendedor" v-if="!showInfoVendedor" 
@@ -122,35 +122,51 @@
         <h2 class="text-2xl font-bold pb-5">Detalles de la propiedad</h2>
         <table class="table-fixed w-full">
           <tbody>
+            <!-- Provincia -->
             <tr v-if="info.s2_namePrvSelected" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Provincia</td>
               <td class="p-2">{{info.s2_namePrvSelected}}</td>
             </tr>
-            <tr v-if="info.s2_nameDttSelected" class="border">
-              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Distrito</td>
-              <td class="p-2">{{info.s2_nameDttSelected}}</td>
-            </tr>
+            <!-- Cantón -->
             <tr  v-if="info.s2_nameCtnSelected" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Cantón</td>
               <td class="p-2">{{info.s2_nameCtnSelected}}</td>
             </tr>
+            <!-- Distrito -->
+            <tr v-if="info.s2_nameDttSelected" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Distrito</td>
+              <td class="p-2">{{info.s2_nameDttSelected}}</td>
+            </tr>
+            <!-- Área> -->
             <tr v-if="info.s1_area" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Área de terreno</td>
               <td class="p-2">{{info.s1_area}} {{ info.s1_areaUn }}</td>
             </tr>
+            <!-- Comodidades -->
             <tr v-if="info.s6_assets" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">La propiedad cuenta con:</td>
-              <td class="p-2">
-                <ul class="pl-0">
-                  <li v-for="(cuenta, indexCuenta) in info.s6_assets" :key="indexCuenta">{{ cuenta }}</li>
-                </ul>
+              <td class="p-2 flex flex-wrap">
+                  <div 
+                    v-for="(cuenta, indexCuenta) in info.s6_assets" 
+                    :key="indexCuenta"
+                    class="bg-gray-500 rounded-lg sm:rounded-full mb-1 mx-1 px-1 sm:px-2 text-gray-100 text-center" >
+                      {{ cuenta }}</div>
               </td>
             </tr>
+            <!-- Inclinación -->
             <tr v-if="info.s4_inclination" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Inclinación del terreno:</td>
               <td class="p-2">
-              <!-- <img class="h-40 bg-white" :src="'/images/'+info.topografia+'.png'" /> -->
-              {{info.s4_inclination}}
+              <img class="h-40" :src="fotoInclinacion" />
+              En su mayoría el lote está con {{info.s4_inclination}}
+              </td>
+            </tr>
+            <!-- Nivel -->
+            <tr v-if="info.s5_nivel" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Altura de la calle:</td>
+              <td class="p-2">
+              <img class="h-40" :src="fotoNivel" />
+              En su mayoría el lote está con {{info.s5_nivel}}
               </td>
             </tr>
           </tbody>
@@ -205,7 +221,7 @@ export default {
       dataVendedor: [],
       loading: true,
       fotoGrande: '',
-      mostrarDocs: false
+      mostrarDocs: false,
     };
   },
   filters: {
@@ -217,6 +233,7 @@ export default {
       }
     }
   },
+
   created () {
     let self = this
     //datos propiedad
@@ -257,13 +274,47 @@ export default {
             self.datosUser = ""
         }
     })
-  },
 
+  },
   mounted() {
     this.loading = false;
     this.showPhoto()
   },
+  computed:{
+    fotoInclinacion(){
+    //obtener link de imágenes de inclinación
+    switch (this.info.s4_inclination){
+      case "Inclinación hasta 5 grados":
+        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_5.jpeg?alt=media&token=77d52d10-1916-459b-aa91-11ddf01a84af"
+      case "Inclinación hasta 15 grados":
+        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_15.jpeg?alt=media&token=5bc66b1e-4635-4cd1-85e5-2dfeee0d4e3d"
+      case "Inclinación hasta 30 grados":
+        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_30.jpeg?alt=media&token=04a358f7-53ab-4702-bc59-878abbc4156a"
+      case "Inclinación hasta 45 grados":
+        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_45.jpeg?alt=media&token=1ea73309-f293-4cc8-978a-04e3fbb6c549"
+      case "Inclinación hasta 60 grados":
+        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_60.jpeg?alt=media&token=bc0f10df-4c4e-44d4-83ca-a46bda5ef60a"
+      case "Inclinación hasta 90 grados":
+        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_90.jpeg?alt=media&token=bd34bcfb-9d2b-4349-b7a9-159891a19625"
+      default:
+        return ""
 
+    }
+    },
+    fotoNivel(){
+      //obtener link de imágenes del nivel
+      switch (this.info.s5_nivel){
+        case "Nivel por encima de la calle":
+          return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fnivel%2Fnivel_%2B1.jpeg?alt=media&token=acfa1ed1-c1e1-437a-aa55-913ebaa034a9"
+        case "Nivel igual al de la calle":
+          return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fnivel%2Fnivel_0.jpeg?alt=media&token=47ef33c5-bbcb-443c-ab33-efc684033b80"
+        case "Nivel por debajo de la calle":
+          return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fnivel%2Fnivel_-1.jpeg?alt=media&token=65a7a949-44f2-45eb-aea5-b07f0e6d265b"
+        default:
+          return ""
+      }
+    }
+  },
   methods:{
     activateProp(){
       if(this.info.status==="complete"){
