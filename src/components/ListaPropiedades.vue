@@ -5,8 +5,8 @@
       <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
     </div>
     <template v-if="propiedades.length > 0 && loading===false">
-        <h2>Mis propiedades</h2>
-        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-stretch">
+        <h2 class="text-2xl font-bold mb-5 tracking-wide">Mis propiedades</h2>
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-stretch">
             <li class="w-full" v-for="(prop, n) in propiedades" :key="n">
                 <Card :prop="prop"></Card>
             </li>

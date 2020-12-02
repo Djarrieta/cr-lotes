@@ -1,11 +1,11 @@
 <template>
     <div class="container mx-auto">
-        <section class="grid md:grid-cols-2 m-2">
+        <section class="grid md:grid-cols-2 mt-10 md:m-2 w-full">
             <label
-                class="flex flex-col items-center justify-center text-center bg-white text-blue rounded-lg shadow-lg tracking-wide border border-blue cursor-pointer hover:bg-blue hover:text-white">
+                class="flex flex-col w-full px-5 py-5 md:w-2/3 m-auto items-center justify-center text-center cursor-pointer">
                 <img 
                     :src="img"
-                    class="object-cover w-full h-full">
+                    class="object-cover w-full h-full rounded-md shadow-lg">
                 <input 
                     type='file' 
                     class="hidden" 
@@ -18,25 +18,30 @@
                     class="w-full"/> 
             </label>
 
-            <div class="flex flex-col  mx-6 ">
-                <label>Nombre:</label>
-                <input type="text" v-model="name">
+            <div class="flex flex-col px-5 py-5 lg:mx-6 w-full md:w-2/3">
+                <label for="nombre" class="font-bold">Nombre:</label>
+                <input type="text" v-model="name" id="nombre" class="focus:outline-none w-full p-3 border-2 mb-5">
                  
-                <label>WhatsApp:</label>
-                <input type="text" v-model="tel">
+                <label for="whatsapp" class="font-bold">WhatsApp:</label>
+                <input type="text" v-model="tel" id="whatsapp" class="focus:outline-none w-full p-3 border-2">
+                <p class="text-xs mb-5 tracking-widest">Recuerda agregar el prefijo del país.</p>
 
-                <label>Correo:</label>
-                <span> {{email}} </span>
+                <label for="email" class="font-bold">Correo:</label>
+                <input type="text" v-model="email" id="email" class="focus:outline-none w-full p-3 border-2 mb-5">
+                
 
-                <button @click="save" class="rounded p-2 m-2 text-gray-100 bg-gradient-to-t from-gray-600 to-gray-700 shadow-sm hover:shadow-md hover:text-white">Guardar</button>
-
-                <EliminarCuenta :uid="uid"></EliminarCuenta>
+                <button @click="save" class="border-2 border-primary rounded p-2 text-primary font-bold shadow-sm hover:shadow-md">Guardar cambios</button>
             </div>
         </section>
 
-        <ListaFavoritos :uid="uid"></ListaFavoritos>
+        <ListaFavoritos :uid="uid" class="border-b-2 border-t-2 m-auto mt-10 py-10 my-5 px-5"></ListaFavoritos>
 
-        <ListaPropiedades :uid="uid"></ListaPropiedades>
+        <ListaPropiedades :uid="uid" class="px-5"></ListaPropiedades>
+
+        <div class="border-t-2 m-auto mt-20 py-10 my-5 px-5 flex-col">
+            <p class="font-bold">¿Quieres eliminar tu cuenta en CR-LOTES?</p>
+            <EliminarCuenta :uid="uid"></EliminarCuenta>
+        </div>
 
     </div>
 </template>
@@ -91,7 +96,7 @@ export default {
     methods:{
 
         save(){
-            db.collection("users").doc(this.uid).update({name:this.name, phoneNumber:this.tel})
+            db.collection("users").doc(this.uid).update({name:this.name, phoneNumber:this.tel, email:this.email})
             .then(Swal.fire({
                 title: 'Cambios guardados con éxito',
                 confirmButtonText: `OK`,
@@ -103,10 +108,10 @@ export default {
             this.progress=0.01
             const fileDir=document.getElementById("inpImg").files[0] 
             
-            const fileName=`profilePics/${this.uid}`
+            const fileName = `profilePics/${this.uid}`
             const storageRef = firebase.storage().ref()
-            const fileRef=storageRef.child(fileName);
-            const uploadTask=fileRef.put(fileDir)
+            const fileRef = storageRef.child(fileName);
+            const uploadTask = fileRef.put(fileDir)
 
             uploadTask.on("state_changed",
                 x=>{

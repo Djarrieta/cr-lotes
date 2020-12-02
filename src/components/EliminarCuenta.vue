@@ -1,6 +1,6 @@
 <template>
   <section>
-      <button @click="eliminarCuenta" class="rounded p-2 m-2 text-red-100 bg-gradient-to-t from-red-600 to-red-700 shadow-sm hover:shadow-md hover:text-white">Eliminar cuenta</button>
+      <button @click="eliminarCuenta" class="rounded py-2 px-5 m-2 tracking-widest text-red-100 bg-gradient-to-t from-red-600 to-red-700 shadow-sm hover:shadow-md hover:text-white">Eliminar cuenta</button>
   </section>
 </template>
 

@@ -6,40 +6,43 @@
     </div>
 
     <template v-if="favoritos.length > 0 && loading===false">
-      <h2>Lista de favoritos</h2>
-      <table>
+      <h2 class="text-2xl font-bold mb-5 tracking-wide">Lista de favoritos</h2>
+      <table class="w-full overflow-hidden">
           <thead>
-              <tr>
-                  <th></th>
-                  <th>Título</th>
-                  <th>Área</th>
-                  <th>Precio</th>
-                  <th>Provincia</th>
-                  <th>Distrito</th>
-                  <th>Cantón</th>
-                  <th>Tipo de frente</th>
-                  <th>Inclinación</th>
-                  <th>Nivel</th>
+              <tr class="bg-gray-200 uppercase border">
+                  <th class="mx-2 text-center py-2 visible w-auto"></th>
+                  <th class="mx-2 text-center py-2 visible w-auto">Título</th>
+                  <th class="mx-2 text-center py-2 hidden lg:table-cell">Área</th>
+                  <th class="mx-2 text-center py-2 hidden lg:table-cell">Precio</th>
+                  <th class="mx-2 text-center py-2 hidden lg:table-cell">Provincia</th>
+                  <th class="mx-2 text-center py-2 hidden lg:table-cell">Cantón</th>
+                  <th class="mx-2 text-center py-2 hidden lg:table-cell">Distrito</th>
+                  <th class="mx-2 text-center py-2 hidden lg:table-cell">Tipo de frente</th>
+                  <th class="mx-2 text-center py-2 hidden lg:table-cell">Inclinación</th>
+                  <th class="mx-2 text-center py-2 hidden lg:table-cell">Nivel</th>
               </tr>
           </thead>
           <tbody>
             <tr v-for="propiedad in propiedadesAll" :key="propiedad.propId">
-                <td><Favorito :propId="propiedad.propId" /></td>
-                <td>{{ propiedad.s1_title }} {{ propiedad.propId }}</td>
-                <td>{{ propiedad.s1_area }} {{ propiedad.s1_areaUn }}</td>
-                <td>{{ propiedad.s1_price }}</td>
-                <td>{{ propiedad.s2_namePrvSelected }}</td>
-                <td>{{ propiedad.s2_nameDttSelected }}</td>
-                <td>{{ propiedad.s2_nameCtnSelected }}</td>
-                <td>{{ propiedad.s3_frontType }}</td>
-                <td>{{ propiedad.s4_inclination }}</td>
-                <td>{{ propiedad.s5_nivel }}</td>
+                <td class="border-b text-left pl-5 visible"><Favorito :propId="propiedad.propId" /></td>
+                <td class="border-b text-left pl-5 visible">
+                  <router-link :to="'/perfil-propiedad/'+ propiedad.propId"><i class="fas fa-link"></i> {{ propiedad.s1_title }}</router-link>
+                </td>
+                <td class="border-b text-left pl-5 hidden lg:table-cell">{{ propiedad.s1_area | numberFormat }} {{ propiedad.s1_areaUn }}</td>
+                <td class="border-b text-left pl-5 hidden lg:table-cell">{{ propiedad.s1_price | numberFormat }} ₡</td>
+                <td class="border-b text-left pl-5 hidden lg:table-cell">{{ propiedad.s2_namePrvSelected }}</td>
+                <td class="border-b text-left pl-5 hidden lg:table-cell">{{ propiedad.s2_nameCtnSelected }}</td>
+                <td class="border-b text-left pl-5 hidden lg:table-cell">{{ propiedad.s2_nameDttSelected }}</td>
+                <td class="border-b text-left pl-5 hidden lg:table-cell">{{ propiedad.s3_frontType }}</td>
+                <td class="border-b text-left pl-5 hidden lg:table-cell">{{ propiedad.s4_inclination }}</td>
+                <td class="border-b text-left pl-5 hidden lg:table-cell">{{ propiedad.s5_nivel }}</td>
             </tr>
           </tbody>
       </table>
     </template>
 
     <template v-else-if="favoritos.length === 0 && loading===false">
+      <h2 class="text-2xl font-bold mb-5 tracking-wide">Lista de favoritos</h2>
       <p>No tiene ninguna propiedad como favorita.</p>
     </template>
   </section>
@@ -72,6 +75,14 @@ export default {
       })
       
     },
+
+    filters: {
+      numberFormat: function(value){
+        let val = (value/1).toFixed(0).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      }
+    },
+
     mounted() {
       let self = this
         // Lista de favoritos
