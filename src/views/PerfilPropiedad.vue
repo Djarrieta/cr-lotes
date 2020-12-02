@@ -9,22 +9,28 @@
       <!-- Migas de pan -->
       <section class="container mx-auto mt-5">
       </section>
-      
-      <section class="lg:flex my-5 md:container m-auto">
-        <!-- Fotos -->
-        <div id="fotos" class="mx-5 lg:w-4/6 flex">
-          <ul class="w-1/6">
-            <li v-for="foto in info.s8_pictures" :key="foto.title">
+
+      <!-- Fotos -->
+      <section class="lg:flex my-5 md:container mx-auto ">
+        <div id="fotos" class="mx-5 lg:w-4/6 flex sm:pb-32 sm:max-h-screen ">
+          <ul class="w-1/12">
+            <li 
+              v-for="foto in info.s8_pictures" 
+              :key="foto.title"
+              >
+              <!-- Imagenes pequeñas -->
               <img
-                class="w-full h-30 object-cover border rounded-lg md:mb-2 cursor-pointer"
+                class="w-full object-cover border rounded-lg md:mb-2 cursor-pointer"
                 :src="foto.fileUrl"
+                :class="foto.fileUrl===fotoGrande ? ' border-primary' : 'none'"
                 :alt="foto.title"
                 @click="showPhoto(foto.fileUrl)"
               />
             </li>
           </ul>
-          <div class="w-5/6 ml-2 lg:ml-0 lg:px-5">
-            <img :src="fotoGrande" alt="" class="w-full h-30 object-cover border rounded-lg shadow">
+          <!-- Imagen Grande -->
+          <div class="w-11/12 ml-2 lg:ml-0 lg:px-5  max-h-screen">
+            <img :src="fotoGrande" alt="" class="w-full sm:h-full sm:w-auto border object-cover rounded-lg shadow ">
           </div>
         </div>
       
@@ -50,6 +56,7 @@
         </div>
       </section>
 
+      <!-- Opciones vendedor -->
       <template v-if="ownProp === true">
         <section class="my-5 lg:container m-auto mt-10 py-10 border-b-2 border-t-2">
           <h2 class="mx-5 lg:mx-0 text-2xl font-bold pb-5">Opciones de vendedor</h2>
@@ -92,6 +99,7 @@
             </div>
         </section>
       </template>
+      <!-- datos vendedor -->
       <template v-else>
         <section class="lg:container mx-5 lg:mx-auto my-10 py-10 border-b-2 border-t-2">
           <button @click="datosVendedor" v-if="!showInfoVendedor" 
@@ -109,7 +117,7 @@
         </section>
       </template>
       
-      <!-- Detalles -->
+      <!-- Detalles propiedad -->
       <section class="lg:container mx-5 lg:mx-auto mt-10 py-10">
         <h2 class="text-2xl font-bold pb-5">Detalles de la propiedad</h2>
         <table class="table-fixed w-full">
@@ -149,6 +157,7 @@
         </table>
 
       </section>
+      <!-- documentos -->
       <section v-if="mostrarDocs" class="lg:container mx-5 lg:mx-auto mt-10 py-10 border-t-2">
           <!-- <template v-if="datosUser.uid"> -->
           <h2 class="text-2xl font-bold pb-5">Documentos de la propiedad</h2>
