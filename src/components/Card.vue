@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full shadow-lg overflow-hidden rounded-lg border">
+  <section class="text-left w-full shadow-lg overflow-hidden rounded-lg border">
       <!-- Foto -->
       <img
             v-if="prop.s8_pictures[0].fileUrl"
