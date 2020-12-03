@@ -12,7 +12,7 @@
 
       <!-- Fotos -->
       <section class="lg:flex my-5 md:container mx-auto ">
-        <div id="fotos" class="mx-5 lg:w-4/6 flex sm:pb-32 sm:max-h-screen ">
+        <div id="fotos" class="mx-5 lg:w-4/6 flex sm:max-h-screen">
           <ul class="w-1/12">
             <li 
               v-for="foto in info.s8_pictures" 
