@@ -338,8 +338,6 @@ export default {
     visitsCounter(){
       //reporta visita si la propiedad no es propia, si hay usuario y si no se llama el componente desde publicar
       const user = firebase.auth().currentUser;
-        console.log(user.uid)
-        console.log(this.info.uid)
         if(user && user.uid!=this.info.uid){
           db.collection("visitCounter").add({
             date:firebase.firestore.FieldValue.serverTimestamp(),
