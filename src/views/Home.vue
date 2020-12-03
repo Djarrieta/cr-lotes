@@ -68,6 +68,7 @@
     <div class="w-full md:flex md:h-full ms:mb-16 overflow-hidden ">
       <!-- Mapa -->
       <div class="relative w-full md:w-1/2 lg:w-1/2 h-64 md:h-auto">
+        <!-- Buscar en esta área -->
         <button @click="search" class="hidden md:block absolute bottom-0 z-10 bg-white m-2 rounded-lg border border-primary px-4 py-1 text-primary font-bold"><i class="fas fa-sync text-primary mr-1"></i>Buscar en esta área</button>
         <GmapMap
             class="w-full h-full"
@@ -122,6 +123,7 @@
         </button>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -348,7 +350,7 @@ export default {
     },
     selectPin(id){
       this.$router.replace("/perfil-propiedad/" +id)
-    }
+    },
   }
 }
 </script>
