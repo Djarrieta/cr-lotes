@@ -37,7 +37,7 @@
             <!-- Marca de agua -->
             <div oncontextmenu="return false" class="absolute left-0 top-t5% h-full w-full flex justify-center items-center z-50 opacity-25" id="marcaDeAgua">
               <img src="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3" alt="marca de agua">
-              <span class="text-5xl text-primary font-bold ml-2">CR-Lotes</span> 
+              <span class="text-2xl sm:text-5xl text-primary font-bold ml-2">CR-Lotes</span> 
             </div>
           </div>
         </div>
