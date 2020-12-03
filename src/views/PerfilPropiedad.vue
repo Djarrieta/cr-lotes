@@ -253,7 +253,7 @@ export default {
       this.fotoGrande = this.info.s8_pictures[0].fileUrl;
       this.mostrarDocs = this.info.s7_files.length
     }else{
-      //datos propiedad
+      //datos propiedad si el componente se abre navegando
       this.idPropiedad = this.$route.params.id;
       let dPropiedad = db.collection("props").doc(this.idPropiedad);
       dPropiedad
@@ -263,6 +263,7 @@ export default {
           self.selectedCenter = { lat: docProp.data().s2_lat, lng: docProp.data().s2_lng };
           self.fotoGrande = self.info.s8_pictures[0].fileUrl;
           self.mostrarDocs = self.info.s7_files.length
+          this.visitsCounter()
         }).catch(e=>console.error(e))
     }
 
@@ -334,6 +335,17 @@ export default {
     }
   },
   methods:{
+    visitsCounter(){
+      //reporta visita si la propiedad no es propia, si hay usuario y si no se llama el componente desde publicar
+      const user = firebase.auth().currentUser;
+        if(user && user.uid!=this.info.uid){
+          db.collection("visitCounter").add({
+            date:firebase.firestore.FieldValue.serverTimestamp(),
+            propId:this.info.propId,
+            uid:user.uid
+          })
+        }
+    },
     activateProp(){
       if(this.info.status==="complete"){
         this.activatePropFirebase("inactive")
