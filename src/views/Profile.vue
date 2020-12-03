@@ -23,7 +23,7 @@
                 <input type="text" v-model="name" id="nombre" class="focus:outline-none w-full p-3 border-2 mb-5">
                  
                 <label for="whatsapp" class="font-bold">WhatsApp:</label>
-                <input type="text" v-model="tel" id="whatsapp" class="focus:outline-none w-full p-3 border-2">
+                <input type="number" v-model="tel" id="whatsapp" class="focus:outline-none w-full p-3 border-2">
                 <p class="text-xs mb-5 tracking-widest">Recuerda agregar el prefijo del país.</p>
 
                 <label for="email" class="font-bold">Correo:</label>

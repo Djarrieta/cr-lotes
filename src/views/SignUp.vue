@@ -30,7 +30,8 @@
               class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"> WhatsApp</label>            
             <div class="flex bg-white border rounded ">
               <!-- indicative -->
-              <input 
+              <input
+                type="number"
                 v-model="indicative"
                 class="focus:outline-none block w-20 bg-white text-gray-700  rounded py-3 px-4 leading-tight">
                 <!-- number -->
@@ -112,7 +113,7 @@ export default {
       return{
         name: "",
         email: "",
-        indicative:"+506",
+        indicative:"506",
         phoneNumber: "",
         password: "",
         password2: "",
