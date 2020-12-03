@@ -20,6 +20,7 @@
               >
               <!-- Imagenes pequeñas -->
               <img
+                oncontextmenu="return false"
                 class="w-full object-cover border rounded-lg md:mb-2 cursor-pointer"
                 :src="foto.fileUrl"
                 :class="foto.fileUrl===fotoGrande ? ' border-primary' : 'none'"
@@ -29,8 +30,14 @@
             </li>
           </ul>
           <!-- Imagen Grande -->
-          <div class="w-11/12 ml-2 lg:ml-0 lg:px-5  max-h-screen">
-            <img :src="fotoGrande" alt="" class="w-full sm:max-h-full sm:w-auto border object-cover rounded-lg shadow ">
+          <div 
+            oncontextmenu="return false" 
+            class="w-11/12 ml-2 lg:ml-0 lg:px-5  max-h-screen relative">
+              <img :src="fotoGrande" alt="" class="w-full sm:max-h-full sm:w-auto border object-cover rounded-lg shadow z-10">
+              <!-- Marca de agua -->
+              <div class="absolute top-0  h-full w-full flex justify-center items-center z-50">
+                CR-Lotes
+              </div>
           </div>
         </div>
       
