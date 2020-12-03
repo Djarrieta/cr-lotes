@@ -9,6 +9,7 @@ module.exports = {
       'sans': ['Roboto', 'Arial', 'sans-serif'],
     },
     inset:{
+      't50%':'50%',
       't5%':'5%',
       't1':'20%',
       'l1':'28%',
