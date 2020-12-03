@@ -11,9 +11,9 @@
       </section>
 
       <!-- Fotos -->
-      <section class="lg:flex my-5 md:container mx-auto ">
-        <div id="fotos" class="mx-5 lg:w-4/6 flex sm:max-h-screen">
-          <ul class="w-1/12">
+      <section class="lg:flex my-5 md:container mx-auto" >
+        <div id="fotos" class="mx-5 lg:w-4/6 flex">
+          <ul class="w-1/12 h-full">
             <li 
               v-for="foto in info.s8_pictures" 
               :key="foto.title"
@@ -29,8 +29,8 @@
             </li>
           </ul>
           <!-- Imagen Grande -->
-          <div class="w-11/12 ml-2 lg:ml-0 lg:px-5  max-h-screen">
-            <img :src="fotoGrande" alt="" class="w-full sm:max-h-full sm:w-auto border object-cover rounded-lg shadow ">
+          <div class="w-11/12 ml-2 lg:ml-0 lg:px-5 max-h-full">
+            <img :src="fotoGrande" alt="" class="w-full max-h-full sm:w-auto border object-cover rounded-lg shadow ">
           </div>
         </div>
       
@@ -383,3 +383,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  #fotos {
+    max-height: calc(65vh);
+    height: 100%;
+  }
+</style>
