@@ -7,9 +7,8 @@
       <div class="relative mb-2">
         <!-- circle -->
         <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center" 
-        :class="indicator>=1 ? 'bg-primary' : 'none'">
-          <span class="text-center text-gray-600 w-full p-1">
-            <!-- icon -->
+        :class="indicator>=1 ? 'bg-primary ' : 'none'">
+          <span class="text-center  w-full p-1">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>

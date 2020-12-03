@@ -107,7 +107,7 @@ export default {
         getFiles(){
             this.progress=0.01
             const fileDir=document.getElementById("inpImg").files[0] 
-            
+            if(!fileDir){return}
             const fileName = `profilePics/${this.uid}`
             const storageRef = firebase.storage().ref()
             const fileRef = storageRef.child(fileName);

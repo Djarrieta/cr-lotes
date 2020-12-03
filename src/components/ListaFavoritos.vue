@@ -5,7 +5,7 @@
       <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
     </div>
 
-    <template v-if="favoritos.length > 0 && loading===false">
+    <template v-if="favoritos && favoritos.length > 0 && loading===false">
       <h2 class="text-2xl font-bold mb-5 tracking-wide">Lista de favoritos</h2>
       <table class="w-full overflow-hidden">
           <thead>
@@ -23,7 +23,7 @@
               </tr>
           </thead>
           <tbody>
-            <tr v-for="propiedad in propiedadesAll" :key="propiedad.propId">
+            <tr  v-for="propiedad in propiedadesAll" :key="propiedad.propId">
                 <td class="border-b text-left pl-5 visible"><Favorito :propId="propiedad.propId" /></td>
                 <td class="border-b text-left pl-5 visible">
                   <router-link :to="'/perfil-propiedad/'+ propiedad.propId"><i class="fas fa-link"></i> {{ propiedad.s1_title }}</router-link>
@@ -41,7 +41,12 @@
       </table>
     </template>
 
-    <template v-else-if="favoritos.length === 0 && loading===false">
+    <template v-else-if="!favoritos  && loading===false">
+      <h2 class="text-2xl font-bold mb-5 tracking-wide">Lista de favoritos</h2>
+      <p>No tiene ninguna propiedad como favorita.</p>
+    </template>
+    
+    <template v-else-if="favoritos.length===0  && loading===false">
       <h2 class="text-2xl font-bold mb-5 tracking-wide">Lista de favoritos</h2>
       <p>No tiene ninguna propiedad como favorita.</p>
     </template>
@@ -96,8 +101,8 @@ export default {
 
                   // Seleccionar solo las propiedades que están en favorito
                   let propiedades = db.collection('props');
-                  console.log(self.favoritos.length)
-                  if(self.favoritos.length > 0) {
+                  
+                  if(self.favoritos && self.favoritos.length > 0) {
                     propiedades
                       .get()
                       .then(function(querySnapshot) {
