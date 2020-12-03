@@ -364,11 +364,11 @@ export default {
 
     datosVendedor() {
       if(this.datosUser){
-        this.infoVendedor = !this.infoVendedor
+        this.showInfoVendedor = !this.showInfoVendedor
         db.collection('users').doc(this.datosUser.uid).update({
             'propsInteres': firebase.firestore.FieldValue.arrayUnion(this.idPropiedad)
         });
-      }else{
+      } else {
         Swal.fire({
               position: 'top-end',
               icon: 'warning',
