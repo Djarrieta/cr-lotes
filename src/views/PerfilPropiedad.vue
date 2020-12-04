@@ -56,7 +56,7 @@
             </p>
             <div class="flex mt-3 border-t-2 pt-2 pb-2 md:pb-8">
               <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://cr-lotes.com/perfil-propiedad/'+info.propId" target="_blank" class="flex-1 text-right" title="Compartir por WhatsApp">
-                <i class="fab fa-whatsapp"></i>
+                <i class="fas fa-share-alt"></i>
               </a>
               <Favorito class="flex-1 text-left pl-10" :propId="info.propId" title="Favorito" />
             </div>

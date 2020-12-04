@@ -33,11 +33,13 @@
                                 <button 
                                     @click="userRole(n)"
                                     class="m-1 px-1 rounded  text-xs"
-                                    :class="u.admin ? 'bg-blue-900 text-blue-100 text-base py-1 px-3' : 'bg-gray-900 text-gray-100 py-1 px-3'">{{u.admin ?"Administrador" : "Colaborador"}}</button>
+                                    :class="u.admin ? 'bg-blue-900 text-blue-100 text-base py-1 px-3' : 'bg-gray-900 text-gray-100 text-base py-1 px-3'">
+                                        {{ u.admin ? "Administrador" : "Colaborador" }}
+                                </button>
                                 <button 
                                     @click="userDelete(n)"
                                     v-if="!u.admin"
-                                    class="m-1 px-1 rounded bg-red-600 text-xs">Borrar</button>
+                                    class="m-1 rounded bg-red-600 text-white text-base py-1 px-3">Borrar</button>
                             </td>
                         </tr>
                     </tbody>

@@ -7,6 +7,7 @@
 
     <template v-if="favoritos && favoritos.length > 0 && loading===false">
       <h2 class="text-2xl font-bold mb-5 tracking-wide">Lista de favoritos</h2>
+      <button class="border-2 border-primary mb-5 text-primary font-bold rounder-md px-3 py-2" @click="listaJson()">Descargar a EXCEL</button>
       <table class="w-full overflow-hidden">
           <thead>
               <tr class="bg-gray-200 uppercase border">
@@ -67,7 +68,9 @@ export default {
             status: false,
             favoritos: [],
             propiedadesAll: [],
-            loading: true
+            loading: true,
+            myStr: '',
+            todos: []
         }
     },
     created() {
@@ -95,47 +98,88 @@ export default {
         favoritos
             .get()
             .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-              if(doc.id === self.uid) {
-                  self.favoritos = doc.data().favoritos
+              querySnapshot.forEach(function(doc) {
+                if(doc.id === self.uid) {
+                    self.favoritos = doc.data().favoritos
 
-                  // Seleccionar solo las propiedades que están en favorito
-                  let propiedades = db.collection('props');
-                  
-                  if(self.favoritos && self.favoritos.length > 0) {
-                    propiedades
-                      .get()
-                      .then(function(querySnapshot) {
-                        querySnapshot.forEach(function(doc) {
-                            if(self.favoritos.includes(doc.data().propId)) {
-                              self.propiedadesAll.push(doc.data())
-                            }
-                        });
-                      })
-                  }
-              }
-            });
+                    // Seleccionar solo las propiedades que están en favorito
+                    let propiedades = db.collection('props');
+                    
+                    if(self.favoritos && self.favoritos.length > 0) {
+                      propiedades
+                        .get()
+                        .then(function(querySnapshot) {
+                          querySnapshot.forEach(function(doc) {
+                              if(self.favoritos.includes(doc.data().propId)) {
+                                self.propiedadesAll.push(doc.data())
+                                
+                                self.todos.push([
+                                                  doc.data().s1_title,
+                                                  doc.data().s1_area,
+                                                  doc.data().s1_areaUn,
+                                                  doc.data().s1_price,
+                                                  doc.data().s2_namePrvSelected,
+                                                  doc.data().s2_nameCtnSelected,
+                                                  doc.data().s2_nameDttSelected,
+                                                  doc.data().s3_frontType,
+                                                  doc.data().s4_inclination,
+                                                  doc.data().s5_nivel
+                                              ])
+                              }
+                          });
+                        })
+                    }
+                }
+              });
+              
+              self.loading = false
+            })
+
+    },
+
+    methods: {
+      listaJson: function (ReportTitle = 'FAVORITOS', ShowLabel = true) {	
+            this.myStr = JSON.stringify(this.todos);
+            let arrData = typeof this.myStr != 'object' ? JSON.parse(this.myStr) : this.myStr;
+
+            let CSV = 'sep=,' + '\r\n\n';
+            if (ShowLabel) {
+                let row = "";
+                for (let index in arrData[0]) {
+                    row += index + ',';
+                }
+
+                row = ['Título', 'Medida', 'Unidad de medida', 'Precio', 'Provincia', 'Canton', 'Distrito', 'Tipo de frente', 'Inclinación', 'Nivel', '']
+
+                row = row.slice(0, -1);
+                CSV += row + '\r\n';
+            }
+            for (let i = 0; i < arrData.length; i++) {
+                let row = "";
+                for (let index in arrData[i]) {
+                    row += '"' + arrData[i][index] + '",';
+                }
+
+                row.slice(0, row.length - 1);
+                CSV += row + '\r\n';
+            }
+             if (CSV == '') {
+                alert("Invalid data");
+                return;
+            }   
+            let fileName = "Favoritos_CR_LOTES_";
+            fileName += ReportTitle.replace(/ /g,"_");   
             
-            self.loading = false
-        })
-
-        // Seleccionar solo las propiedades que están en favorito
-        // let propiedades = db.collection('props');
-        // console.log(self.favoritos.length)
-        // if(self.favoritos.length > 0) {
-        //   propiedades
-        //     .get()
-        //     .then(function(querySnapshot) {
-        //       querySnapshot.forEach(function(doc) {
-        //           if(self.favoritos.includes(doc.data().propId)) {
-        //             self.propiedadesAll.push(doc.data())
-        //           }
-        //       });
-        //     })
-        // }
-    
-    
-    
-  },
+            let uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+            let link = document.createElement("a");    
+            link.href = uri;
+            link.style = "visibility:hidden";
+            link.download = fileName + ".csv";
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
 }
 </script>
