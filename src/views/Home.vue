@@ -222,6 +222,7 @@ export default {
       //check if its the same marker that was selected if yes toggle
       if (this.currentMidx == idx) {
         this.infoWinOpen = !this.infoWinOpen;
+        this.selectedMarker=''
       }
       //if different marker set infowindow to open and reset current marker index
       else {
