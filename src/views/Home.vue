@@ -83,8 +83,9 @@
                 mapTypeControl: false,
                 streetViewControl: false,
                 rotateControl: false,
+                fullscreenControl: false,
               }">
-              
+            
             <GmapMarker
                 v-for="(p,i) in props"                  
                 icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"

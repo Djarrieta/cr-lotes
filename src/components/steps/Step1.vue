@@ -31,7 +31,7 @@
             </div>
             <!-- Area -->
             <div class="my-1">
-                <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Area</label>
+                <label class="w-16 ml-2 pl-1 bg-white  text-xs font-bold">Area</label>
                 <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
                     <div class="flex">
                         <input 
@@ -67,7 +67,7 @@
             </div>
 
         </div>
-        <img src="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fscott-graham-OQMZwNd3ThU-unsplash.jpg?alt=media&token=a26184f0-4a98-404f-8ec9-16f83f8d5843" alt="FormPicture">
+        <img  class="hiden sm:block" src="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fscott-graham-OQMZwNd3ThU-unsplash.jpg?alt=media&token=a26184f0-4a98-404f-8ec9-16f83f8d5843" alt="FormPicture">
     </div>
 </div>
 </template>

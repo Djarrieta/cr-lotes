@@ -3,7 +3,7 @@
       <!-- Foto -->
       <img
             v-if="prop.s8_pictures[0].fileUrl"
-            class="w-full h-48 object-cover object-center bg-gray-100"
+            class="w-full h-48 object-cover object-center bg-white"
             :src="prop.s8_pictures[0].fileUrl"
         /> 
         <!-- Detalles -->
@@ -16,7 +16,7 @@
                 </span>
             </p>
         </div>
-        <div class="px-6 py-5 bg-gray-200 text-left">
+        <div class="px-6 py-5 bg-white text-left">
             <p class="font-bold text-md mb-2 uppercase">
                 {{ prop.s1_title }}
             </p>
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="px-6 py-5 flex justify-between bg-gray-200" v-if="prop.uid===idUser.uid">
+        <div class="px-6 py-5 flex justify-between bg-white" v-if="prop.uid===idUser.uid">
             <StatusProp :propId="prop.propId"></StatusProp>
             <StatusVendido :propId="prop.propId"></StatusVendido>
             <Subastar :propId="prop.propId"></Subastar>

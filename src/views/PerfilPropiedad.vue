@@ -85,7 +85,12 @@
         :center="selectedCenter"
         :zoom="selectedZoom"
         mapTypeControl="false"
-        streetViewControl="false"
+        :options="{
+                mapTypeControl: false,
+                streetViewControl: false,
+                rotateControl: false,
+                fullscreenControl: false,
+              }"
         class="w-full h-64 rounded-lg shadow-lg"
         ref="mapRef"
         >

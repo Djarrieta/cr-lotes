@@ -88,7 +88,8 @@
             :options="{
                 mapTypeControl: false,
                 streetViewControl: false,
-                rotateControl: false,}">
+                rotateControl: false,
+                fullscreenControl: false,}">
             <GmapMarker
                 :position="center"
                 icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
