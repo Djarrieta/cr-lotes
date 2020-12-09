@@ -12,7 +12,7 @@
 
       <!-- Fotos -->
       <section class="lg:flex my-5 md:container mx-auto" >
-        <div id="fotos" class="mx-5 lg:w-4/6 flex">
+        <div class="mx-5 lg:w-4/6 flex">
           <ul class="w-1/12 h-full">
             <li 
               v-for="foto in info.s8_pictures" 
@@ -31,15 +31,24 @@
           </ul>
           <!-- Imagen Grande -->
           <div 
-            oncontextmenu="return false" 
-            class="w-11/12 ml-2 lg:ml-0 lg:px-5  max-h-screen relative">
-            <img :src="fotoGrande" alt="" class=" w-full sm:max-h-full sm:w-auto border object-cover rounded-lg shadow z-10">
-            <!-- Marca de agua -->
-            <div oncontextmenu="return false" class="absolute left-0 top-t5% h-full w-full flex justify-center items-center z-50 opacity-25" id="marcaDeAgua">
-              <img src="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3" alt="marca de agua">
-              <span class="text-2xl sm:text-5xl text-primary font-bold ml-2">CR-Lotes</span> 
-            </div>
+            class="w-11/12 ml-2 flex">
+              <div class=" w-auto relative">
+                <img 
+                  id="fotos"
+                  :src="fotoGrande" 
+                  alt="foto grande"
+                  class="  border rounded-lg shadow z-10">
+                <div 
+                  oncontextmenu="return false" 
+                  class="absolute left-0 top-t5% h-full w-full flex justify-center items-center z-50 opacity-25">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3" alt="marca de agua">
+                  <span class="text-2xl sm:text-5xl text-primary font-bold ml-2">CR-Lotes</span> 
+                </div>
+              </div>
+              <div></div><!-- este div vacío corrige el ancho del div contenedor de la foto -->
+              
           </div>
+          
         </div>
       
         <!-- Datos -->
@@ -180,7 +189,7 @@
             <tr v-if="info.s5_nivel" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Altura de la calle:</td>
               <td class="p-2">
-              <img class="h-40" :src="fotoNivel" />
+              <img :src="fotoNivel" />
               En su mayoría el lote está con {{info.s5_nivel}}
               </td>
             </tr>
@@ -433,8 +442,7 @@ export default {
 
 <style scoped>
   #fotos {
-    /* max-height: calc(70vh);
-    height: 100%; */
+    max-height: calc(100vh - 8rem);
   }
 
   #marcaDeAgua {
