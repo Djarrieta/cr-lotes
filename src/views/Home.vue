@@ -323,8 +323,8 @@ export default {
           //establece los límites del mapa
           const minLat=map.getBounds().Wa.i
           const maxLat=map.getBounds().Wa.j
-          const minLng=map.getBounds().Sa.i
-          const maxLng=map.getBounds().Sa.j
+          const minLng=map.getBounds().Ra.i
+          const maxLng=map.getBounds().Ra.j
 
           //busca según filtros
           db.collection('props')
