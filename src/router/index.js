@@ -31,7 +31,7 @@ const routes = [
     component:Registro
   },
   {
-    path: '/signup',
+    path: '/registrarme',
     name: 'SignUp',
     component: SignUp
   },
@@ -44,8 +44,8 @@ const routes = [
     }
   },
   {
-    path: '/profile',
-    name: 'Profile',
+    path: '/perfil',
+    name: 'Perfil',
     component: Profile,
     meta:{
       autentificado:true
