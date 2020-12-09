@@ -60,10 +60,12 @@
                 </select>
             </div>
         </div>
-        <!-- Boton Buscar -->
-        <div class="w-full px-2 mt-5 md:w-1/4 ">
+        <!-- Botones -->
+        <div class="w-full px-2 mt-5 md:w-1/4 flex justify-between">
+          <button @click="clear" class="w-10 border border-primary rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary mr-1"><i class="fas fa-eraser text-primary mr-1"></i></button>
           <button @click="search" class="w-full border border-primary rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary"><i class="fas fa-sync text-primary mr-1"></i> Refrescar lista</button>
         </div>
+
     </div>
     <div class="w-full md:flex md:h-full ms:mb-16 overflow-hidden ">
       <!-- Mapa -->
@@ -352,6 +354,18 @@ export default {
     selectPin(id){
       this.$router.replace("/perfil-propiedad/" +id)
     },
+    clear(){
+      this.dtts=[]
+      this.ctns=[]
+      this.s2_idPrvSelected=0
+      this.s2_idCtnSelected=0
+      this.s2_idDttSelected=0
+
+      this.zoom=7
+      setTimeout(() => {
+        this.search()
+      }, 1000); 
+    }
   }
 }
 </script>
