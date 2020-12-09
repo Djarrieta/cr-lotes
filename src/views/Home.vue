@@ -62,7 +62,7 @@
         </div>
         <!-- Botones -->
         <div class="w-full px-2 mt-5 md:w-1/4 flex justify-between">
-          <button @click="clear" class="w-10 border border-primary rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary mr-1"><i class="fas fa-eraser text-primary mr-1"></i></button>
+          <button @click="clear" class="w-10 border border-primary rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary mr-1" title="Limpiar filtros"><i class="fas fa-eraser text-primary mr-1"></i></button>
           <button @click="search" class="w-full border border-primary rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary"><i class="fas fa-sync text-primary mr-1"></i> Refrescar lista</button>
         </div>
 

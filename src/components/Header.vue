@@ -38,7 +38,7 @@
                     <div v-if="!currentUser" class="hidden sm:block sm:ml-6">
                         <div class="flex">
                             <router-link to="/login" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Ingresar</router-link>
-                            <router-link to="/signup" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Registrarse</router-link>
+                            <router-link :to="{ name: 'SignUp' }" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Registrarse</router-link>
                         </div>
                     </div>
                 </div>
@@ -73,8 +73,8 @@
                                 v-if="!currentUser"
                                 class="profileMenuElement">
                                 Registrarse</router-link>
-                            <router-link 
-                                to="/profile" 
+                            <router-link
+                                :to="{ name: 'Perfil' }"
                                 v-if="currentUser"
                                 class="profileMenuElement">
                                 {{ displayName }}</router-link>
