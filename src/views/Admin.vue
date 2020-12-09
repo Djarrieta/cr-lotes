@@ -8,8 +8,8 @@
 
         <!-- Usuarios -->
         <div v-if="usuariosAct">
-            <section class="flex flex-col">
-                <h1 class="text-4xl text-gray-600">Usuarios</h1>
+            <section class="flex flex-col mt-5">
+                <h1 class="text-2xl text-gray-800 uppercase font-bold">Usuarios</h1>
                 <table>
                     <thead>
                         <tr class="bg-gray-200 uppercase border ">
@@ -33,6 +33,7 @@
                                 <button 
                                     @click="userRole(n)"
                                     class="m-1 px-1 rounded  text-xs"
+                                    title="Cambiar rol"
                                     :class="u.admin ? 'bg-blue-900 text-blue-100 text-base py-1 px-3' : 'bg-gray-900 text-gray-100 text-base py-1 px-3'">
                                         {{ u.admin ? "Administrador" : "Colaborador" }}
                                 </button>
@@ -47,8 +48,8 @@
             </section>
 
             <!-- Propiedades -->
-            <section v-if="selectedUser"  class="flex flex-col">
-                <h1 class="text-4xl text-gray-600">Propiedades de {{ selectedUser.name}}</h1>
+            <section v-if="selectedUser"  class="flex flex-col mt-10">
+                <h1 class="text-2xl text-gray-800 uppercase font-bold">Propiedades de {{ selectedUser.name}}</h1>
                 <table >
                     <thead>
                         <tr class="bg-gray-200 uppercase border">
