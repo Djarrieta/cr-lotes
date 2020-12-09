@@ -284,8 +284,8 @@ export default {
           let counter=0
           const minLat=map.getBounds().Wa.i
           const maxLat=map.getBounds().Wa.j
-          const minLng=map.getBounds().Sa.i
-          const maxLng=map.getBounds().Sa.j
+          const minLng=map.getBounds().Ra.i
+          const maxLng=map.getBounds().Ra.j
 
           //busca según filtros
           this.props= []
