@@ -33,7 +33,7 @@
           <div 
             oncontextmenu="return false" 
             class="w-11/12 ml-2 lg:ml-0 lg:px-5  max-h-screen relative">
-            <img :src="fotoGrande" alt="" class="w-full sm:max-h-full sm:w-auto border object-cover rounded-lg shadow z-10">
+            <img :src="fotoGrande" alt="" class=" w-full sm:max-h-full sm:w-auto border object-cover rounded-lg shadow z-10">
             <!-- Marca de agua -->
             <div oncontextmenu="return false" class="absolute left-0 top-t5% h-full w-full flex justify-center items-center z-50 opacity-25" id="marcaDeAgua">
               <img src="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3" alt="marca de agua">
@@ -433,8 +433,8 @@ export default {
 
 <style scoped>
   #fotos {
-    max-height: calc(65vh);
-    height: 100%;
+    /* max-height: calc(70vh);
+    height: 100%; */
   }
 
   #marcaDeAgua {
