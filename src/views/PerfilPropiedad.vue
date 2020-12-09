@@ -54,6 +54,7 @@
               <span class="block"><b>Distrito:</b> {{ info.s2_nameDttSelected }}</span>
               <span class="block"><b>Dirección:</b> {{ info.s2_address }}</span>
             </p>
+            <p><span class="font-bold">Esta propiedad la han visto:</span> {{ counterVisitas }} {{ counterVisitas | pluralize(counterVisitas)}}</p>
             <div class="flex mt-3 border-t-2 pt-2 pb-2 md:pb-8">
               <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://cr-lotes.com/perfil-propiedad/'+info.propId" target="_blank" class="flex-1 text-right" title="Compartir por WhatsApp">
                 <i class="fas fa-share-alt"></i>
@@ -232,6 +233,7 @@ export default {
       loading: true,
       fotoGrande: '',
       mostrarDocs: false,
+      counterVisitas: 1
     };
   },
   filters: {
@@ -241,6 +243,10 @@ export default {
         let val = (value/1).toFixed(0).replace('.', ',')
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
       }
+    },
+
+    pluralize: function(amount) {
+       return (amount > 1 || amount === 0) ? 'veces' : 'vez'
     }
   },
 
@@ -252,7 +258,7 @@ export default {
       this.selectedCenter = { lat: this.info.s2_lat, lng: this.info.s2_lng };
       this.fotoGrande = this.info.s8_pictures[0].fileUrl;
       this.mostrarDocs = this.info.s7_files.length
-    }else{
+    } else {
       //datos propiedad si el componente se abre navegando
       this.idPropiedad = this.$route.params.id;
       let dPropiedad = db.collection("props").doc(this.idPropiedad);
@@ -263,9 +269,25 @@ export default {
           self.selectedCenter = { lat: docProp.data().s2_lat, lng: docProp.data().s2_lng };
           self.fotoGrande = self.info.s8_pictures[0].fileUrl;
           self.mostrarDocs = self.info.s7_files.length
-          this.visitsCounter()
+          // this.visitsCounter()
+          if(this.info.counterVisitas) {
+            this.counterVisitas = this.info.counterVisitas + 1
+            this.idPropiedad = this.$route.params.id;
+            let doc = db.collection('props').doc(this.idPropiedad);
+            doc.update({
+                'counterVisitas': this.counterVisitas
+            });
+          } else {
+            this.idPropiedad = this.$route.params.id;
+            let doc = db.collection('props').doc(this.idPropiedad);
+            doc.update({
+                'counterVisitas': this.counterVisitas
+            });
+          }
         }).catch(e=>console.error(e))
     }
+
+    
 
     // Capturar datos usuario
     firebase.auth().onAuthStateChanged( user => {
