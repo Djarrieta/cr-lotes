@@ -67,64 +67,65 @@
         </div>
 
     </div>
-    <div class="w-full md:flex md:h-full ms:mb-16 overflow-hidden ">
-      <!-- Mapa -->
-      <div class="relative w-full md:w-1/2 lg:w-1/2 h-64 md:h-auto">
-        <!-- Buscar en esta área -->
-        <button @click="search" class="hidden md:block absolute bottom-0 z-10 bg-white m-2 rounded-lg border border-primary px-4 py-1 text-primary font-bold"><i class="fas fa-sync text-primary mr-1"></i>Buscar en esta área</button>
-        <GmapMap
-            class="w-full h-full"
-            ref="mapRef"
-            :center="center"
-            :zoom="zoom"
-            
-            map-type-id="roadmap"
-            :options="{
-                mapTypeControl: false,
-                streetViewControl: false,
-                rotateControl: false,
-                fullscreenControl: false,
-              }">
-            
-            <GmapMarker
-                v-for="(p,i) in props"                  
-                icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
-                :key=i
-                :position="{lat:p.s2_lat,lng:p.s2_lng}"
-                :clickable="true"
-                :draggable="false"
-                @click="toggleInfoWindow(p, i)"
-            /> 
-            <gmapInfoWindow 
-                :options="infoOptions"
-                :position="infoWindowPos"
-                :opened="infoWinOpen"
-                @closeclick="infoWinOpen=false; selectedMarker=''"
-            >
-                <div v-html="infoContent"></div>
-            </gmapInfoWindow>    
-        </GmapMap>
-      </div>
 
-      <!-- Cards -->
-      <div class="w-full md:w-1/2 lg:w-1/2 h-full  overflow-y-scroll text-center">
-        <ul v-if="!loading" class="grid grid-cols-1 xl:grid-cols-2 2xl:gap-4 gap-2 gap-y-6 justify-items-stretch">
-            <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
-                <Card :prop="prop"  :class="selectedMarker == prop.propId ? 'bg-primary' : 'none'"></Card>
-            </li>
-        </ul>
-        <!-- loading -->
-        <div v-if="loading" class="flex justify-center items-center opacity-25  w-full h-full">
-          <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
+    <div class="w-full flex flex-col-reverse md:flex md:flex-row md:h-full ms:mb-16 overflow-hidden ">
+        <!-- Cards -->
+        <div class="w-full md:w-1/2 lg:w-1/2 h-full  overflow-y-scroll text-center">
+          <ul v-if="!loading" class="grid grid-cols-1 xl:grid-cols-2 2xl:gap-4 gap-2 gap-y-6 justify-items-stretch">
+              <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
+                  <Card :prop="prop"  :class="selectedMarker == prop.propId ? 'bg-primary' : 'none'"></Card>
+              </li>
+          </ul>
+          <!-- loading -->
+          <div v-if="loading" class="flex justify-center items-center opacity-25  w-full h-full">
+            <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
+          </div>
+          <!-- Alerta sin resultados -->
+          <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600 text-center">No hay propiedades en venta en esta área. 
+          Selecciona otra región con los desplegables o mueve el mapa.</div>
+          <!-- see more -->
+          <button v-if="props.length && showSeeMore"  @click="searchMore" class="w-3/4 p-2 focus:outline-none bg-gray-200 shadow-inner my-2 mx-auto rounded-full">
+            Ver más
+          </button>
         </div>
-        <!-- Alerta sin resultados -->
-        <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600 text-center">No hay propiedades en venta en esta área. 
-        Selecciona otra región con los desplegables o mueve el mapa.</div>
-        <!-- see more -->
-        <button v-if="props.length && showSeeMore"  @click="searchMore" class="w-3/4 p-2 focus:outline-none bg-gray-200 shadow-inner my-2 mx-auto rounded-full">
-          Ver más
-        </button>
-      </div>
+
+        <!-- Mapa -->
+        <div class="relative w-full md:w-1/2 lg:w-1/2 h-64 md:h-auto">
+          <!-- Buscar en esta área -->
+          <button @click="search" class="hidden md:block absolute bottom-0 z-10 bg-white m-2 rounded-lg border border-primary px-4 py-1 text-primary font-bold"><i class="fas fa-sync text-primary mr-1"></i>Buscar en esta área</button>
+          <GmapMap
+              class="w-full h-full"
+              ref="mapRef"
+              :center="center"
+              :zoom="zoom"
+              
+              map-type-id="roadmap"
+              :options="{
+                  mapTypeControl: false,
+                  streetViewControl: false,
+                  rotateControl: false,
+                  fullscreenControl: false,
+                }">
+              
+              <GmapMarker
+                  v-for="(p,i) in props"                  
+                  icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
+                  :key=i
+                  :position="{lat:p.s2_lat,lng:p.s2_lng}"
+                  :clickable="true"
+                  :draggable="false"
+                  @click="toggleInfoWindow(p, i)"
+              /> 
+              <gmapInfoWindow 
+                  :options="infoOptions"
+                  :position="infoWindowPos"
+                  :opened="infoWinOpen"
+                  @closeclick="infoWinOpen=false; selectedMarker=''"
+              >
+                  <div v-html="infoContent"></div>
+              </gmapInfoWindow>    
+          </GmapMap>
+        </div>
     </div>
 
   </div>
