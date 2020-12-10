@@ -143,8 +143,8 @@ export default {
   data(){
     return{
         props: [],
-        inicialLoad:6,
-        loadMore:6,
+        inicialLoad:4,
+        loadMore:4,
 
         center:{lat: 10,lng: -83},
         zoom:7,

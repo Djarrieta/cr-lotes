@@ -26,7 +26,7 @@
                     <div class="flex-shrink-0">
                         <!-- small logo -->
                         <router-link to="/" class="hidden sm:block lg:hidden h-8 w-auto text-primary text-2xl  font-bold">
-                            CRL
+                            CR-L
                         </router-link>
 
                         <!-- big logo -->
