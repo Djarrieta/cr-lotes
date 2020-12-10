@@ -107,7 +107,7 @@
       </div>
 
       <!-- Cards -->
-      <div class="w-full md:w-1/2 lg:w-1/2 h-full min-h-screen overflow-y-scroll text-center">
+      <div class="w-full md:w-1/2 lg:w-1/2 h-full  overflow-y-scroll text-center">
         <ul v-if="!loading" class="grid grid-cols-1 xl:grid-cols-2 2xl:gap-4 gap-2 gap-y-6 justify-items-stretch">
             <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
                 <Card :prop="prop"  :class="selectedMarker == prop.propId ? 'bg-primary' : 'none'"></Card>
