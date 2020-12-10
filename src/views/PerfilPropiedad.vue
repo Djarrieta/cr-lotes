@@ -272,7 +272,6 @@ export default {
       this.selectedCenter = { lat: this.info.s2_lat, lng: this.info.s2_lng };
       this.fotoGrande = this.info.s8_pictures[0].fileUrl;
       this.mostrarDocs = this.info.s7_files.length
-      this.loading = false;
     } else {
       //datos propiedad si el componente se abre navegando
       this.idPropiedad = this.$route.params.id;
