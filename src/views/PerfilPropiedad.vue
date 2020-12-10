@@ -189,7 +189,7 @@
             <tr v-if="info.s5_nivel" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Altura de la calle:</td>
               <td class="p-2">
-              <img :src="fotoNivel" />
+              <img :src="fotoNivel" class="max-w-xs"/>
               En su mayoría el lote está con {{info.s5_nivel}}
               </td>
             </tr>

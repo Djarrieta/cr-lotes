@@ -107,14 +107,14 @@
       </div>
 
       <!-- Cards -->
-      <div class="w-full md:w-1/2 lg:w-1/2 h-full overflow-y-scroll text-center">
+      <div class="w-full md:w-1/2 lg:w-1/2 h-full min-h-screen overflow-y-scroll text-center">
         <ul v-if="!loading" class="grid grid-cols-1 xl:grid-cols-2 2xl:gap-4 gap-2 gap-y-6 justify-items-stretch">
             <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
                 <Card :prop="prop"  :class="selectedMarker == prop.propId ? 'bg-primary' : 'none'"></Card>
             </li>
         </ul>
         <!-- loading -->
-        <div v-if="loading" class="flex justify-center items-center opacity-25 mt-4">
+        <div v-if="loading" class="flex justify-center items-center opacity-25  w-full h-full">
           <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
         </div>
         <!-- Alerta sin resultados -->
