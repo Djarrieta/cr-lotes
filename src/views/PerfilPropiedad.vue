@@ -264,7 +264,7 @@ export default {
     }
   },
 
-  created () {
+  created () { 
     let self = this
     //si este componente está metido dentro de confirmación de publicación cargan datos como props si no las busca en con el id
     if(this.infoConfirmacion){
