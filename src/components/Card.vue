@@ -17,15 +17,18 @@
             </p>
         </div>
         <div class="px-6 py-5 bg-white text-left">
-            <p class="font-bold text-md mb-2 uppercase">
+            <p class="font-bold text-md uppercase">
                 {{ prop.s1_title }}
             </p>
-            <p class="font-medium text-md text-primary mb-2">
-                {{ prop.s1_price  | precio }} ₡
+            <p class="text-xs"><span class="font-bold">ID:</span> {{ prop.propId }}</p>
+            <p class="font-medium text-md text-primary">
+                ₡ {{ prop.s1_price  | precio }} 
             </p>
             <p class="text-gray-700 text-base">
-
                 {{ prop.s1_description.substring(0,70)+" ..." }}
+            </p>
+            <p>
+                <span class="font-bold">Propiedad vista:</span> {{ prop.counterVisitas }} {{ prop.counterVisitas | pluralize(prop.counterVisitas) }}
             </p>
             <div class="flex flex-col md:flex-row justify-between mt-5">
                 <p>
@@ -79,6 +82,9 @@ export default {
         numberFormat: function(value){
           let val = (value/1).toFixed(0).replace('.', ',')
           return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        },
+        pluralize: function(amount) {
+            return (amount > 1 || amount === 0) ? 'veces' : 'vez'
         }
     }
 }
