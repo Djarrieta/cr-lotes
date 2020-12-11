@@ -259,6 +259,8 @@ export default {
       this.ctns=[]
       this.dtts=[]
       this.ctns=cantones.filter(c=>c.provincia_id==this.s2_idPrvSelected.id)
+      console.log(document.getElementById('selectCtn'))
+
       setTimeout(() => {
         this.search()
       }, 1000); 
