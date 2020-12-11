@@ -55,54 +55,45 @@
                 </svg>
                 </button> -->
 
-                <!-- Profile menu -->
-                <div class="ml-3 relative z-40">
-                    <div @click="ShowProfileMenu">
-                        <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-white transition duration-150 ease-in-out" id="user-menu" aria-label="User menu" aria-haspopup="true">
-                            <!-- profile picture -->
-                        <img class="h-8 w-8 rounded-full" :src="profilePic">
-                        </button>
-                    </div>
-                    <div 
-                        v-if="profileMenuVisible" 
-                        @mouseleave="ShowProfileMenu"
-                        class="origin-top-right absolute right-t1 -mt-4 w-48 rounded-md shadow-lg">
-                        <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                            <router-link 
-                                :to="{ name: 'Login' }"
-                                v-if="!currentUser"
-                                class="profileMenuElement">
-                                Ingresar</router-link>
-                            <router-link 
-                                :to="{ name: 'SignUp' }"
-                                v-if="!currentUser"
-                                class="profileMenuElement">
-                                Registrarse</router-link>
-                            <router-link
-                                :to="{ name: 'Perfil' }"
-                                v-if="currentUser"
-                                class="profileMenuElement">
-                                {{ displayName }}</router-link>
-                            <router-link 
-                                to="/publicar" 
-                                v-if="currentUser"
-                                class="profileMenuElement">
-                                Publicar</router-link>
-                            <router-link 
-                                to="/admin" 
-                                v-if="currentUser && admin"
-                                class="profileMenuElement">
-                                Administrar</router-link>
-                            <a 
-                                to="/" 
-                                v-if="currentUser"
-                                class="profileMenuElement"
-                                @click="signOut">
-                                Salir</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Profile menu -->
+        <div class="ml-3 relative">
+          <div @click="ShowProfileMenu">
+            <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-white transition duration-150 ease-in-out" id="user-menu" aria-label="User menu" aria-haspopup="true">
+                <!-- profile picture -->
+              <img class="h-8 w-8 rounded-full" :src="profilePic">
+            </button>
+          </div>
+          <div 
+            v-if="profileMenuVisible" 
+            @mouseleave="ShowProfileMenu"
+            class="origin-top-right absolute right-0 mt-1 w-48 rounded-md shadow-lg">
+            <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+                <router-link 
+                    :to="{ name: 'SignIn' }" 
+                    v-if="!currentUser"
+                    class="profileMenuElement">
+                    Ingresar</router-link>
+                <router-link
+                    :to="{ name: 'SignUp' }" 
+                    v-if="!currentUser"
+                    class="profileMenuElement">
+                    Registrarse</router-link>
+                <router-link
+                    :to="{ name: 'Home' }"
+                    v-if="currentUser"
+                    class="profileMenuElement">
+                    {{ currentUser.displayName }}</router-link>
+                <router-link
+                    :to="{ name: 'NewCard' }"
+                    v-if="currentUser"
+                    class="profileMenuElement">
+                    Publicar</router-link>
+                <a 
+                    :to="{ name: 'Home' }"
+                    v-if="currentUser"
+                    class="profileMenuElement"
+                    @click="signOut">
+                    Salir</a>
             </div>
         </div>
 

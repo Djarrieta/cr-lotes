@@ -2,8 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  * {
-    @apply text-gray-700;
-  }
+@layer base {
+	.inputText {
+		@apply rounded-full m-1 p-2 bg-white;
+	}
+	.inputText:focus {
+		@apply bg-white;
+	}
+	.tag {
+		@apply inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2;
+	}
+
+	.inputForm {
+		@apply appearance-none relative block w-full px-3 py-5 border border-gray-300 text-gray-900 rounded;
+	} /* placeholder-gray-500 sm:text-sm lg:text-lg sm:leading-5 */
+	.inputForm:focus {
+		@apply outline-none  border-blue-300 z-10;
+	}
+	.inputForm::placeholder {
+		@apply text-gray-500;
+	}
+
+	.boton-indigo {
+		@apply py-4 px-4 border border-transparent text-lg leading-5 font-medium rounded-md transition duration-150 ease-in-out uppercase text-white bg-indigo-900;
+	}
+	.boton-indigo:hover {
+		@apply bg-indigo-700;
+	}
+	.boton-indigo:focus {
+		@apply outline-none border-indigo-700;
+	}
+	.boton-indigo:active {
+		@apply bg-indigo-700;
+	}
+	.label {
+		@apply block tracking-wide text-base text-blue-900  mb-2;
+	}
+
+	.caja-sombreada {
+		@apply w-full bg-white px-5 py-10 shadow-2xl rounded-2xl;
+	}
+
+	@screen sm {
+		.inputForm {
+			@apply text-sm leading-5;
+		}
+
+		.caja-sombreada {
+			@apply mb-10 px-20;
+		}
+	}
+	@screen md {
+		.caja-sombreada {
+			@apply bg-white px-20 py-20 mt-20  shadow-lg rounded-2xl;
+		}
+	}
+
+	@screen lg {
+		.inputForm {
+			@apply text-lg;
+		}
+	}
 }

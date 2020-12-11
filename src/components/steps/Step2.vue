@@ -107,6 +107,7 @@
 </div>
 </template>
 
+
 <script>
 import provincias from "@/assets/provinciasCR.js"
 import cantones from "@/assets/cantonesCR.js"
