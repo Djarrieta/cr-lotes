@@ -71,9 +71,10 @@
     <div class="w-full flex flex-col-reverse md:flex md:flex-row md:h-full ms:mb-16 overflow-hidden ">
         <!-- Cards -->
         <div class="w-full md:w-1/2 lg:w-1/2 h-full  overflow-y-scroll text-center">
-          <ul v-if="!loading" class="grid grid-cols-1 xl:grid-cols-2 2xl:gap-4 gap-2 gap-y-6 justify-items-stretch">
+          <!-- <ul v-if="!loading" class="grid grid-cols-1 xl:grid-cols-2 2xl:gap-4 gap-2 gap-y-6 justify-items-stretch"> -->
+          <ul v-if="!loading" class="grid grid-cols-1 gap-2 gap-y-6 justify-items-stretch xl:px-5">
               <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
-                  <Card :prop="prop"  :class="selectedMarker == prop.propId ? 'bg-primary' : 'none'"></Card>
+                  <CardHorizontal :prop="prop"  :class="selectedMarker == prop.propId ? 'bg-primary' : 'none'"></CardHorizontal>
               </li>
           </ul>
           <!-- loading -->
@@ -136,11 +137,11 @@ import provincias from "@/assets/provinciasCR.js"
 import cantones from "@/assets/cantonesCR.js"
 import distritos from "@/assets/distritosCR.js"
 
-import Card from "@/components/Card"
+import CardHorizontal from "@/components/CardHorizontal"
 import { db } from "@/main";
 export default {
   name:"Home",
-  components: { Card },
+  components: { CardHorizontal },
   data(){
     return{
         props: [],
