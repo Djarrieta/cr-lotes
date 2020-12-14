@@ -9,7 +9,7 @@
             <div class="px-1">
                 <select 
                     id="selectPrv"
-                    class="focus:outline-none w-full py-3 border-2"
+                    class="focus:outline-none focus:shadow-outline w-full py-3 border-2"
                     v-model="s2_idPrvSelected"
                     @change="SelectPrv">
                     <option disabled value="0"
@@ -30,7 +30,7 @@
             <div class="px-1">
                 <select 
                     id="selectCtn"
-                    class="focus:outline-none w-full py-3 border-2"
+                    class="focus:outline-none focus:shadow-outline w-full py-3 border-2"
                     v-model="s2_idCtnSelected"
                     @change="SelectCtn">
                     <option disabled value="0"
@@ -49,7 +49,7 @@
                 <select 
                     @change="SelectDtt"
                     id="selectDtt"
-                    class="focus:outline-none w-full py-3 border-2"
+                    class="focus:outline-none focus:shadow-outline w-full py-3 border-2"
                     v-model="s2_idDttSelected">
                     <option disabled value="0"
                     class="">Selecciona</option>
@@ -107,10 +107,16 @@
                   rotateControl: false,
                   fullscreenControl: false,
                 }">
-              
+              <!-- icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3" -->
               <GmapMarker
-                  v-for="(p,i) in props"                  
-                  icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
+                  v-for="(p,i) in props"
+                  icon= { scale: 0 }
+                  :label="{
+                    text: p.s1_price,
+                    color: '#000',
+                    fontWeight: 'bold',
+                    fontSize: '14px'
+                  }"
                   :key=i
                   :position="{lat:p.s2_lat,lng:p.s2_lng}"
                   :clickable="true"
@@ -131,7 +137,6 @@
 
   </div>
 </template>
-
 <script>
 import provincias from "@/assets/provinciasCR.js"
 import cantones from "@/assets/cantonesCR.js"
@@ -183,6 +188,12 @@ export default {
     setTimeout(() => {
       this.search()
     }, 1000); 
+  },
+  filters: {
+      numberFormat: function(value){
+        let val = (value/1).toFixed(0).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      }
   },
   watch:{
         s2_idPrvSelected(newId){
@@ -262,17 +273,20 @@ export default {
       this.ctns=cantones.filter(c=>c.provincia_id==this.s2_idPrvSelected.id)
       setTimeout(() => {
         this.search()
+        document.getElementById("selectCtn").focus();
       }, 1000); 
+      
+        // document.getElementById("selectCtn").focus();
     },
     SelectCtn(){
       this.loading=true
-      
       this.props= []
       this.dtts=[]
       this.dtts=distritos.filter(c=>c.canton_id==this.s2_idCtnSelected.id)
 
       setTimeout(() => {
         this.search()
+        document.getElementById("selectDtt").focus();
       }, 1000); 
     },
     SelectDtt(){
