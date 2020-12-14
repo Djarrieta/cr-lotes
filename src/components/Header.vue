@@ -9,17 +9,17 @@
             CRL
           </router-link>
 
-<!--                     <button @click="showLeftMenu" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false"> -->
+          <button @click="showLeftMenu" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false">
 
             <!-- sandwitch Icon when menu is open -->
-<!--                     <svg v-if="!leftMenuVisible" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg v-if="!leftMenuVisible" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg> -->
+          </svg>
           <!-- Close Icon when menu is open -->
-<!--                     <svg v-if="leftMenuVisible" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg v-if="leftMenuVisible" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
-          </button> -->
+          </button>
         </div>
         <!-- Logos -->
         <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
@@ -41,9 +41,11 @@
               <router-link :to="{ name: 'SignUp' }" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Registrarse</router-link>
             </div>
           </div>
-          <div v-if="currentUser" class="md:block ml-0 md:ml-6">
+          <div v-if="!leftMenuVisible" class="md:block ml-0 md:ml-6 hidden">
             <div class="flex">
               <router-link to="/" class="ml-4 mt-2 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-gray-800"><i class="fas fa-home hover:bg-white"></i> Inicio</router-link>
+              <router-link to="/" class="ml-4 mt-2 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-gray-800">Conócenos</router-link>
+              <router-link to="/" class="ml-4 mt-2 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-gray-800">Testimonios</router-link>
             </div>
           </div>
         </div>
@@ -89,6 +91,11 @@
                 class="profileMenuElement">
                 Publicar</router-link>
               <router-link 
+                to="/favoritos" 
+                v-if="currentUser"
+                class="profileMenuElement">
+                Favoritos</router-link>
+              <router-link 
                 to="/admin" 
                 v-if="currentUser && admin"
                 class="profileMenuElement">
@@ -107,12 +114,13 @@
     </div>
 
     <!--  Left Menu only visible on sm -->
-<!--         <div v-if="leftMenuVisible" class="md:hidden ">
+    <div v-if="leftMenuVisible" class="md:hidden ">
       <div class="px-2 pt-2 pb-3">
-      <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Nosotros</a>
-      <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Contacto</a>
+        <router-link to="/" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out"><i class="fas fa-home hover:bg-white"></i> Inicio</router-link>
+        <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Conócenos</a>
+        <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Testimonios</a>
       </div>
-    </div> -->
+    </div>
   </nav>
 </template>
 
@@ -133,15 +141,12 @@ export default {
   computed:{
     profilePic(){
       let pic="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Fuser_40px.png?alt=media&token=3a5e7134-b699-492d-8e65-78c34e59e893"
-
       if(this.currentUser){
         pic="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FuserColor_40px.png?alt=media&token=47c3b3a4-9de5-42a8-91fa-53857aea0526"
       }
-
       if(this.currentUser.photoURL){
         pic=this.currentUser.photoURL
       }
-
       return pic
     }
   },
