@@ -1,5 +1,5 @@
 <template>
-
+    <!-- Esta es la solución de issue prueba -->
   <div class="w-full" id="contenedor">
     <!-- filtros -->
     <div class="container mx-auto py-2 md:flex md:items-center">
