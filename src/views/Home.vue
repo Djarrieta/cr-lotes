@@ -373,7 +373,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
   #contenedor {
     height: calc(100vh - 10.2rem);
   }
