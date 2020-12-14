@@ -91,6 +91,11 @@
                                 class="profileMenuElement">
                                 Publicar</router-link>
                             <router-link 
+                                to="/favoritos" 
+                                v-if="currentUser"
+                                class="profileMenuElement">
+                                Favoritos</router-link>
+                            <router-link 
                                 to="/admin" 
                                 v-if="currentUser && admin"
                                 class="profileMenuElement">

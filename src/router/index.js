@@ -9,6 +9,7 @@ import Profile from '@/views/Profile.vue'
 import Registro from '@/views/Registro.vue'
 import Admin from '@/views/Admin.vue'
 import PerfilPropiedad from '@/views/PerfilPropiedad.vue'
+import Favoritos from '@/views/Favoritos.vue'
 import Error from '@/views/Error.vue'
 import Swal from 'sweetalert2'
 
@@ -47,6 +48,14 @@ const routes = [
     path: '/perfil',
     name: 'Perfil',
     component: Profile,
+    meta:{
+      autentificado:true
+    }
+  },
+  {
+    path: '/favoritos',
+    name: 'Favoritos',
+    component: Favoritos,
     meta:{
       autentificado:true
     }
