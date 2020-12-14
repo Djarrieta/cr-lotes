@@ -116,7 +116,7 @@ export default {
         if (result.isConfirmed) {
           db.collection("props").doc(this.data.propId.toString()).set({
               ...this.data,
-              status:"complete",
+              status:"approvement",
               date:firebase.firestore.FieldValue.serverTimestamp(),
               uid:this.currentUser.uid,
           }).then(()=>{
