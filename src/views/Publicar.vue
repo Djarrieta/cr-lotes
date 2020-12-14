@@ -1,6 +1,8 @@
 <template>
   <div class="container mx-auto max-w-4xl">
-    <StepsIndicator :indicator="indicator"/>
+    <StepsIndicator 
+      @goto="goto"
+      :indicator="indicator"/>
 
     <!-- Título-->
     <Step1 
@@ -54,6 +56,7 @@
       @prev="prev"
       @save="save"
       v-if="indicator===9"/>
+     
   </div>
   
 </template>
@@ -132,9 +135,15 @@ export default {
       if(id){
         db.collection("props").doc(id).get()
         .then((info)=>{
-          this.data={...info.data()}
+          this.data={...info.data(),editing:true}
         }).catch(e=>console.error(e))
       }
+    },
+    goto(selectedIndicator){
+      if(this.data.editing){
+        this.indicator=selectedIndicator
+      }
+      
     }
   }
 }

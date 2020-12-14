@@ -390,11 +390,9 @@ export default {
         this.activatePropFirebase("complete")
       }
     },
-
     showPhoto(data) {
       this.fotoGrande = data
     },
-    
     activatePropFirebase(newStatus){
       Swal.fire({
         title: '¿Estás seguro que quieres modificar el estado de la propiedad?',
@@ -418,7 +416,6 @@ export default {
         }
       })
     },
-
     datosVendedor() {
       if(this.datosUser){
         this.showInfoVendedor = !this.showInfoVendedor
