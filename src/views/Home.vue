@@ -1,5 +1,5 @@
 <template>
-    <!-- Esta es la solución de issue prueba -->
+
   <div class="w-full" id="contenedor">
     <!-- filtros -->
     <div class="container mx-auto py-2 md:flex md:items-center">
@@ -110,12 +110,13 @@
               <!-- icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3" -->
               <GmapMarker
                   v-for="(p,i) in props"
-                  icon= { scale: 0 }
+                  icon= "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FRectangle%2047.png?alt=media&token=981de71a-330d-407d-a971-83624f33c332"
                   :label="{
-                    text: p.s1_price,
-                    color: '#000',
+                    text: p.formatedPrice,
+                    color: '#E61E50',
                     fontWeight: 'bold',
-                    fontSize: '14px'
+                    fontSize: '11px',
+                    
                   }"
                   :key=i
                   :position="{lat:p.s2_lat,lng:p.s2_lng}"
@@ -247,8 +248,7 @@ export default {
       }
     },
     getInfoWindowContent: function (marker) {
-      let precioFormateado = new Intl.NumberFormat().format(marker.s1_price)
-      precioFormateado+= "₡"
+      let precioFormateado = this.formatPrice(marker.s1_price)
 
       return (
         `<div class="text-center">
@@ -294,6 +294,11 @@ export default {
         this.search()
       }, 1000); 
     },
+    formatPrice(price){
+      let precioFormateado = new Intl.NumberFormat().format(price)
+      precioFormateado+= "₡"
+      return precioFormateado
+    },
     search(){
       this.showSeeMore=true
       this.loading=true
@@ -322,7 +327,7 @@ export default {
                         propLat >= minLat &&
                         propLng >= minLng && 
                         counter<this.inicialLoad){
-                          this.props.push(prop.data())
+                          this.props.push({...prop.data(),formatedPrice:this.formatPrice(prop.data().s1_price)})
                           counter++
                         }
                 })
@@ -358,7 +363,7 @@ export default {
                         propLng <= maxLng &&
                         propLat >= minLat &&
                         propLng >= minLng){
-                          this.props.push(prop.data())
+                          this.props.push({...prop.data(),formatedPrice:this.formatPrice(prop.data().s1_price)})
                           this.showSeeMore=true
                           if(counter==this.inicialLoad){return}
                           counter++
