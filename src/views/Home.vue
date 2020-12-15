@@ -255,7 +255,7 @@ export default {
         `<div class="text-center">
           <img class="w-32" src="${marker.s8_pictures[0].fileUrl}">
           <div class="flex justify-between items-center mt-2">
-            <div class="flex flex-col">
+            <div class="flex flex-col mr-2">
               <p class="font-lg text-md text-primary mb-2">
                       ${ this.formatPrice(marker.s1_price) }
               </p>
