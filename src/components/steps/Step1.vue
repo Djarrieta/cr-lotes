@@ -30,7 +30,7 @@
       </div>
       <!-- Area -->
       <div class="my-1">
-        <label class="w-16 ml-2 pl-1 bg-white  text-xs font-bold">Area</label>
+        <label class="w-16 ml-2 pl-1 bg-white  text-xs font-bold">Área</label>
         <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
           <div class="flex">
             <input 
@@ -46,10 +46,10 @@
           </div>
 
           <span 
-            class=" text-xs text-gray-400">
+            class=" text-xs text-gray-800">
               {{ s1_area | numberFormat }} 
-                <span class=" text-xs text-gray-400" v-if="s1_areaUn=='m²'">metros cuad.</span> 
-                <span class=" text-xs text-gray-400" v-if="s1_areaUn=='ha'">hectareas</span> 
+                <span class=" text-xs text-gray-800" v-if="s1_areaUn=='m²'">metros cuad.</span> 
+                <span class=" text-xs text-gray-800" v-if="s1_areaUn=='ha'">hectareas</span> 
           </span>
         </div>
       </div>
@@ -61,7 +61,7 @@
             class="focus:outline-none w-full bg-white px-2"
             v-model="s1_frontSize"
             type="number">
-          <span class=" text-xs text-gray-400">{{ s1_frontSize | numberFormat }} metros </span>
+          <span class=" text-xs text-gray-800">{{ s1_frontSize | numberFormat }} metros </span>
         </div>
       </div>
       <!-- Precio -->
@@ -72,7 +72,20 @@
             class="focus:outline-none w-full bg-white px-2"
             v-model="s1_price"
             type="number">
-          <span class=" text-xs text-gray-400">{{ s1_price | numberFormat }} ₡ </span>
+          <span class=" text-xs text-gray-800">₡ {{ s1_price | numberFormat }} </span>
+        </div>
+      </div>
+      <!-- % descuento -->
+      <div class="my-1">
+        <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Porcentaje de descuento (de 0 a 100)</label>
+        <div class="border  border-gray-300  px-1 rounded bg-white">
+          <input 
+            class="focus:outline-none w-full bg-white px-2"
+            v-model="s1_price_off"
+            type="number"
+            min=0
+            max=100> 
+          <span class=" text-xs text-gray-800">Precio con descuento: ₡ {{ Math.round(s1_price - ((s1_price * s1_price_off) / 100)) | numberFormat }}</span>
         </div>
       </div>
 
@@ -96,12 +109,13 @@ export default {
 		s1_areaUn:"m²",
 		s1_frontSize:null,
     s1_price:null,
+    s1_price_off: 0,
     problems:""
   }
   },
   filters:{
     numberFormat: function(value){
-      let val = (value/1).toFixed(2).replace('.', ',')
+      let val = (value/1).toFixed(0).replace('.', ',')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     }
   },
@@ -114,6 +128,7 @@ export default {
 			s1_areaUn:this.s1_areaUn,
 			s1_frontSize:this.s1_frontSize,
       s1_price:this.s1_price,
+      s1_price_off:this.s1_price_off,
     }
   }
   },
@@ -131,6 +146,7 @@ export default {
 			if(this.data.s1_areaUn){this.s1_areaUn=this.data.s1_areaUn}
 			if(this.data.s1_frontSize){this.s1_frontSize=this.data.s1_frontSize}
       if(this.data.s1_price){this.s1_price=this.data.s1_price}
+      if(this.data.s1_price_off){this.s1_price_off=this.data.s1_price_off}
     }
   },
   mounted(){
@@ -141,6 +157,7 @@ export default {
 			this.s1_areaUn=this.data.s1_areaUn
 			this.s1_frontSize=this.data.s1_frontSize
       this.s1_price=this.data.s1_price
+      this.s1_price_off=this.data.s1_price_off
     }
   },
   methods:{
