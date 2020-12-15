@@ -20,7 +20,7 @@
         </p>
       </div>
 			<!-- Detalles -->
-      <div class="px-6 py-5 bg-white text-left">
+      <div class="px-6 py-3 bg-white text-left">
         <p class="font-bold text-md uppercase">
           {{ prop.s1_title }}
         </p>
@@ -34,17 +34,21 @@
         <p>
           <span class="font-bold">Propiedad vista:</span> {{ prop.counterVisitas }} {{ prop.counterVisitas | pluralize(prop.counterVisitas) }}
         </p>
-        <div class="flex flex-col justify-between mt-3">
+        <div class="flex flex-col justify-between my-3">
 					<!-- Area -->
           <p class="mb-1">
             <i class="fas fa-ruler-combined"></i> {{prop.s1_area | numberFormat}} {{prop.s1_areaUn}}
           </p>
 					<!-- Botones y acciones -->
-          <div class="flex w-full justify-around">
+          <div class="flex w-full justify-between">
 						<!-- Botón Detalles -->
-            <router-link target="_blank" :to="'/perfil-propiedad/'+prop.propId" class="px-2 py-1 mr-5 | border-2 border-primary | text-primary h-7 rounded-md">Detalles</router-link>
+            <router-link target="_blank" :to="'/perfil-propiedad/'+prop.propId" class="py-1 mr-5 | text-primary font-bold | rounded-md">
+              <i class="fas fa-link"></i> Detalles 
+            </router-link>
 						<!-- Compartir -->
-            <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+prop.propId" class="text-gray-900 hover:text-primary | flex  flex-no-wrap items-center" target="_blank" title="Compartir en WhatsApp"><i class="fas fa-share-alt"></i> Compartir</a>
+            <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+prop.propId" class="text-primary font-bold" target="_blank" title="Compartir en WhatsApp">
+              <i class="fab fa-whatsapp"></i> Compartir por WhatsApp
+            </a>
           </div>
         </div>
       </div>
