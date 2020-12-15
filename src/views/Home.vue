@@ -107,10 +107,10 @@
                   rotateControl: false,
                   fullscreenControl: false,
                 }">
-              <!-- icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3" -->
+              
               <GmapMarker
                   v-for="(p,i) in props"
-                  icon= "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FRectangle%2047.png?alt=media&token=981de71a-330d-407d-a971-83624f33c332"
+                  icon= "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FMapMarker.png?alt=media&token=3996fc92-9f31-4b7e-b47e-1ce17f887377"
                   :label="{
                     text: p.formatedPrice,
                     color: '#E61E50',
