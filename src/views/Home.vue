@@ -248,17 +248,22 @@ export default {
       }
     },
     getInfoWindowContent: function (marker) {
-      let precioFormateado = this.formatPrice(marker.s1_price)
+      const priceUn=this.formatPrice(marker.s1_price/marker.s1_area).toString()+"/"+marker.s1_areaUn
 
       return (
+        
         `<div class="text-center">
           <img class="w-32" src="${marker.s8_pictures[0].fileUrl}">
           <div class="flex justify-between items-center mt-2">
-            <p class="font-lg text-md text-orange-600 mb-2">
-                    ${ precioFormateado }
-            </p>
-
-            <a  href="/perfil-propiedad/${marker.propId}" class="bg-blue-800 rounded-full px-2 text-xs text-gray-100">
+            <div class="flex flex-col">
+              <p class="font-lg text-md text-primary mb-2">
+                      ${ this.formatPrice(marker.s1_price) }
+              </p>
+              <p class="font-lg text-md text-primary mb-2">
+                      ${ priceUn }
+              </p>
+            </div>
+            <a target="_blank" href="/perfil-propiedad/${marker.propId}" class="bg-blue-800 rounded-full px-2 text-xs text-gray-100">
               Detalles</a>
           </div>
         </div>
