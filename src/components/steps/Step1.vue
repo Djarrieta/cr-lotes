@@ -90,14 +90,14 @@
       </div>
       <!-- Se alquila -->
       <div class="my-1">
-        <input type="checkbox" v-model="seAlquila" id="seAlquila" value="seAlquila"> <label for="seAlquila">Se alquila</label>
+        <input type="checkbox" v-model="s1_seAlquila" id="seAlquila" value="seAlquila"> <label for="seAlquila">Se alquila</label>
       </div>
       <!-- Precio de alquiler -->
-      <div v-if="seAlquila" class="my-1">
+      <div v-if="s1_seAlquila" class="my-1">
         <label class="w-16 ml-2 pl-1 bg-gray-100  text-base font-bold">Precio de alquiler mensual</label>
         <div class="border  border-gray-300  px-1 rounded bg-white">
           <input 
-            :disabled="seAlquila ? false : true"
+            :disabled="s1_seAlquila ? false : true"
             class="focus:outline-none w-full bg-white px-2 disabled:bg-gray-200"
             v-model="s1_price_alquiler"
             type="number">
@@ -127,7 +127,7 @@ export default {
     s1_price:null,
     s1_price_off: 0,
     s1_price_alquiler: 0,
-    seAlquila: false,
+    s1_seAlquila: false,
     problems:""
   }
   },
@@ -148,6 +148,7 @@ export default {
       s1_price:this.s1_price,
       s1_price_off:this.s1_price_off,
       s1_price_alquiler:this.s1_price_alquiler,
+      s1_seAlquila:this.s1_seAlquila,
     }
   }
   },
@@ -166,6 +167,7 @@ export default {
 			if(this.data.s1_frontSize){this.s1_frontSize=this.data.s1_frontSize}
       if(this.data.s1_price){this.s1_price=this.data.s1_price}
       if(this.data.s1_price_off){this.s1_price_off=this.data.s1_price_off}
+      if(this.data.s1_seAlquila){this.s1_seAlquila=this.data.s1_seAlquila}
       if(this.data.s1_price_alquiler){this.s1_price_alquiler=this.data.s1_price_alquiler}
     }
   },
@@ -178,6 +180,7 @@ export default {
 			this.s1_frontSize=this.data.s1_frontSize
       this.s1_price=this.data.s1_price
       this.s1_price_off=this.data.s1_price_off
+      this.s1_seAlquila=this.data.s1_seAlquila
       this.s1_price_alquiler=this.data.s1_price_alquiler
     }
   },
