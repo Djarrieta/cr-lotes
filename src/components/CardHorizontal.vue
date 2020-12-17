@@ -14,7 +14,7 @@
         <p class="px-5 rounded-lg text-white font-poppins flex justify-between">
           <span class="text-white"><i class="fas fa-map-marked-alt text-white"></i> {{ prop.s2_namePrvSelected }} - {{ prop.s2_nameCtnSelected }}</span>
           <span class="flex">
-            <router-link :to="'/publicar/'+ prop.propId"> <i v-if="prop.uid === idUser.uid" class="fas fa-edit text-primary cursor-pointer mr-2" title="Editar"></i></router-link>
+            <router-link v-if="prop.uid === idUser.uid" :to="'/publicar/'+ prop.propId" class="font-bold">Editar</router-link>
             <Favorito v-if="prop.uid != idUser.uid" :propId="prop.propId" title="Favorito" /> 
           </span>
         </p>
@@ -30,10 +30,10 @@
             <span v-if="prop.s1_price_off">{{ prop.s1_price_off }}% descuento</span>
             <span v-if="prop.s1_price_off">₡ {{ Math.round(prop.s1_price - ((prop.s1_price * prop.s1_price_off) / 100)) | numberFormat }}</span>
         </p>
-        <!-- <p class="text-gray-700 text-base">
+        <p v-if="!prop.s1_price_alquiler" class="text-gray-700 text-base">
           {{ prop.s1_description.substring(0,70)+" ..." }}
-        </p> -->
-        <p v-if="prop.s1_price_alquiler > 0" class="font-medium flex flex-col md:flex md:flex-row md:justify-between my-2">
+        </p>
+        <p v-if="prop.s1_price_alquiler > 0" class="font-medium flex flex-col md:flex md:flex-row md:justify-between">
             <span> Precio alquiler mensual: ₡ {{ prop.s1_price_alquiler  | numberFormat }} </span>  
         </p>
         <p>
@@ -57,12 +57,7 @@
           </div>
         </div>
       </div>
-			<!-- Opciones vendendor -->
-      <div class="px-6 py-5 flex justify-between bg-white" v-if="prop.uid===idUser.uid">
-        <StatusProp :propId="prop.propId"></StatusProp>
-        <StatusVendido :propId="prop.propId"></StatusVendido>
-        <Subastar :propId="prop.propId"></Subastar>
-      </div>
+			
     </div>
   </section>
 </template>
@@ -70,12 +65,9 @@
 <script>
 import firebase from "firebase"
 import Favorito from "@/components/Favorito"
-import StatusProp from "@/components/StatusProp"
-import StatusVendido from "@/components/StatusVendido"
-import Subastar from "@/components/Subastar"
 export default {
   name:"CardHorizontal",
-  components: { Favorito, StatusProp, StatusVendido, Subastar },
+  components: { Favorito },
   props:["prop"],
   data(){
     return {
@@ -94,7 +86,6 @@ export default {
   },
   filters: {
     precio: function(value){
-      // let precioFormateado = new Intl.NumberFormat().format(val)
       let val = (value/1).toFixed(0).replace('.', ',')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
@@ -108,7 +99,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
