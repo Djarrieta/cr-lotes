@@ -8,7 +8,7 @@
     <div class="flex flex-col p-4">
       <!-- Título -->
       <div class="my-1">
-        <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Título</label>
+        <label class="w-16 ml-2 pl-1 bg-gray-100  text-base font-bold">Título</label>
         <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
           <input 
             class="focus:outline-none w-full bg-white px-2"
@@ -19,7 +19,7 @@
          <!-- Descripción -->
       </div>
       <div class="my-1">
-        <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Descripción</label>
+        <label class="w-16 ml-2 pl-1 bg-gray-100  text-base font-bold">Descripción</label>
         <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
           <textarea
           v-model="s1_description"
@@ -30,7 +30,7 @@
       </div>
       <!-- Area -->
       <div class="my-1">
-        <label class="w-16 ml-2 pl-1 bg-white  text-xs font-bold">Área</label>
+        <label class="w-16 ml-2 pl-1 bg-white  text-base font-bold">Área</label>
         <div class="border  border-gray-300 py-2 px-1 rounded bg-white">
           <div class="flex">
             <input 
@@ -46,38 +46,38 @@
           </div>
 
           <span 
-            class=" text-xs text-gray-800">
+            class=" text-base text-gray-800">
               {{ s1_area | numberFormat }} 
-                <span class=" text-xs text-gray-800" v-if="s1_areaUn=='m²'">metros cuad.</span> 
-                <span class=" text-xs text-gray-800" v-if="s1_areaUn=='ha'">hectareas</span> 
+                <span class=" text-base text-gray-800" v-if="s1_areaUn=='m²'">metros cuad.</span> 
+                <span class=" text-base text-gray-800" v-if="s1_areaUn=='ha'">hectareas</span> 
           </span>
         </div>
       </div>
       <!-- Frente -->
       <div class="my-1">
-        <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Medida Frente</label>
+        <label class="w-16 ml-2 pl-1 bg-gray-100  text-base font-bold">Medida Frente</label>
         <div class="border  border-gray-300  px-1 rounded bg-white">
           <input 
             class="focus:outline-none w-full bg-white px-2"
             v-model="s1_frontSize"
             type="number">
-          <span class=" text-xs text-gray-800">{{ s1_frontSize | numberFormat }} metros </span>
+          <span class=" text-base text-gray-800">{{ s1_frontSize | numberFormat }} metros </span>
         </div>
       </div>
       <!-- Precio -->
       <div class="my-1">
-        <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Precio</label>
+        <label class="w-16 ml-2 pl-1 bg-gray-100  text-base font-bold">Precio</label>
         <div class="border  border-gray-300  px-1 rounded bg-white">
           <input 
             class="focus:outline-none w-full bg-white px-2"
             v-model="s1_price"
             type="number">
-          <span class=" text-xs text-gray-800">₡ {{ s1_price | numberFormat }} </span>
+          <span class=" text-base text-gray-800">₡ {{ s1_price | numberFormat }} </span>
         </div>
       </div>
       <!-- % descuento -->
       <div class="my-1">
-        <label class="w-16 ml-2 pl-1 bg-gray-100  text-xs font-bold">Porcentaje de descuento (de 0 a 100)</label>
+        <label class="w-16 ml-2 pl-1 bg-gray-100  text-base font-bold">Porcentaje de descuento (de 0 a 100)</label>
         <div class="border  border-gray-300  px-1 rounded bg-white">
           <input 
             class="focus:outline-none w-full bg-white px-2"
@@ -85,7 +85,23 @@
             type="number"
             min=0
             max=100> 
-          <span class=" text-xs text-gray-800">Precio con descuento: ₡ {{ Math.round(s1_price - ((s1_price * s1_price_off) / 100)) | numberFormat }}</span>
+          <span class=" text-base text-gray-800">Precio con descuento: ₡ {{ Math.round(s1_price - ((s1_price * s1_price_off) / 100)) | numberFormat }}</span>
+        </div>
+      </div>
+      <!-- Se alquila -->
+      <div class="my-1">
+        <input type="checkbox" v-model="seAlquila" id="seAlquila" value="seAlquila"> <label for="seAlquila">Se alquila</label>
+      </div>
+      <!-- Precio de alquiler -->
+      <div v-if="seAlquila" class="my-1">
+        <label class="w-16 ml-2 pl-1 bg-gray-100  text-base font-bold">Precio de alquiler mensual</label>
+        <div class="border  border-gray-300  px-1 rounded bg-white">
+          <input 
+            :disabled="seAlquila ? false : true"
+            class="focus:outline-none w-full bg-white px-2 disabled:bg-gray-200"
+            v-model="s1_price_alquiler"
+            type="number">
+          <span class=" text-base text-gray-800">₡ {{ s1_price_alquiler | numberFormat }} </span>
         </div>
       </div>
 
@@ -110,6 +126,8 @@ export default {
 		s1_frontSize:null,
     s1_price:null,
     s1_price_off: 0,
+    s1_price_alquiler: 0,
+    seAlquila: false,
     problems:""
   }
   },
@@ -129,6 +147,7 @@ export default {
 			s1_frontSize:this.s1_frontSize,
       s1_price:this.s1_price,
       s1_price_off:this.s1_price_off,
+      s1_price_alquiler:this.s1_price_alquiler,
     }
   }
   },
@@ -147,6 +166,7 @@ export default {
 			if(this.data.s1_frontSize){this.s1_frontSize=this.data.s1_frontSize}
       if(this.data.s1_price){this.s1_price=this.data.s1_price}
       if(this.data.s1_price_off){this.s1_price_off=this.data.s1_price_off}
+      if(this.data.s1_price_alquiler){this.s1_price_alquiler=this.data.s1_price_alquiler}
     }
   },
   mounted(){
@@ -158,6 +178,7 @@ export default {
 			this.s1_frontSize=this.data.s1_frontSize
       this.s1_price=this.data.s1_price
       this.s1_price_off=this.data.s1_price_off
+      this.s1_price_alquiler=this.data.s1_price_alquiler
     }
   },
   methods:{

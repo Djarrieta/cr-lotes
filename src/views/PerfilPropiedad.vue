@@ -88,6 +88,9 @@
                <span v-if="info.s1_price_off">{{ info.s1_price_off }}% descuento</span>
                <span v-if="info.s1_price_off">₡ {{ Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) | numberFormat }}</span>
             </p>
+            <p v-if="info.s1_price_alquiler > 0" class="font-medium text-lg text-primary flex flex-col md:flex md:flex-row md:justify-between my-2">
+               <span> Precio alquiler mensual: ₡ {{ info.s1_price_alquiler  | numberFormat }} </span>  
+            </p>
             <p v-if="!info.s1_price_off">
               <b>Valor por {{ info.s1_areaUn }}:</b> ₡ {{ (info.s1_price/info.s1_area)  | numberFormat }}
             </p>
@@ -109,7 +112,7 @@
 
       <!-- Opciones vendedor -->
       <template v-if="ownProp === true">
-        <section class="my-5 lg:container m-auto mt-10 py-10 border-b-2 border-t-2">
+        <section class="my-5 lg:container m-auto mt-10 py-10 border-t-2">
           <h2 class="mx-5 lg:mx-0 text-2xl font-bold pb-5">Opciones de vendedor</h2>
           <div class="mx-5 lg:mx-0 md:flex md:justify-between space-y-4 md:space-y-0">
             <StatusProp :propId="info.propId"></StatusProp>
@@ -174,6 +177,32 @@
             <tr v-if="info.s1_area" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Área de terreno</td>
               <td class="p-2">{{ info.s1_area | numberFormat }} {{ info.s1_areaUn }}</td>
+            </tr>
+            <!-- Precio de venta -->
+            <tr v-if="info.s1_price" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Precio de venta</td>
+              <td class="p-2">
+                <span :class="[info.s1_price_off > 0 ? 'line-through text-primary' : 'font-bold']"> ₡{{ info.s1_price  | numberFormat }} </span>  
+                <span v-if="info.s1_price_off"> {{ info.s1_price_off }}% descuento</span>
+                <span v-if="info.s1_price_off" class="font-bold text-green-700"> ₡{{ Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) | numberFormat }}</span>
+              </td>
+            </tr>
+            <!-- Precio de venta -->
+            <tr v-if="info.s1_price" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Valor por {{ info.s1_areaUn }}</td>
+              <td class="p-2">
+                <span v-if="!info.s1_price_off">
+                  ₡ {{ (info.s1_price/info.s1_area)  | numberFormat }}
+                </span>
+                <span v-if="info.s1_price_off">
+                  ₡ {{ (Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) / info.s1_area)  | numberFormat }}
+                </span>
+              </td>
+            </tr>
+            <!-- Precio de alquiler -->
+            <tr v-if="info.s1_price_alquiler" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Precio mensual de alquiler</td>
+              <td class="p-2">₡{{ info.s1_price_alquiler | numberFormat }}</td>
             </tr>
             <!-- Comodidades -->
             <tr v-if="info.s6_assets" class="border">
