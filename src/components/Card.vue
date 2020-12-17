@@ -29,6 +29,9 @@
             <p class="text-gray-700 text-base">
                 {{ prop.s1_description.substring(0,70)+" ..." }}
             </p>
+            <p v-if="prop.s1_price_alquiler > 0" class="font-medium flex flex-col md:flex md:flex-row md:justify-between my-2">
+                <span> Precio alquiler mensual: ₡ {{ prop.s1_price_alquiler  | numberFormat }} </span>  
+            </p>
             <p>
                 <span class="font-bold">Propiedad vista:</span> {{ prop.counterVisitas }} {{ prop.counterVisitas | pluralize(prop.counterVisitas) }}
             </p>
