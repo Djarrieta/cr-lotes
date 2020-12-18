@@ -103,7 +103,14 @@
                 <!-- Datos -->
                 <td class="flex flex-col sm:w-1/5">
                   <span class="text-lg">{{p.propId}}</span>
-                  <span class="text-primary sm:hidden">₡ {{p.s1_price | numberFormat}}</span> 
+                  <!-- Precio -->
+                  <div>
+                    <span 
+                      class="text-primary sm:hidden" 
+                      :class="p.s1_price_off ? 'line-through text-xs' : 'none'">₡ {{p.s1_price | numberFormat}}  </span> 
+                      <span class="sm:hidden" v-if="p.s1_price_off"> {{p.s1_price_off}}% </span>
+                  </div>
+                  <span v-if="p.s1_price_off" class=" text-green-700 sm:hidden">₡ {{Math.round(p.s1_price - ((p.s1_price * p.s1_price_off) / 100)) | numberFormat }}</span>
                   <!-- Creado -->
                   <div class="text-xs sm:hidden">
                     <span class="font-bold">Creado:</span>
@@ -116,9 +123,9 @@
                   </div>
                 </td>
                 <!-- Fecha -->
-                <td class="hidden | sm:flex flex-col | sm:w-1/5">
+                <td class="hidden | sm:flex flex-col | sm:w-1/5 text-xs">
                   <div>
-                    <span class="font-bold">Creado:</span>
+                    <span class="font-bold text-sx">Creado:</span>
                     <span>{{ p.date | dateFormat }}</span>
                   </div>
                   <div>
@@ -127,8 +134,14 @@
                   </div>
                 </td>
                 <!-- precio -->
-                <td class="hidden sm:block text-primary | sm:w-1/5">
-                  ₡{{p.s1_price | numberFormat}}
+                <td class="hidden sm:block text-primary | sm:w-1/5 ml-2">
+                  <div>
+                    <span 
+                      class="text-primary " 
+                      :class="p.s1_price_off ? 'line-through text-xs' : 'none'">₡ {{p.s1_price | numberFormat}}  </span> 
+                      <span class="" v-if="p.s1_price_off"> {{p.s1_price_off}}% </span>
+                  </div>
+                  <span v-if="p.s1_price_off" class=" text-green-700 ">₡ {{Math.round(p.s1_price - ((p.s1_price * p.s1_price_off) / 100)) | numberFormat }}</span>
                 </td>
                 <!-- Estados -->
                 <td class="flex flex-col mx-2 | sm:w-1/5">

@@ -56,7 +56,6 @@
       @prev="prev"
       @save="save"
       v-if="indicator===9"/>
-     
   </div>
   
 </template>
@@ -109,15 +108,18 @@ export default {
     save(){
       Swal.fire({
         title: '¿Quieres guardar los cambios?',
+        text:"Tu publicación pasará a revisión por parte de nuestro equipo. Una vez sea aprobada, podrás ver la publicación en nuestro portal.",
         showDenyButton: true,
         confirmButtonText: `Guardar`,
         denyButtonText: `No guardar`,
       }).then((result) => {
         if (result.isConfirmed) {
+          const currentDate=firebase.firestore.FieldValue.serverTimestamp()
           db.collection("props").doc(this.data.propId.toString()).set({
               ...this.data,
               status:"Aprobación",
-              date:firebase.firestore.FieldValue.serverTimestamp(),
+              date:currentDate,
+              dateMod:currentDate,
               uid:this.currentUser.uid,
           }).then(()=>{
             Swal.fire('Guardado!', '', 'success')
