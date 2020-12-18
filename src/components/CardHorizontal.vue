@@ -54,6 +54,8 @@
             <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+prop.propId" class="text-primary font-bold" target="_blank" title="Compartir en WhatsApp">
               <i class="fab fa-whatsapp"></i> Compartir por WhatsApp
             </a>
+            <!-- Ubicar En Mapa -->
+            <span @click="locateMarker"><i class="fas fa-search-location"></i></span>
           </div>
         </div>
       </div>
@@ -95,6 +97,11 @@ export default {
     },
     pluralize: function(amount) {
       return (amount > 1 || amount === 0) ? 'veces' : 'vez'
+    }
+  },
+  methods:{
+    locateMarker(){
+      this.$emit("locateMarker")
     }
   }
 }

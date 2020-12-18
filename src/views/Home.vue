@@ -74,7 +74,9 @@
           <!-- <ul v-if="!loading" class="grid grid-cols-1 xl:grid-cols-2 2xl:gap-4 gap-2 gap-y-6 justify-items-stretch"> -->
           <ul v-if="!loading" class="grid grid-cols-1 gap-2 gap-y-6 justify-items-stretch xl:px-5">
               <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
-                  <CardHorizontal :prop="prop"  :class="selectedMarker == prop.propId ? 'bg-primary' : 'none'"></CardHorizontal>
+                  <CardHorizontal 
+                  @mouseenter="locateMarker(prop.propId)"
+                  @locateMarker="locateMarker(prop.propId)" :prop="prop"  :class="selectedMarker == prop.propId ? 'bg-primary' : 'none'"></CardHorizontal>
               </li>
           </ul>
           <!-- loading -->
@@ -110,7 +112,7 @@
               
               <GmapMarker
                   v-for="(p,i) in props"
-                  icon= "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FMapMarker.png?alt=media&token=3996fc92-9f31-4b7e-b47e-1ce17f887377"
+                  :icon= p.markerIcon
                   :label="{
                     text: p.formatedPrice,
                     color: '#E61E50',
@@ -180,6 +182,7 @@ export default {
           }
         },
         selectedMarker:"",
+        selectedCard:"",
 
         showSeeMore:true,
         loading:true,
@@ -197,33 +200,42 @@ export default {
       }
   },
   watch:{
-        s2_idPrvSelected(newId){
-            const lat =Number(newId.pos.split(", ")[0])
-            const lng =Number(newId.pos.split(", ")[1])
-            this.center={lat,lng}
-            this.zoom=10
-            
-            const e=document.getElementById("selectPrv")
-            this.s2_namePrvSelected= e.options[e.selectedIndex].text
-        },
-        s2_idCtnSelected(newId){
-            const lat =Number(newId.pos.split(", ")[0])
-            const lng =Number(newId.pos.split(", ")[1])
-            this.center={lat,lng}
-            this.zoom=12
+    s2_idPrvSelected(newId){
+        const lat =Number(newId.pos.split(", ")[0])
+        const lng =Number(newId.pos.split(", ")[1])
+        this.center={lat,lng}
+        this.zoom=10
+        
+        const e=document.getElementById("selectPrv")
+        this.s2_namePrvSelected= e.options[e.selectedIndex].text
+    },
+    s2_idCtnSelected(newId){
+        const lat =Number(newId.pos.split(", ")[0])
+        const lng =Number(newId.pos.split(", ")[1])
+        this.center={lat,lng}
+        this.zoom=12
 
-            const e=document.getElementById("selectCtn")
-            this.s2_nameCtnSelected= e.options[e.selectedIndex].text
-        },
-        s2_idDttSelected(newId){
-            const lat =Number(newId.pos.split(", ")[0])
-            const lng =Number(newId.pos.split(", ")[1])
-            this.center={lat,lng}
-            this.zoom=14
+        const e=document.getElementById("selectCtn")
+        this.s2_nameCtnSelected= e.options[e.selectedIndex].text
+    },
+    s2_idDttSelected(newId){
+        const lat =Number(newId.pos.split(", ")[0])
+        const lng =Number(newId.pos.split(", ")[1])
+        this.center={lat,lng}
+        this.zoom=14
 
-            const e=document.getElementById("selectDtt")
-            this.s2_nameDttSelected= e.options[e.selectedIndex].text
-        },
+        const e=document.getElementById("selectDtt")
+        this.s2_nameDttSelected= e.options[e.selectedIndex].text
+    },
+    selectedCard(newId){
+      this.props.forEach((p,i)=>{
+        if(p.propId===newId){
+          this.props[i].markerIcon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FMapMarkerSelected.png?alt=media&token=a7f53c7b-4052-4ca2-b36a-ecdaf54f1b11"
+        }else{
+          this.props[i].markerIcon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FMapMarker.png?alt=media&token=3996fc92-9f31-4b7e-b47e-1ce17f887377"
+        }
+      })
+    }
   },
   methods:{
     toggleInfoWindow: function (marker, idx) {
@@ -332,7 +344,10 @@ export default {
                         propLat >= minLat &&
                         propLng >= minLng && 
                         counter<this.inicialLoad){
-                          this.props.push({...prop.data(),formatedPrice:this.formatPrice(prop.data().s1_price)})
+                          this.props.push({
+                            ...prop.data(),
+                            formatedPrice:this.formatPrice(prop.data().s1_price),
+                            markerIcon:"https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FMapMarker.png?alt=media&token=3996fc92-9f31-4b7e-b47e-1ce17f887377"})
                           counter++
                         }
                 })
@@ -368,7 +383,10 @@ export default {
                         propLng <= maxLng &&
                         propLat >= minLat &&
                         propLng >= minLng){
-                          this.props.push({...prop.data(),formatedPrice:this.formatPrice(prop.data().s1_price)})
+                          this.props.push({
+                            ...prop.data(),
+                            formatedPrice:this.formatPrice(prop.data().s1_price),
+                            markerIcon:"https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FMapMarker.png?alt=media&token=3996fc92-9f31-4b7e-b47e-1ce17f887377"})
                           this.showSeeMore=true
                           if(counter==this.inicialLoad){return}
                           counter++
@@ -392,6 +410,10 @@ export default {
       setTimeout(() => {
         this.search()
       }, 1000); 
+    },
+    locateMarker(propId){
+      console.log("hola")
+      this.selectedCard=propId
     }
   }
 }
