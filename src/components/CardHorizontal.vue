@@ -14,46 +14,50 @@
         <p class="px-5 rounded-lg text-white font-poppins flex justify-between">
           <span class="text-white"><i class="fas fa-map-marked-alt text-white"></i> {{ prop.s2_namePrvSelected }} - {{ prop.s2_nameCtnSelected }}</span>
           <span class="flex">
-            <router-link :to="'/publicar/'+ prop.propId"> <i v-if="prop.uid === idUser.uid" class="fas fa-edit text-primary cursor-pointer mr-2" title="Editar"></i></router-link>
+            <router-link v-if="prop.uid === idUser.uid" :to="'/publicar/'+ prop.propId" class="font-bold">Editar</router-link>
             <Favorito v-if="prop.uid != idUser.uid" :propId="prop.propId" title="Favorito" /> 
           </span>
         </p>
       </div>
 			<!-- Detalles -->
-      <div class="px-6 py-5 bg-white text-left">
+      <div class="px-6 py-3 bg-white text-left">
         <p class="font-bold text-md uppercase">
           {{ prop.s1_title }}
         </p>
         <p class="text-xs"><span class="font-bold">ID:</span> {{ prop.propId }}</p>
-        <p class="font-medium text-md text-primary">
-          ₡ {{ prop.s1_price  | precio }} 
+        <p class="font-medium text-md text-primary flex flex-col md:flex md:flex-row md:justify-between">
+            <span :class="[prop.s1_price_off > 0 ? 'line-through  text-primary' : ' text-primary']"> ₡ {{ prop.s1_price  | precio }} </span>  
+            <span v-if="prop.s1_price_off">{{ prop.s1_price_off }}% descuento</span>
+            <span v-if="prop.s1_price_off">₡ {{ Math.round(prop.s1_price - ((prop.s1_price * prop.s1_price_off) / 100)) | numberFormat }}</span>
         </p>
-        <p class="text-gray-700 text-base">
+        <p v-if="!prop.s1_price_alquiler" class="text-gray-700 text-base">
           {{ prop.s1_description.substring(0,70)+" ..." }}
+        </p>
+        <p v-if="prop.s1_price_alquiler > 0" class="font-medium flex flex-col md:flex md:flex-row md:justify-between">
+            <span> Precio alquiler mensual: ₡ {{ prop.s1_price_alquiler  | numberFormat }} </span>  
         </p>
         <p>
           <span class="font-bold">Propiedad vista:</span> {{ prop.counterVisitas }} {{ prop.counterVisitas | pluralize(prop.counterVisitas) }}
         </p>
-        <div class="flex flex-col justify-between mt-3">
+        <div class="flex flex-col justify-between my-3">
 					<!-- Area -->
           <p class="mb-1">
             <i class="fas fa-ruler-combined"></i> {{prop.s1_area | numberFormat}} {{prop.s1_areaUn}}
           </p>
 					<!-- Botones y acciones -->
-          <div class="flex w-full justify-around">
+          <div class="flex w-full justify-between">
 						<!-- Botón Detalles -->
-            <router-link target="_blank" :to="'/perfil-propiedad/'+prop.propId" class="px-2 py-1 mr-5 | border-2 border-primary | text-primary h-7 rounded-md">Detalles</router-link>
+            <router-link target="_blank" :to="'/perfil-propiedad/'+prop.propId" class="py-1 mr-5 | text-primary font-bold | rounded-md">
+              <i class="fas fa-link"></i> Detalles 
+            </router-link>
 						<!-- Compartir -->
-            <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+prop.propId" class="text-gray-900 hover:text-primary | flex  flex-no-wrap items-center" target="_blank" title="Compartir en WhatsApp"><i class="fas fa-share-alt"></i> Compartir</a>
+            <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://localhost:8080/perfil-propiedad/'+prop.propId" class="text-primary font-bold" target="_blank" title="Compartir en WhatsApp">
+              <i class="fab fa-whatsapp"></i> Compartir por WhatsApp
+            </a>
           </div>
         </div>
       </div>
-			<!-- Opciones vendendor -->
-      <div class="px-6 py-5 flex justify-between bg-white" v-if="prop.uid===idUser.uid">
-        <StatusProp :propId="prop.propId"></StatusProp>
-        <StatusVendido :propId="prop.propId"></StatusVendido>
-        <Subastar :propId="prop.propId"></Subastar>
-      </div>
+			
     </div>
   </section>
 </template>
@@ -61,12 +65,9 @@
 <script>
 import firebase from "firebase"
 import Favorito from "@/components/Favorito"
-import StatusProp from "@/components/StatusProp"
-import StatusVendido from "@/components/StatusVendido"
-import Subastar from "@/components/Subastar"
 export default {
   name:"CardHorizontal",
-  components: { Favorito, StatusProp, StatusVendido, Subastar },
+  components: { Favorito },
   props:["prop"],
   data(){
     return {
@@ -85,7 +86,6 @@ export default {
   },
   filters: {
     precio: function(value){
-      // let precioFormateado = new Intl.NumberFormat().format(val)
       let val = (value/1).toFixed(0).replace('.', ',')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
@@ -99,7 +99,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

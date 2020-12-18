@@ -10,53 +10,94 @@
       <section class="container mx-auto mt-5">
       </section>
 
-      <!-- Fotos -->
-      <section class="lg:flex my-5 md:container mx-auto" >
-        <div class="mx-5 lg:w-4/6 flex">
-          <ul class="w-1/12 h-full">
-            <li 
-              v-for="foto in info.s8_pictures" 
-              :key="foto.title"
-              >
-              <!-- Imagenes pequeñas -->
-              <img
-                oncontextmenu="return false"
-                class="w-full object-cover border rounded-lg md:mb-2 cursor-pointer"
-                :src="foto.fileUrl"
-                :class="foto.fileUrl===fotoGrande ? ' border-primary' : 'none'"
-                :alt="foto.title"
-                @click="showPhoto(foto.fileUrl)"
-              />
-            </li>
-          </ul>
-          <!-- Imagen Grande -->
-          <div 
-            class="w-11/12 ml-2 flex">
-              <div class=" w-auto relative">
-                <img 
-                  id="fotos"
-                  :src="fotoGrande" 
-                  alt="foto grande"
-                  class="  border rounded-lg shadow z-10">
-                <div 
-                  oncontextmenu="return false" 
-                  class="absolute left-0 top-t5% h-full w-full flex justify-center items-center z-50 opacity-25">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3" alt="marca de agua">
-                  <span class="text-2xl sm:text-5xl text-primary font-bold ml-2">CR-Lotes</span> 
-                </div>
-              </div>
-              <div></div><!-- este div vacío corrige el ancho del div contenedor de la foto -->
-              
+      <section id="presentacionPropiedad" class="mx-5 md:container md:mx-auto">
+        <h1 class="text-xl font-bold uppercase tracking-widest">{{ info.s1_title }}</h1>
+        <div class="flex flex-col md:flex-row md:justify-between">
+          <p>
+            <span title="Provincia">{{ info.s2_namePrvSelected }}</span> / <span title="Cantón">{{ info.s2_nameCtnSelected }}</span> / <span title="Distrito">{{ info.s2_nameDttSelected }}</span>
+          </p>
+          <div class="flex">
+            <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://cr-lotes.com/perfil-propiedad/'+info.propId" target="_blank" class="text-right" title="Compartir por WhatsApp">
+              <i class="fab fa-whatsapp"></i> Compartir por WhatsApp
+            </a>
+            <Favorito v-if="ownProp === false" class="text-left pl-10" :propId="info.propId" title="Favorito" />
           </div>
-          
+        </div>
+      </section>
+
+      <!-- Fotos se muestran todas -->
+      <section class="md:container mx-auto my-5 | max-w-xs  md:gap-4 | overflow-hidden | bg-white shadow-md rounded-xl relative" :class="[info.s8_pictures.length === 1 ? 'md:grid-rows-1 md:grid-cols-4' : 'md:grid md:grid-rows-2 md:grid-cols-4']">
+        <div oncontextmenu="return false" class="row-span-2 col-span-2 | h-48 lg:w-full md:h-128">
+          <img :src="info.s8_pictures[0].fileUrl" :alt="info.s8_pictures[0].title" class="object-cover | w-full h-full">
+          <div 
+            oncontextmenu="return false" 
+            class="absolute left-0 top-t5% h-full w-full flex justify-center items-center z-50 opacity-25">
+            <img src="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3" alt="marca de agua">
+            <span class="text-2xl sm:text-5xl text-primary font-bold ml-2">CR-Lotes</span> 
+          </div>
+        </div>
+        <div v-for="(foto, index) in fotos1a5" :key="index">
+          <div v-if="foto.fileUrl" oncontextmenu="return false" class="row-span-1 col-span-1 | bg-primary | h-48 md:h-64">
+            <img :src="foto.fileUrl" :alt="index" class="object-fill | h-full w-full">
+          </div>
+          <div v-if="!foto.fileUrl" oncontextmenu="return false" class="row-span-1 col-span-1 | bg-gray-100 | h-48 md:h-64 | grid justify-items-center items-center">
+            <div class="flex">
+              <img src="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3" alt="marca de agua">
+              <p class="text-center w-full ml-2 pt-1">
+                CR-LOTES
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ubicación y info principal -->
+      <section class="lg:flex my-10 md:container mx-auto" >
+        <div class="mx-5 lg:w-4/6">
+          <h2 class="mx-5 lg:mx-0 text-2xl font-bold pb-5">Ubicación</h2>
+          <GmapMap
+          :center="selectedCenter"
+          :zoom="selectedZoom"
+          mapTypeControl="false"
+          :options="{
+                  mapTypeControl: false,
+                  streetViewControl: false,
+                  rotateControl: false,
+                  fullscreenControl: false,
+                }"
+          class="w-full h-64 rounded-lg shadow-lg"
+          ref="mapRef"
+          >
+          <GmapMarker
+          :position="selectedCenter"
+          :draggable="false"
+          icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
+          ref="GoogleMrkr"
+          />
+          </GmapMap>
         </div>
       
         <!-- Datos -->
         <div class="lg:w-2/6">
-          <div class="px-5 pt-5 md:px-10 md:pt-10 mx-5 mt-5 lg:mx-0 md:mt-10 lg:mt-0 rounded-md overflow-hidden border bg-white shadow">
+          <div class="px-5 py-5 md:px-10 md:py-12 mx-5 mt-5 lg:mx-0 md:mt-10 lg:mt-0 | rounded-md border bg-white shadow | overflow-hidden">
             <h1 class="text-lg font-bold uppercase">{{ info.s1_title }}</h1>
             <p>{{ info.s1_description }}</p>
-            <p class="font-medium text-lg text-primary my-2" v-if="info.s1_price">{{ info.s1_price | numberFormat }} ₡</p>
+            <!-- <p class="font-medium text-lg text-primary my-2" v-if="info.s1_price">{{ info.s1_price | numberFormat }} ₡</p> -->
+            <p class="font-medium text-lg text-primary flex flex-col md:flex md:flex-row md:justify-between my-2">
+               <span :class="[info.s1_price_off > 0 ? 'line-through text-primary' : ' text-primary']"> ₡ {{ info.s1_price  | numberFormat }} </span>  
+               <span v-if="info.s1_price_off">{{ info.s1_price_off }}% descuento</span>
+               <span v-if="info.s1_price_off">₡ {{ Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) | numberFormat }}</span>
+            </p>
+            <p v-if="info.s1_price_alquiler > 0" class="font-medium text-lg text-primary flex flex-col md:flex md:flex-row md:justify-between my-2">
+               <span> Precio alquiler mensual: ₡ {{ info.s1_price_alquiler  | numberFormat }} </span>  
+            </p>
+            <p v-if="!info.s1_price_off">
+              <b>Valor por {{ info.s1_areaUn }}:</b> ₡ {{ (info.s1_price/info.s1_area)  | numberFormat }}
+            </p>
+            <p v-if="info.s1_price_off">
+              <b>Valor por {{ info.s1_areaUn }}:</b> 
+              ₡ {{ (Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) / info.s1_area)  | numberFormat }}
+            </p>
             <p>
               <span class="block"><b>Provincia:</b> {{ info.s2_namePrvSelected }}</span>
               <span class="block"><b>Cantón:</b> {{ info.s2_nameCtnSelected }}</span>
@@ -64,19 +105,14 @@
               <span class="block"><b>Dirección:</b> {{ info.s2_address }}</span>
             </p>
             <p><span class="font-bold">Esta propiedad la han visto:</span> {{ counterVisitas }} {{ counterVisitas | pluralize(counterVisitas)}}</p>
-            <div class="flex mt-3 border-t-2 pt-2 pb-2 md:pb-8">
-              <a :href="'https://api.whatsapp.com/send?text=CR-Lotes%20https://cr-lotes.com/perfil-propiedad/'+info.propId" target="_blank" class="flex-1 text-right" title="Compartir por WhatsApp">
-                <i class="fas fa-share-alt"></i>
-              </a>
-              <Favorito class="flex-1 text-left pl-10" :propId="info.propId" title="Favorito" />
-            </div>
+          
           </div>
         </div>
       </section>
 
       <!-- Opciones vendedor -->
       <template v-if="ownProp === true">
-        <section class="my-5 lg:container m-auto mt-10 py-10 border-b-2 border-t-2">
+        <section class="my-5 lg:container m-auto mt-10 py-10 border-t-2">
           <h2 class="mx-5 lg:mx-0 text-2xl font-bold pb-5">Opciones de vendedor</h2>
           <div class="mx-5 lg:mx-0 md:flex md:justify-between space-y-4 md:space-y-0">
             <StatusProp :propId="info.propId"></StatusProp>
@@ -87,30 +123,6 @@
         </section>
       </template>
 
-      <!-- mapa -->
-      <section class="md:container mx-auto mt-10 py-10">
-        <h2 class="mx-5 lg:mx-2 text-2xl font-bold pb-5">Ubicación</h2>
-        <GmapMap
-        :center="selectedCenter"
-        :zoom="selectedZoom"
-        mapTypeControl="false"
-        :options="{
-                mapTypeControl: false,
-                streetViewControl: false,
-                rotateControl: false,
-                fullscreenControl: false,
-              }"
-        class="w-full h-64 rounded-lg shadow-lg"
-        ref="mapRef"
-        >
-        <GmapMarker
-        :position="selectedCenter"
-        :draggable="false"
-        icon="https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2FLogoXS.png?alt=media&token=733feece-c24c-4ccc-b346-c75c0f1660a3"
-        ref="GoogleMrkr"
-        />
-        </GmapMap>
-      </section>
       
       <!-- Datos del vendedor si es propia -->
       <template v-if="ownProp === true">
@@ -166,6 +178,32 @@
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Área de terreno</td>
               <td class="p-2">{{ info.s1_area | numberFormat }} {{ info.s1_areaUn }}</td>
             </tr>
+            <!-- Precio de venta -->
+            <tr v-if="info.s1_price" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Precio de venta</td>
+              <td class="p-2">
+                <span :class="[info.s1_price_off > 0 ? 'line-through text-primary' : 'font-bold']"> ₡{{ info.s1_price  | numberFormat }} </span>  
+                <span v-if="info.s1_price_off"> {{ info.s1_price_off }}% descuento</span>
+                <span v-if="info.s1_price_off" class="font-bold text-green-700"> ₡{{ Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) | numberFormat }}</span>
+              </td>
+            </tr>
+            <!-- Precio de venta -->
+            <tr v-if="info.s1_price" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Valor por {{ info.s1_areaUn }}</td>
+              <td class="p-2">
+                <span v-if="!info.s1_price_off">
+                  ₡ {{ (info.s1_price/info.s1_area)  | numberFormat }}
+                </span>
+                <span v-if="info.s1_price_off">
+                  ₡ {{ (Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) / info.s1_area)  | numberFormat }}
+                </span>
+              </td>
+            </tr>
+            <!-- Precio de alquiler -->
+            <tr v-if="info.s1_price_alquiler" class="border">
+              <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Precio mensual de alquiler</td>
+              <td class="p-2">₡{{ info.s1_price_alquiler | numberFormat }}</td>
+            </tr>
             <!-- Comodidades -->
             <tr v-if="info.s6_assets" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">La propiedad cuenta con:</td>
@@ -189,7 +227,7 @@
             <tr v-if="info.s5_nivel" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Altura de la calle:</td>
               <td class="p-2">
-              <img :src="fotoNivel" class="max-w-xs"/>
+              <img :src="fotoNivel" class="w-32 md:max-w-xs"/>
               En su mayoría el lote está con {{info.s5_nivel}}
               </td>
             </tr>
@@ -272,6 +310,7 @@ export default {
       this.selectedCenter = { lat: this.info.s2_lat, lng: this.info.s2_lng };
       this.fotoGrande = this.info.s8_pictures[0].fileUrl;
       this.mostrarDocs = this.info.s7_files.length
+      this.loading = false;
     } else {
       //datos propiedad si el componente se abre navegando
       this.idPropiedad = this.$route.params.id;
@@ -338,25 +377,27 @@ export default {
   },
   computed:{
     fotoInclinacion(){
-    //obtener link de imágenes de inclinación
-    switch (this.info.s4_inclination){
-      case "Inclinación hasta 5 grados":
-        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_5.jpeg?alt=media&token=77d52d10-1916-459b-aa91-11ddf01a84af"
-      case "Inclinación hasta 15 grados":
-        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_15.jpeg?alt=media&token=5bc66b1e-4635-4cd1-85e5-2dfeee0d4e3d"
-      case "Inclinación hasta 30 grados":
-        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_30.jpeg?alt=media&token=04a358f7-53ab-4702-bc59-878abbc4156a"
-      case "Inclinación hasta 45 grados":
-        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_45.jpeg?alt=media&token=1ea73309-f293-4cc8-978a-04e3fbb6c549"
-      case "Inclinación hasta 60 grados":
-        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_60.jpeg?alt=media&token=bc0f10df-4c4e-44d4-83ca-a46bda5ef60a"
-      case "Inclinación hasta 90 grados":
-        return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_90.jpeg?alt=media&token=bd34bcfb-9d2b-4349-b7a9-159891a19625"
-      default:
-        return ""
-
-    }
+      //obtener link de imágenes de inclinación
+      switch (this.info.s4_inclination){
+        case "Inclinación hasta 5 grados":
+          return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_5.jpeg?alt=media&token=77d52d10-1916-459b-aa91-11ddf01a84af"
+        case "Inclinación hasta 15 grados":
+          return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_15.jpeg?alt=media&token=5bc66b1e-4635-4cd1-85e5-2dfeee0d4e3d"
+        case "Inclinación hasta 30 grados":
+          return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_30.jpeg?alt=media&token=04a358f7-53ab-4702-bc59-878abbc4156a"
+        case "Inclinación hasta 45 grados":
+          return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_45.jpeg?alt=media&token=1ea73309-f293-4cc8-978a-04e3fbb6c549"
+        case "Inclinación hasta 60 grados":
+          return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_60.jpeg?alt=media&token=bc0f10df-4c4e-44d4-83ca-a46bda5ef60a"
+        case "Inclinación hasta 90 grados":
+          return "https://firebasestorage.googleapis.com/v0/b/cr-lotes-firebase.appspot.com/o/assets%2Finclination%2Finclination_90.jpeg?alt=media&token=bd34bcfb-9d2b-4349-b7a9-159891a19625"
+        default:
+          return ""
+      }
     },
+      fotos1a5: function () {
+        return this.info.s8_pictures.slice(1, 5)
+      },
     fotoNivel(){
       //obtener link de imágenes del nivel
       switch (this.info.s5_nivel){
@@ -451,4 +492,5 @@ export default {
     -ms-user-select: none;
     user-select: none;
   }
+
 </style>

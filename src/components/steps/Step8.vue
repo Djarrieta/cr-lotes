@@ -1,10 +1,10 @@
 <template>
 <!-- fotos -->
 <div>
+    <Buttons @next="next" @prev="prev"/>
     <p>
          Te recomendamos subir las mejores fotografías de mejor vista, el acceso, de frente y desde arriba. Escoge cuidadosamente!
     </p>
-    <Buttons @next="next" @prev="prev"/>
     <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
         <label 
@@ -85,6 +85,13 @@ export default {
                     fileName:"",
                     progress:0,
                     code:"Arriba"
+                },
+                {
+                    title:"Otra",
+                    fileUrl:"",
+                    fileName:"",
+                    progress:0,
+                    code:"Otra"
                 },
             ],
             problems:"",

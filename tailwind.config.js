@@ -32,6 +32,9 @@ module.exports = {
       colors:{
         'primary':'#E61E50',
         'secundary':'#D80665'
+      },
+      spacing: {
+        '128': '33rem'
       }
     },
   },

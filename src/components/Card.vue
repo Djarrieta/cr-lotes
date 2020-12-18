@@ -21,11 +21,16 @@
                 {{ prop.s1_title }}
             </p>
             <p class="text-xs"><span class="font-bold">ID:</span> {{ prop.propId }}</p>
-            <p class="font-medium text-md text-primary">
-                ₡ {{ prop.s1_price  | precio }} 
+            <p class="font-medium text-md text-primary flex flex-col md:flex md:flex-row md:justify-between">
+               <span :class="[prop.s1_price_off > 0 ? 'line-through text-primary' : ' text-primary']"> ₡ {{ prop.s1_price  | precio }} </span>  
+               <span>{{ prop.s1_price_off }}% descuento</span>
+               <span>₡ {{ Math.round(prop.s1_price - ((prop.s1_price * prop.s1_price_off) / 100)) | numberFormat }}</span>
             </p>
             <p class="text-gray-700 text-base">
                 {{ prop.s1_description.substring(0,70)+" ..." }}
+            </p>
+            <p v-if="prop.s1_price_alquiler > 0" class="font-medium flex flex-col md:flex md:flex-row md:justify-between my-2">
+                <span> Precio alquiler mensual: ₡ {{ prop.s1_price_alquiler  | numberFormat }} </span>  
             </p>
             <p>
                 <span class="font-bold">Propiedad vista:</span> {{ prop.counterVisitas }} {{ prop.counterVisitas | pluralize(prop.counterVisitas) }}
