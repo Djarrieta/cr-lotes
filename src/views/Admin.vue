@@ -1,107 +1,226 @@
 <template>
   <div class="container mx-auto flex flex-col justify-items-center">
-    <!-- Tabs -->
-    <ul class="flex space-x-2 my-3">
-      <li :class="tab==='usuarios' ? 'border-primary text-primary' : 'none' " class="cursor-pointer border-2 px-2 py-1 rounded-md" @click="changeTab('usuarios')">Usuarios</li>
-      <li :class="tab==='desactivadas' ? 'border-primary text-primary' : 'none' " class="cursor-pointer border-2 px-2 py-1 rounded-md" @click="changeTab('desactivadas')">Prop. desactivadas</li>
-			<li :class="tab==='aprovacion' ? 'border-primary text-primary' : 'none' " class="cursor-pointer border-2 px-2 py-1 rounded-md" @click="changeTab('aprovacion')">Prop. por aprovar</li>
-    </ul>
-    <div>
+      <!-- tabs -->
+      <div>
+        <button @click="changeTab('usuarios')" class=" border border-primary rounded p-2 bg-white hover:bg-gray-300  focus:outline-none  text-primary text-xl m-2" :class="tab==='usuarios' ? 'bg-blue-100' : 'none'">Usuarios</button>
+        <button @click="changeTab('propiedades')" class=" border border-primary rounded p-2 bg-white hover:bg-gray-300  focus:outline-none  text-primary text-xl m-2 " :class="tab==='propiedades' ? 'bg-blue-100' : 'none'">Propiedades</button>
+      </div>
 			<!-- Usuarios -->
-      <section v-if="tab==='usuarios'" class="flex flex-col mt-5">
-        <h1 class="text-2xl text-gray-800 uppercase font-bold">Usuarios</h1>
+      <section  v-if="tab==='usuarios'" class="flex flex-col mt-5">
         <table>
           <thead>
-            <tr class="bg-gray-200 uppercase border ">
-              <th class="mx-2 text-left py-2 pl-5">Nombre</th>
-              <th class="mx-2 text-left pl-5">Correo</th>
-              <th class="mx-2 text-left pl-5">Teléfono</th>
-              <th class="mx-2 text-left pl-5">Opciones</th>
+            <tr class="bg-gray-200 border flex py-1">
+              <th class="ml-4 | w-1/2 sm:w-1/4 | text-left" >Usuario</th>
+              <th class="hidden sm:block | w-1/4 | text-left">Teléfono</th>
+              <th class="hidden sm:block | w-1/4 | text-left">Correo</th>
+              <th class="w-1/2 sm:w-1/4 ">Opciones</th>
             </tr>
           </thead>
-        
           <tbody>
-            <tr v-for="(u,n) in users" 
+            <tr 
+              v-for="(u,n) in users" 
               :key=n
-              class="hover:bg-gray-300 cursor-pointer"
-                @click="selectUser(n)"
-            >
-              <td class="border-b text-left pl-5">{{u.name}}</td>
-              <td class="border-b text-left pl-5">{{u.email}}</td>
-              <td class="border-b text-left pl-5">{{u.phoneNumber}}</td>
-              <td class="border-b py-2 pl-5">
-                <button 
-                  @click="userRole(n)"
-                  class="m-1 px-1 rounded  text-xs"
-                  title="Cambiar rol"
-                  :class="u.admin ? 'bg-blue-900 text-blue-100 text-base py-1 px-3' : 'bg-gray-900 text-gray-100 text-base py-1 px-3'">
-                    {{ u.admin ? "Administrador" : "Colaborador" }}
-                </button>
-                <button 
-                  @click="userDelete(n)"
-                  v-if="!u.admin"
-                  class="m-1 rounded bg-red-600 text-white text-base py-1 px-3">Borrar</button>
-              </td>
+              class="hover:bg-gray-300 | flex justify-between items-center | border-b m-1">
+                <!-- Datos -->
+                <td class="flex flex-col  | w-2/3 sm:w-1/4 | text-left pl-5">
+                  <span class="text-2xl sm:text-base">{{u.name}}</span>
+                  <span class="text-xs | sm:hidden">{{u.email}}</span>
+                  <span class="text-xs | sm:hidden">{{u.phoneNumber}}</span>
+                </td>
+                  <!-- Datos solo visibles después de sm -->
+                <td class="hidden sm:flex  | sm:w-1/4 | text-left pl-5">
+                  <span class="text-left">{{u.phoneNumber}}</span>
+                </td>
+                <td class="hidden sm:block justify-center | sm:w-1/4 | text-left pl-5">
+                  <span class="text-xs">{{u.email}}</span>
+                </td>
+
+                <!-- opciones -->
+                <td class="flex flex-col justify-center items-center | w-1/3 ">
+                  <button 
+                    @click="userRole(n)"
+                    class="w-full sm:w-32 | px-1 mx-2  | rounded text-xs"
+                    :class="u.admin ? 'bg-blue-600 text-blue-100 ' : 'bg-gray-400'">
+                      {{ u.admin ? "Administrador" : "Colaborador" }}
+                  </button>
+                  <button 
+                    @click="selectUser(n)"
+                    class="w-full sm:w-32 | px-1 mx-2 my-1 | rounded text-xs bg-gray-400">Ver Propiedades</button>
+                  <button 
+                    @click="userDelete(n)"
+                    v-if="!u.admin"
+                    class="w-full sm:w-32 | px-1 mx-2  | rounded text-xs bg-primary text-white">Borrar</button>
+                  
+                </td>
             </tr>
           </tbody>
         </table>
       </section>
       <!-- Propiedades -->
-      <section v-if="tab==='desactivadas'" class="flex flex-col mt-10">
-        <h1 class="text-2xl text-gray-800 uppercase font-bold">Propiedades de {{ selectedUser.name}}</h1>
+      <section v-if="tab==='propiedades'"  class="flex flex-col my-10 ">
+        <!-- Filtros -->
+        <div class="flex flex-col | bg-gray-200 p-2 rounded m-2 | max-w-md">
+          <!-- Usuario -->
+          <div class="flex | m-1">
+            <label class=" font-bold | m-1">Usuario:</label>
+            <select  class="w-full rounded" v-model="propSelectedUser">
+              <option value="Todos">Todos</option>
+              <option 
+                v-for="(u,n) in users" 
+                :key="n"
+                :value=u.uid >{{ u.name }}</option>
+            </select>
+          </div>
+          <!-- Estado -->
+          <div class="flex | m-1">
+            <label class=" font-bold | m-1 ">Estado:</label>
+            <select 
+              class="w-full roundedd" v-model="propSelectedEstado">
+                <option value="Todos">Todos</option>
+                <option 
+                  v-for="(e,n) in estados" 
+                  :key="n"
+                  :value="e">{{e}}</option>
+            </select>
+          </div>
+        </div>
+        <!-- Lista Propiedades -->
         <table >
           <thead>
-            <tr class="bg-gray-200 uppercase border">
-              <th class="mx-2 text-center py-2">Id</th>
-              <th class="mx-2 text-left pl-5">Estado</th>
-              <th class="mx-2 text-left pl-5">Precio</th>
-              <th class="mx-2 text-left pl-5">Opciones</th>
+            <tr class="bg-gray-200 border flex py-1">
+              <th class="ml-4 | w-1/2 sm:w-1/5 | text-left" >Propiedad</th>
+              <th class="hidden sm:block | w-1/5 | text-left">Fecha</th>
+              <th class="hidden sm:block | w-1/5 | text-left">Precio</th>
+              <th class="hidden sm:block | w-1/5 | text-left">Estado</th>
+              <th class="w-1/2 sm:w-1/5 ">Opciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(p,n) in props" 
+           <tr  
+              v-for="(p,n) in propsFiltered" 
               :key=n
-              class="hover:bg-gray-300 cursor-pointer">
-              <td class="border-b font-bold text-green-800 bg-green-300 text-center py-2">
-                <router-link :to="'/perfil-propiedad/'+ p.propId">
-                  {{ p.propId }}
-                </router-link>
-              </td>
-              <td class="border-b text-left pl-5">{{ p.status | aliasEstado }}</td>
-              <td class="border-b text-left pl-5">{{ p.s1_price | numberFormat }}  ₡</td>
-              <td class="border-b pl-5">
-                <!-- <button class="m-1 px-1 rounded bg-red-600 text-xs">Borrar</button> -->
-                <StatusProp v-if="p.status != 'vendido'" :propId="p.propId"></StatusProp>
-              </td>
-            </tr>
+              class="hover:bg-gray-300 | flex justify-between items-center | border-b m-1 py-1">
+                <!-- Datos -->
+                <td class="flex flex-col sm:w-1/5">
+                  <span class="text-lg">{{p.propId}}</span>
+                  <span class="text-primary sm:hidden">₡ {{p.s1_price | numberFormat}}</span> 
+                  <!-- Creado -->
+                  <div class="text-xs sm:hidden">
+                    <span class="font-bold">Creado:</span>
+                    <span>{{ p.date | dateFormat }}</span>
+                  </div>
+                  <!-- Modificado -->
+                  <div class="text-xs sm:hidden">
+                    <span class="font-bold">Modificado:</span>
+                    <span>{{ p.date | dateFormat }}</span>
+                  </div>
+                </td>
+                <!-- Fecha -->
+                <td class="hidden | sm:flex flex-col | sm:w-1/5">
+                  <div>
+                    <span class="font-bold">Creado:</span>
+                    <span>{{ p.date | dateFormat }}</span>
+                  </div>
+                  <div>
+                    <span class="font-bold">Modificado:</span>
+                    <span>{{ p.date | dateFormat }}</span>
+                  </div>
+                </td>
+                <!-- precio -->
+                <td class="hidden sm:block text-primary | sm:w-1/5">
+                  ₡{{p.s1_price | numberFormat}}
+                </td>
+                <!-- Estados -->
+                <td class="flex flex-col mx-2 | sm:w-1/5">
+                  <select v-model="p.status" class="text-xs rounded">
+                    <option 
+                      v-for="(s,n) in estados"
+                      :key="n"
+                      :value="s"
+                      class="text-xs">
+                        {{s}}
+                      </option>
+                  </select>
+                  <!-- Subastar -->
+                  <div>
+                    <span class="text-xs font-bold">Subastar:</span>
+                    <select v-model="p.subastarTexto" class="text-xs rounded">
+                      <option value="Si"
+                        class="text-xs">
+                          Si
+                        </option>
+                        <option value="No"
+                        class="text-xs">
+                          No
+                        </option>
+                    </select>
+                  </div>
+                  <button 
+                    @click="updateStatus(p.propId)"
+                    class="w-full sm:w-32 | px-1 mx-2 my-1 | rounded text-xs bg-gray-400">
+                      Guardar
+                  </button>
+                </td>
+                <!-- opciones -->
+                <td class="flex flex-col justify-center items-center | w-1/3 mx-1 sm:w-1/5">
+                  <router-link 
+                    :to="'/publicar/'+ p.propId"
+                    class="w-full sm:w-32 | px-1 mx-2 my-1 | rounded text-xs text-center bg-gray-400">
+                      Editar</router-link>
+                  <router-link 
+                    target="_blank"
+                    :to="'/perfil-propiedad/'+ p.propId"
+                    class="w-full sm:w-32 | px-1 mx-2 my-1 | rounded text-xs text-center bg-gray-400">
+                      Ver Detalles</router-link>
+                  <button 
+                    class="w-full sm:w-32 | px-1 mx-2 my-1 | rounded text-xs bg-primary text-gray-100">
+                      Eliminar
+                  </button>
+                </td>
+           </tr>
           </tbody>
         </table>
       </section>
-    </div>
-
-    <ListaPropiedadesDesactivadas v-if="tab==='desactivadas'" class="flex flex-col"></ListaPropiedadesDesactivadas>
   </div>
 </template>
 
 <script>
 import {db} from "@/main.js"
 import Swal from 'sweetalert2'
-import ListaPropiedadesDesactivadas from "@/components/ListaPropiedadesDesactivadas"
-import StatusProp from "@/components/StatusProp"
 
 export default {
   name:"Admin",
-  components: { ListaPropiedadesDesactivadas, StatusProp },
+  
   data(){
     return{
       users: [],
       props: [],
-      selectedUser: null,
-      tab:"usuarios",
+      propSelectedUser:"Todos",
+      propSelectedEstado:"Todos",
+      estados:[
+        "approvement",
+        "complete",
+        "vendido",
+        "desactivar",
+        "deleted"
+      ],
+      tab:"usuarios"
     }
   },
-
+  computed:{
+    propsFiltered(){
+      let ps=this.props
+      if(this.propSelectedUser!="Todos"){
+        ps= ps.filter(p=>p.uid===this.propSelectedUser)
+      }
+      if(this.propSelectedEstado!="Todos"){
+        ps= ps.filter(p=>p.status===this.propSelectedEstado)
+      }
+      return ps
+    }
+  },
   created(){
+    /* Usuarios */
     db.collection("users").onSnapshot((users)=>{
       this.users=[]
       users.forEach(user => {
@@ -111,6 +230,16 @@ export default {
         })
       });
     })
+    /* Propiedades  */
+    db.collection("props").orderBy("propId","desc").get().then(props=>{
+      props.forEach(p=>{
+        let subastar="No"
+        if(p.data().subastar){
+          subastar="Si"
+        }
+        this.props.push({...p.data(),subastarTexto:subastar})
+      })
+    })
   },
 
   filters: {
@@ -118,21 +247,10 @@ export default {
       let val = (value/1).toFixed(2).replace('.', ',')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
-
-    aliasEstado: function (value) {
-      switch (value) {
-        case 'vendido':
-          return 'Propiedad vendida';
-        case 'complete':
-          return 'A la venta';
-        case 'desactivar':
-          return 'Desactivada';
-        case 'deleted':
-          return 'Eliminada por el vendedor';
-        default:
-          return 'asd';
-      }
-    }
+    dateFormat(date){
+      const d=new Date(date.seconds*1000)
+      return d.getDay() + "/" + d.getMonth()+ "/" + d.getFullYear()
+    },
   },
 
   methods:{
@@ -149,7 +267,6 @@ export default {
         db.collection("users").doc(user.uid).update({admin:true})
       }
     },
-
     userDelete(n){
       const user=this.users[n]
       if(!user.admin){
@@ -167,24 +284,29 @@ export default {
         }).catch(e=>console.error(e))
       }
     },
-
     selectUser(n){
-      this.selectedUser=this.users[n]
-      let query = db.collection('props').where("uid","==", this.selectedUser.uid);
-
-      query.onSnapshot(querySnapshot => {
-        let props = querySnapshot.docs
-        this.props = []
-        props.forEach( prop => {
-          this.props.push(prop.data())
-        })
-      }, err => {
-        console.log(`Encountered error: ${err}`);
-      });
-
+      this.propSelectedUser=this.users[n].uid
+      this.tab="propiedades"
     },
+    updateStatus(propId){
+      
+      const prop=this.propsFiltered.filter(p=>p.propId===propId)
+      let subastar=false
+      if(prop[0].subastarTexto=="Si"){subastar=true}
 
-    changeTab(tab) {
+      const status=prop[0].status
+      Swal.fire({
+          title: '¿Esta Seguro que desea modificar estos datos?',
+          showDenyButton: true,
+          confirmButtonText: `Modificar`,
+          denyButtonText: `Cancelar`,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            db.collection("props").doc(propId.toString()).update({subastar,status,}) 
+          }
+        }).catch(e=>console.error(e))
+    },
+    changeTab(tab){
       this.tab=tab
     }
   }
