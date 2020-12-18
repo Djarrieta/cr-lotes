@@ -1,100 +1,110 @@
 <template>
 <!-- Comodidades -->
 <div>
-    <p>¿Con qué cómodidades contarán tus clientes cerca o en la propiedad?</p>
-    <Buttons @next="next" @prev="prev"/>
-    <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
-    <div class="w-full h-full bg-gray-200 rounded-lg shadow-inner p-8">
-        <button
-            v-for="(i,n) in info" 
-            :key=n
-            @click="addAsset(i)"
-            class="rounded-full px-2 py-1 mx-1 my-2 focus:outline-none"
-            :class="s6_assets.includes(i) ? 'bg-gray-600 ' : 'bg-gray-300 '">
-            <i v-if="!s6_assets.includes(i)" class="fas fa-plus-circle mr-1"></i>
-            <i  v-if="s6_assets.includes(i)" class="fas fa-minus-circle mr-1 text-gray-100"></i>
-            
-            <span :class="s6_assets.includes(i) ? ' text-gray-100 ' : 'none'">{{i}}</span>
-        </button>
+  <p>¿Con qué cómodidades contarán tus clientes cerca o en la propiedad?</p>
+  <Buttons @next="next" @prev="prev"/>
+  <div  v-if="problems" class="text-sm text-left text-red-600 bg-red-200 border border-red-400 h-12 flex items-center p-4 m-4 rounded-sm" role="alert"> {{problems}} </div>
+  <div class="w-full h-full bg-gray-200 rounded-lg shadow-inner p-8">
+    <button
+      v-for="(i,n) in info" 
+      :key=n
+      @click="addAsset(i)"
+      class="rounded-full px-2 py-1 mx-1 my-2 focus:outline-none"
+      :class="s6_assets.includes(i) ? 'bg-gray-600 ' : 'bg-gray-300 '">
+      <i v-if="!s6_assets.includes(i)" class="fas fa-plus-circle mr-1"></i>
+      <i  v-if="s6_assets.includes(i)" class="fas fa-minus-circle mr-1 text-gray-100"></i>
+      
+      <span :class="s6_assets.includes(i) ? ' text-gray-100 ' : 'none'">{{i}}</span>
+    </button>
 
-    </div>
+  </div>
 </div>
 </template>
 
 <script>
 import Buttons from "@/components/steps/Buttons"
 export default {
-    name:"Step6",
-    props:["data"],
-    components:{Buttons},
-    data(){
-        return{
-            s6_assets:[],
-            info:
-                [
-                    "Acera",
-                    "Cordón y caño",
-                    "Alumbrado público",
-                    "Transporte público",
-                    "Teléfono",
-                    "Electricidad",
-                    "Agua potable",
-                    "Cobertura celular",
-                    "Cable TV",
-                    "Fibra optica",
-                    "Internet",
-                    "Alcantarillado",
-                    "Recolección basura",
-                    "Facilidades comunales",
-                    "Edificios comerciales",
-                    "Escuela primaria",
-                    "Educación secundaria",
-                    "Tempos religiosos",
-                    "Servicios privados", 
-                    "Servicios municipales", 
-                    "Servicios Financieros",
-                    "Servicios de salud",
-                    "Áreas recreativas",
-                    "Planta de aguas residuales",
-                    "Riesgo de inundación",
-                    "Riesgo de deslizamiento",
-                    "Riesgo por alta tensión",
-                    
-                ],
-            problems:""
-        }
+  name:"Step6",
+  props:["data"],
+  components:{Buttons},
+  data(){
+    return{
+      s6_assets:[],
+      info:
+        [
+          "Acera",
+          "Cordón y caño",
+          "Alumbrado público",
+          "Transporte público",
+          "Teléfono",
+					"Electricidad",
+					"Gravamen",
+					"Agua potable",
+					"Agua de pozo",
+          "Cobertura celular",
+					"Cable TV",
+					"Frente al norte",
+					"Frente al sur",
+					"Frente al este",
+					"Frente al oeste",
+					"Fibra óptica",
+					"Hipoteca",
+					"Internet",
+					"Lindero a río",
+					"Vía de concreto",
+					"Vía de tierra",
+          "Alcantarillado",
+          "Recolección basura",
+          "Facilidades comunales",
+          "Edificios comerciales",
+          "Escuela primaria",
+          "Educación secundaria",
+          "Tempos religiosos",
+          "Servicios privados", 
+          "Servicios municipales", 
+          "Servicios Financieros",
+          "Servicios de salud",
+          "Áreas recreativas",
+          "Planta de aguas residuales",
+          "Riesgo de inundación",
+          "Riesgo de deslizamiento",
+					"Riesgo por alta tensión",
+					"Relleno mal compactado",
+        ],
+      problems:""
+    }
+  },
+  watch:{
+    problems:function(){
+      setTimeout(() => {
+        this.problems=""
+      }, 2000);
+    }
+  },
+  methods:{
+    addAsset(i){
+      if(this.s6_assets.includes(i)){
+        const pos=this.s6_assets.indexOf(i)
+        this.s6_assets.splice(pos,1)
+      }else{
+        this.s6_assets.push(i)
+      }
     },
-    watch:{
-        problems:function(){
-            setTimeout(() => {
-                this.problems=""
-            }, 2000);
-        }
+    next(){
+      this.problems=""
+      if(!this.s6_assets){this.problems="Selección inválida"}
+      //Emite solo cuando no hay problemas
+      if(!this.problems){
+        this.$emit("next",{s6_assets:this.s6_assets})
+      }
     },
-    methods:{
-        addAsset(i){
-            if(this.s6_assets.includes(i)){
-                const pos=this.s6_assets.indexOf(i)
-                this.s6_assets.splice(pos,1)
-            }else{
-                this.s6_assets.push(i)
-            }
-        },
-        next(){
-            this.problems=""
-            if(!this.s6_assets){this.problems="Selección inválida"}
-            //Emite solo cuando no hay problemas
-            if(!this.problems){
-                this.$emit("next",{s6_assets:this.s6_assets})
-            }
-        },
-        prev(){
-            this.$emit("prev",{s6_assets:this.s6_assets})
-        },
+    prev(){
+      this.$emit("prev",{s6_assets:this.s6_assets})
     },
-    mounted(){
-        if(this.data.s6_assets){
-            this.s6_assets=this.data.s6_assets}
-    },
+  },
+  mounted(){
+    if(this.data.s6_assets){
+      this.s6_assets=this.data.s6_assets}
+  },
 }
 </script>
