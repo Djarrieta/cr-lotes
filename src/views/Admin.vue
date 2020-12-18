@@ -198,11 +198,11 @@ export default {
       propSelectedUser:"Todos",
       propSelectedEstado:"Todos",
       estados:[
-        "approvement",
-        "complete",
-        "vendido",
-        "desactivar",
-        "deleted"
+        "En Venta",
+        "Aprobación",
+        "Vendido",
+        "Desactivado",
+        "Eliminado"
       ],
       tab:"usuarios"
     }

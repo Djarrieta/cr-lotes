@@ -332,7 +332,7 @@ export default {
           this.props= []
           db.collection('props')
             .orderBy("propId", "desc")
-            .where("status","==","complete")
+            .where("status","==","En Venta")
             .get()
             .then((props)=>{
                 props.forEach(  prop => {
@@ -371,7 +371,7 @@ export default {
           //busca según filtros
           db.collection('props')
             .orderBy("propId", "desc")
-            .where("status","==","complete")
+            .where("status","==","En Venta")
             .startAfter(lastCod)
             .get()
             .then((props)=>{
