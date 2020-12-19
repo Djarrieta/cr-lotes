@@ -9,7 +9,7 @@
       <!-- Migas de pan -->
       <section class="container mx-auto mt-5">
       </section>
-
+      <!-- Titulo -->
       <section id="presentacionPropiedad" class="mx-5 md:container md:mx-auto">
         <h1 class="text-xl font-bold uppercase tracking-widest">{{ info.s1_title }}</h1>
         <div class="flex flex-col md:flex-row md:justify-between">
@@ -24,8 +24,7 @@
           </div>
         </div>
       </section>
-
-      <!-- Fotos se muestran todas -->
+      <!-- Fotos -->
       <section class="md:container mx-auto my-5 | max-w-xs  md:gap-4 | overflow-hidden | bg-white shadow-md rounded-xl relative" :class="[info.s8_pictures.length === 1 ? 'md:grid-rows-1 md:grid-cols-4' : 'md:grid md:grid-rows-2 md:grid-cols-4']">
         <div oncontextmenu="return false" class="row-span-2 col-span-2 | h-48 lg:w-full md:h-128">
           <img :src="info.s8_pictures[0].fileUrl" :alt="info.s8_pictures[0].title" class="object-cover | w-full h-full">
@@ -50,9 +49,9 @@
           </div>
         </div>
       </section>
-
       <!-- Ubicación y info principal -->
       <section class="lg:flex my-10 md:container mx-auto" >
+        <!-- Mapa -->
         <div class="mx-5 lg:w-4/6">
           <h2 class="mx-5 lg:mx-0 text-2xl font-bold pb-5">Ubicación</h2>
           <GmapMap
@@ -76,20 +75,19 @@
           />
           </GmapMap>
         </div>
-      
-        <!-- Datos -->
+        <!-- Info Principal-->
         <div class="lg:w-2/6">
           <div class="px-5 py-5 md:px-10 md:py-12 mx-5 mt-5 lg:mx-0 md:mt-10 lg:mt-0 | rounded-md border bg-white shadow | overflow-hidden">
             <h1 class="text-lg font-bold uppercase">{{ info.s1_title }}</h1>
             <p>{{ info.s1_description }}</p>
             <!-- <p class="font-medium text-lg text-primary my-2" v-if="info.s1_price">{{ info.s1_price | numberFormat }} ₡</p> -->
-            <p class="font-medium text-lg text-primary flex flex-col md:flex md:flex-row md:justify-between my-2">
-               <span :class="[info.s1_price_off > 0 ? 'line-through text-primary' : ' text-primary']"> ₡ {{ info.s1_price  | numberFormat }} </span>  
-               <span v-if="info.s1_price_off">{{ info.s1_price_off }}% descuento</span>
-               <span v-if="info.s1_price_off">₡ {{ Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) | numberFormat }}</span>
+            <p class="font-medium text-lg text-primary flex flex-col md:flex md:flex-row  my-2">
+               <span class="mr-1" :class="[info.s1_price_off > 0 ? 'line-through text-gray-600' : ' text-primary']"> ₡ {{ info.s1_price  | numberFormat }} </span>  
+               <span class="mx-2" v-if="info.s1_price_off">{{ info.s1_price_off }}%OFF</span>
+               <span class="text-primary" v-if="info.s1_price_off">₡ {{ Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) | numberFormat }}</span>
             </p>
             <p v-if="info.s1_price_alquiler > 0" class="font-medium text-lg text-primary flex flex-col md:flex md:flex-row md:justify-between my-2">
-               <span> Precio alquiler mensual: ₡ {{ info.s1_price_alquiler  | numberFormat }} </span>  
+               <span class="flex"> Alquiler/Mes: <div class="text-primary ml-2">₡ {{ info.s1_price_alquiler  | numberFormat }}</div>  </span>  
             </p>
             <p v-if="!info.s1_price_off">
               <b>Valor por {{ info.s1_areaUn }}:</b> ₡ {{ (info.s1_price/info.s1_area)  | numberFormat }}
@@ -98,12 +96,12 @@
               <b>Valor por {{ info.s1_areaUn }}:</b> 
               ₡ {{ (Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) / info.s1_area)  | numberFormat }}
             </p>
-            <p>
+<!--             <p>
               <span class="block"><b>Provincia:</b> {{ info.s2_namePrvSelected }}</span>
               <span class="block"><b>Cantón:</b> {{ info.s2_nameCtnSelected }}</span>
               <span class="block"><b>Distrito:</b> {{ info.s2_nameDttSelected }}</span>
               <span class="block"><b>Dirección:</b> {{ info.s2_address }}</span>
-            </p>
+            </p> -->
             <p><span class="font-bold">Esta propiedad la han visto:</span> {{ counterVisitas }} {{ counterVisitas | pluralize(counterVisitas)}}</p>
           
           </div>
@@ -179,16 +177,16 @@
               <td class="p-2">{{ info.s1_area | numberFormat }} {{ info.s1_areaUn }}</td>
             </tr>
             <!-- Precio de venta -->
-            <tr v-if="info.s1_price" class="border">
+<!--             <tr v-if="info.s1_price" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Precio de venta</td>
               <td class="p-2">
                 <span :class="[info.s1_price_off > 0 ? 'line-through text-primary' : 'font-bold']"> ₡{{ info.s1_price  | numberFormat }} </span>  
                 <span v-if="info.s1_price_off"> {{ info.s1_price_off }}% descuento</span>
                 <span v-if="info.s1_price_off" class="font-bold text-green-700"> ₡{{ Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) | numberFormat }}</span>
               </td>
-            </tr>
+            </tr> -->
             <!-- Precio de venta -->
-            <tr v-if="info.s1_price" class="border">
+<!--             <tr v-if="info.s1_price" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Valor por {{ info.s1_areaUn }}</td>
               <td class="p-2">
                 <span v-if="!info.s1_price_off">
@@ -198,12 +196,12 @@
                   ₡ {{ (Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) / info.s1_area)  | numberFormat }}
                 </span>
               </td>
-            </tr>
+            </tr> -->
             <!-- Precio de alquiler -->
-            <tr v-if="info.s1_price_alquiler" class="border">
+<!--             <tr v-if="info.s1_price_alquiler" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Precio mensual de alquiler</td>
               <td class="p-2">₡{{ info.s1_price_alquiler | numberFormat }}</td>
-            </tr>
+            </tr> -->
             <!-- Comodidades -->
             <tr v-if="info.s6_assets" class="border">
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">La propiedad cuenta con:</td>
@@ -302,49 +300,11 @@ export default {
     }
   },
 
-  created () { 
+  async created () { 
     let self = this
-    //si este componente está metido dentro de confirmación de publicación cargan datos como props si no las busca en con el id
-    if(this.infoConfirmacion){
-      this.info = this.infoConfirmacion
-      this.selectedCenter = { lat: this.info.s2_lat, lng: this.info.s2_lng };
-      this.fotoGrande = this.info.s8_pictures[0].fileUrl;
-      this.mostrarDocs = this.info.s7_files.length
-      this.loading = false;
-    } else {
-      //datos propiedad si el componente se abre navegando
-      this.idPropiedad = this.$route.params.id;
-      let dPropiedad = db.collection("props").doc(this.idPropiedad);
-      dPropiedad
-        .get()
-        .then(docProp=> {
-          self.info = docProp.data()
-          self.selectedCenter = { lat: docProp.data().s2_lat, lng: docProp.data().s2_lng };
-          self.fotoGrande = self.info.s8_pictures[0].fileUrl;
-          self.mostrarDocs = self.info.s7_files.length
-          // this.visitsCounter()
-          if(this.info.counterVisitas) {
-            this.counterVisitas = this.info.counterVisitas + 1
-            this.idPropiedad = this.$route.params.id;
-            let doc = db.collection('props').doc(this.idPropiedad);
-            doc.update({
-                'counterVisitas': this.counterVisitas
-            });
-          } else {
-            this.idPropiedad = this.$route.params.id;
-            let doc = db.collection('props').doc(this.idPropiedad);
-            doc.update({
-                'counterVisitas': this.counterVisitas
-            });
-          }
-           this.loading = false;
-        }).catch(e=>console.error(e))
-    }
 
-    
-
-    // Capturar datos usuario
-    firebase.auth().onAuthStateChanged( user => {
+// Capturar datos usuario
+    await firebase.auth().onAuthStateChanged( user => {
         if(user){
             self.datosUser = user
             db.collection("users").doc(this.datosUser.uid).get().then(userInfo=>{
@@ -369,6 +329,43 @@ export default {
             self.datosUser = ""
         }
     })
+
+    //si este componente está metido dentro de confirmación de publicación cargan datos como props si no las busca en con el id
+    if(this.infoConfirmacion){
+      this.info = this.infoConfirmacion
+      this.selectedCenter = { lat: this.info.s2_lat, lng: this.info.s2_lng };
+      this.fotoGrande = this.info.s8_pictures[0].fileUrl;
+      this.mostrarDocs = this.info.s7_files.length
+      this.loading = false;
+    } else {
+      //datos propiedad si el componente se abre navegando
+      this.idPropiedad = this.$route.params.id;
+      let dPropiedad = db.collection("props").doc(this.idPropiedad);
+      dPropiedad
+        .get()
+        .then(docProp=> {
+          self.info = docProp.data()
+          self.selectedCenter = { lat: docProp.data().s2_lat, lng: docProp.data().s2_lng };
+          self.fotoGrande = self.info.s8_pictures[0].fileUrl;
+          self.mostrarDocs = self.info.s7_files.length
+          // Contador de visitas
+          if(this.info.counterVisitas) {
+            this.counterVisitas = this.info.counterVisitas + 1
+            this.idPropiedad = this.$route.params.id;
+            let doc = db.collection('props').doc(this.idPropiedad);
+            doc.update({
+                'counterVisitas': this.counterVisitas
+            });
+          } else {
+            this.idPropiedad = this.$route.params.id;
+            let doc = db.collection('props').doc(this.idPropiedad);
+            doc.update({
+                'counterVisitas': this.counterVisitas
+            });
+          }
+           this.loading = false;
+        }).catch(e=>console.error(e))
+    }
 
   },
   mounted() {
