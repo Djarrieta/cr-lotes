@@ -211,7 +211,7 @@ export default {
       propSelectedUser:"Todos",
       propSelectedEstado:"Todos",
       estados:[
-        "En Venta",
+        "En venta",
         "Aprobación",
         "Vendido",
         "Desactivado",

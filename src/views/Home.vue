@@ -293,7 +293,6 @@ export default {
         document.getElementById("selectCtn").focus();
       }, 1000); 
       
-        // document.getElementById("selectCtn").focus();
     },
     SelectCtn(){
       this.loading=true
@@ -332,7 +331,7 @@ export default {
           this.props= []
           db.collection('props')
             .orderBy("propId", "desc")
-            .where("status","==","En Venta")
+            .where("status","==","En venta")
             .get()
             .then((props)=>{
                 props.forEach(  prop => {
@@ -371,7 +370,7 @@ export default {
           //busca según filtros
           db.collection('props')
             .orderBy("propId", "desc")
-            .where("status","==","En Venta")
+            .where("status","==","En venta")
             .startAfter(lastCod)
             .get()
             .then((props)=>{
@@ -412,8 +411,12 @@ export default {
       }, 1000); 
     },
     locateMarker(propId){
-      console.log("hola")
       this.selectedCard=propId
+        
+        /* const lat =Number(newId.pos.split(", ")[0])
+        const lng =Number(newId.pos.split(", ")[1])
+        this.center={lat,lng} */
+        /* this.zoom=14 */
     }
   }
 }
