@@ -51,9 +51,9 @@
             <i class="fas fa-ruler-combined"></i> {{prop.s1_area | numberFormat}} {{prop.s1_areaUn}}
           </p>
 					<!-- Botones y acciones -->
-          <div class="flex w-full justify-between">
+          <div class="flex w-full justify-between py-2">
 						<!-- Botón Detalles -->
-            <router-link target="_blank" :to="'/perfil-propiedad/'+prop.propId" class="py-1 | text-primary font-bold">
+            <router-link target="_blank" :to="'/perfil-propiedad/'+prop.propId" class="text-primary font-bold">
               <i class="fas fa-link"></i> Detalles 
             </router-link>
 						<!-- Compartir -->
@@ -61,7 +61,7 @@
               <i class="fab fa-whatsapp"></i> Compartir
             </a>
             <!-- Ubicar En Mapa -->
-            <span @click="locateMarker" class="text-primary"><i class="fas fa-search-location"></i>Ubicar</span>
+            <span @click="locateMarker" class="text-primary font-bold cursor-pointer"><i class="fas fa-search-location"></i> Ubicar</span>
           </div>
         </div>
       </div>
