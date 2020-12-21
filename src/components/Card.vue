@@ -1,5 +1,8 @@
 <template>
-  <section class="text-left w-full shadow-lg overflow-hidden rounded-lg border">
+  <section class="text-left w-full shadow-lg overflow-hidden rounded-lg border relative">
+        <div v-if="prop.status === 'Aprobación'" class="absolute top-0 right-0| rounded-tl-lg | px-5 | bg-yellow-300 text-yellow-900 font-bold" title="Esta propiedad no se verá hasta que sea aprobada por un administrador.">
+            <i class="fas fa-exclamation-circle | text-yellow-900"></i> Propiedad en aprobación
+        </div>
       <!-- Foto -->
       <img
             v-if="prop.s8_pictures[0].fileUrl"
@@ -8,6 +11,7 @@
         /> 
         <!-- Detalles -->
         <div class="pl-2 py-2 bg-gradient-to-r from-gray-900 via-gray-700 w-full">
+            
             <p class="px-5 rounded-lg text-white font-poppins flex justify-between">
                 <span class="text-white"><i class="fas fa-map-marked-alt text-white"></i> {{ prop.s2_namePrvSelected }} - {{ prop.s2_nameCtnSelected }}</span>
                 <span class="flex">
@@ -17,14 +21,15 @@
             </p>
         </div>
         <div class="px-6 py-5 bg-white text-left">
+            
             <p class="font-bold text-md uppercase">
                 {{ prop.s1_title }}
             </p>
             <p class="text-xs"><span class="font-bold">ID:</span> {{ prop.propId }}</p>
             <p class="font-medium text-md text-primary flex flex-col md:flex md:flex-row md:justify-between">
                <span :class="[prop.s1_price_off > 0 ? 'line-through text-primary' : ' text-primary']"> ₡ {{ prop.s1_price  | precio }} </span>  
-               <span>{{ prop.s1_price_off }}% descuento</span>
-               <span>₡ {{ Math.round(prop.s1_price - ((prop.s1_price * prop.s1_price_off) / 100)) | numberFormat }}</span>
+               <span v-if="prop.s1_price_off">{{ prop.s1_price_off }}% descuento</span>
+               <span v-if="prop.s1_price_off">₡ {{ Math.round(prop.s1_price - ((prop.s1_price * prop.s1_price_off) / 100)) | numberFormat }}</span>
             </p>
             <p class="text-gray-700 text-base">
                 {{ prop.s1_description.substring(0,70)+" ..." }}
@@ -46,9 +51,9 @@
             </div>
         </div>
         <div class="px-6 py-5 flex justify-between bg-white" v-if="prop.uid===idUser.uid">
-            <StatusProp :propId="prop.propId"></StatusProp>
-            <StatusVendido :propId="prop.propId"></StatusVendido>
-            <Subastar :propId="prop.propId"></Subastar>
+            <StatusProp v-if="prop.status != 'Aprobación'" :propId="prop.propId"></StatusProp>
+            <StatusVendido v-if="prop.status != 'Aprobación'" :propId="prop.propId"></StatusVendido>
+            <Subastar v-if="prop.status != 'Aprobación'" :propId="prop.propId"></Subastar>
         </div>
   </section>
 </template>

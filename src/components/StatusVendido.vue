@@ -1,6 +1,6 @@
 <template>
   <section>
-      <i @click="vendido" v-if="status != 'vendido'" class="fas fa-home text-green-500 text-center cursor-pointer" title="Marcar vendido"></i>
+      <i @click="vendido" v-if="status != 'Vendido'" class="fas fa-home text-green-500 text-center cursor-pointer" title="Marcar vendido"></i>
       <i @click="vender" v-else class="fas fa-home text-red-500 text-center cursor-pointer" title="Propiedad vendida"></i>
   </section>
 </template>
@@ -32,10 +32,10 @@ export default {
     methods:{
         vender() {
             db.collection('props').doc(this.propId.toString()).update({
-                'status': 'complete',
+                'status': 'En venta',
                 'dateVenta': ''
             });
-            this.status = 'complete'
+            this.status = 'En venta'
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -47,10 +47,10 @@ export default {
         vendido() {
             let docRef = db.collection('props').doc(this.propId.toString());
             docRef.update({
-                'status': 'vendido',
+                'status': 'Vendido',
                 'dateVenta': firebase.firestore.FieldValue.serverTimestamp()
             });
-            this.status = 'vendido'
+            this.status = 'Vendido'
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',

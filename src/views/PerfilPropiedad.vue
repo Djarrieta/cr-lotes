@@ -75,8 +75,12 @@
           />
           </GmapMap>
         </div>
-        <!-- Info Principal-->
-        <div class="lg:w-2/6">
+      
+        <!-- Datos -->
+        <div class="lg:w-2/6 relative">
+          <div v-if="info.status === 'Aprobación'" class="absolute top-0 right-0| rounded-tl-lg | px-5 | bg-yellow-300 text-yellow-900 font-bold" title="Esta propiedad no se verá hasta que sea aprobada por un administrador.">
+            <i class="fas fa-exclamation-circle | text-yellow-900"></i> Propiedad en aprobación
+          </div>
           <div class="px-5 py-5 md:px-10 md:py-12 mx-5 mt-5 lg:mx-0 md:mt-10 lg:mt-0 | rounded-md border bg-white shadow | overflow-hidden">
             <h1 class="text-lg font-bold uppercase">{{ info.s1_title }}</h1>
             <p>{{ info.s1_description }}</p>
@@ -113,10 +117,10 @@
         <section class="my-5 lg:container m-auto mt-10 py-10 border-t-2">
           <h2 class="mx-5 lg:mx-0 text-2xl font-bold pb-5">Opciones de vendedor</h2>
           <div class="mx-5 lg:mx-0 md:flex md:justify-between space-y-4 md:space-y-0">
-            <StatusProp :propId="info.propId"></StatusProp>
+            <StatusProp v-if="info.status != 'Aprobación'" :propId="info.propId"></StatusProp>
             <section><router-link :to="'/publicar/'+ idPropiedad">Editar</router-link></section>
-            <StatusVendido :propId="info.propId"></StatusVendido>
-            <Subastar :propId="info.propId"></Subastar>
+            <StatusVendido v-if="info.status != 'Aprobación'" :propId="info.propId"></StatusVendido>
+            <Subastar v-if="info.status != 'Aprobación'" :propId="info.propId"></Subastar>
           </div>
         </section>
       </template>
@@ -190,10 +194,10 @@
               <td class="font-bold w-2/4 md:w-1/4 bg-gray-200 p-2">Valor por {{ info.s1_areaUn }}</td>
               <td class="p-2">
                 <span v-if="!info.s1_price_off">
-                  ₡ {{ (info.s1_price/info.s1_area)  | numberFormat }}
+                  ₡{{ (info.s1_price/info.s1_area)  | numberFormat }}
                 </span>
                 <span v-if="info.s1_price_off">
-                  ₡ {{ (Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) / info.s1_area)  | numberFormat }}
+                  ₡{{ (Math.round(info.s1_price - ((info.s1_price * info.s1_price_off) / 100)) / info.s1_area)  | numberFormat }}
                 </span>
               </td>
             </tr> -->

@@ -1,6 +1,6 @@
 <template>
   <section>
-      <i @click="desactivar" v-if="status != 'desactivar'" title="Desactivar" class="fas fa-ban cursor-pointer text-green-500"></i>
+      <i @click="desactivar" v-if="status != 'Desactivar'" title="Desactivar" class="fas fa-ban cursor-pointer text-green-500"></i>
       <i @click="activar" v-else title="Volver a activar" class="fas fa-ban cursor-pointer text-red-500"></i>
   </section>
 </template>
@@ -33,10 +33,10 @@ export default {
     methods:{
         activar() {
             db.collection('props').doc(this.propId.toString()).update({
-                'status': 'complete',
+                'status': 'En venta',
                 'dateDesac': ''
             });
-            this.status = 'complete'
+            this.status = 'En venta'
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -48,7 +48,7 @@ export default {
         desactivar() {
             let docRef = db.collection('props').doc(this.propId.toString());
             docRef.update({
-                'status': 'desactivar',
+                'status': 'Desactivar',
                 'dateDesac': firebase.firestore.FieldValue.serverTimestamp()
             });
             Swal.fire({
@@ -58,7 +58,7 @@ export default {
                 showConfirmButton: false,
                 timer: 1500
             })
-            this.status = 'desactivar'
+            this.status = 'Desactivar'
         }
     }
 }
