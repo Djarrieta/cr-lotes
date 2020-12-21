@@ -57,11 +57,11 @@
         </table>
       </section>
       <!-- Propiedades -->
-      <section v-if="tab==='propiedades'"  class="flex flex-col my-10 ">
+      <section v-if="tab==='propiedades'"  class="flex flex-col">
         <!-- Filtros -->
-        <div class="flex flex-col | bg-gray-200 p-2 rounded m-2 | max-w-md">
+        <div class="flex flex-col md:flex-row | bg-gray-200 p-2 rounded m-2 md:mx-0 | max-w-md md:max-w-full">
           <!-- Usuario -->
-          <div class="flex | m-1">
+          <div class="flex md:flex-col md:flex-1 | m-1">
             <label class=" font-bold | m-1">Usuario:</label>
             <select  class="w-full rounded" v-model="propSelectedUser">
               <option value="Todos">Todos</option>
@@ -72,7 +72,7 @@
             </select>
           </div>
           <!-- Estado -->
-          <div class="flex | m-1">
+          <div class="flex md:flex-col md:flex-1 | m-1">
             <label class=" font-bold | m-1 ">Estado:</label>
             <select 
               class="w-full roundedd" v-model="propSelectedEstado">
@@ -81,6 +81,15 @@
                   v-for="(e,n) in estados" 
                   :key="n"
                   :value="e">{{e}}</option>
+            </select>
+          </div>
+          <!-- Subastar -->
+          <div class="flex md:flex-col md:flex-1 | m-1">
+            <label class=" font-bold | m-1 ">Subastar:</label>
+            <select 
+              class="w-full roundedd" v-model="propSelectedSubastar">
+                <option value="Todos">Todos</option>
+                <option value="true">Sí</option>
             </select>
           </div>
         </div>
@@ -210,6 +219,7 @@ export default {
       props: [],
       propSelectedUser:"Todos",
       propSelectedEstado:"Todos",
+      propSelectedSubastar:"Todos",
       estados:[
         "En venta",
         "Aprobación",
@@ -222,12 +232,15 @@ export default {
   },
   computed:{
     propsFiltered(){
-      let ps=this.props
+      let ps = this.props
       if(this.propSelectedUser!="Todos"){
-        ps= ps.filter(p=>p.uid===this.propSelectedUser)
+        ps = ps.filter(p=>p.uid===this.propSelectedUser)
       }
       if(this.propSelectedEstado!="Todos"){
-        ps= ps.filter(p=>p.status===this.propSelectedEstado)
+        ps = ps.filter(p=>p.status===this.propSelectedEstado)
+      }
+      if(this.propSelectedSubastar!="Todos"){
+        ps = ps.filter( p => !!p.subastar )
       }
       return ps
     }
