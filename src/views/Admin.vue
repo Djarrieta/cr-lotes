@@ -200,6 +200,7 @@
                     class="w-full sm:w-32 | px-1 mx-2 my-1 | rounded text-xs text-center bg-gray-400">
                       Ver Detalles</router-link>
                   <button 
+                    @click="deleteProp(p)"
                     class="w-full sm:w-32 | px-1 mx-2 my-1 | rounded text-xs bg-primary text-gray-100">
                       Eliminar
                   </button>
@@ -212,6 +213,7 @@
 </template>
 
 <script>
+import firebase from "firebase";
 import {db} from "@/main.js"
 import Swal from 'sweetalert2'
 
@@ -262,17 +264,9 @@ export default {
       });
     })
     /* Propiedades  */
-    db.collection("props").orderBy("propId","desc").get().then(props=>{
-      props.forEach(p=>{
-        let subastar="No"
-        if(p.data().subastar){
-          subastar="Si"
-        }
-        this.props.push({...p.data(),subastarTexto:subastar})
-      })
-    })
-  },
+    this.loadProps()
 
+  },
   filters: {
     numberFormat: function(value){
       let val = (value/1).toFixed(2).replace('.', ',')
@@ -285,6 +279,18 @@ export default {
   },
 
   methods:{
+    loadProps(){
+      this.props= [],
+      db.collection("props").orderBy("propId","desc").get().then(props=>{
+        props.forEach(p=>{
+          let subastar="No"
+          if(p.data().subastar){
+            subastar="Si"
+          }
+          this.props.push({...p.data(),subastarTexto:subastar})
+        })
+      })
+    },
     userRole(n){
       const user=this.users[n]
       if(user.admin){
@@ -339,6 +345,38 @@ export default {
     },
     changeTab(tab){
       this.tab=tab
+    },
+    async deleteProp(propToDelete){
+      const self =this
+      Swal.fire({
+        title: '¿Esta seguro que desea ELIMINAR esta propiedad y todos sus archivos de forma permanente?',
+        showDenyButton: true,
+        confirmButtonText: `Eliminar`,
+        denyButtonText: `Cancelar`,
+      })
+      .then(async function(r){
+        if(r.isConfirmed){
+            let storage = firebase.storage();
+            let storageRef = storage.ref();
+            /* Delete pictures */
+            propToDelete.s8_pictures.forEach(async function(pic){
+              let refPic=storageRef.child(pic.fileName)
+              await refPic.delete().catch(e=>console.error(e))
+            })
+            /* Delete files */
+            propToDelete.s7_files.forEach(async function(file){
+              let reffile=storageRef.child(file.fileName)
+              await reffile.delete().catch(e=>console.error(e))
+            })
+            /* Delete prop */
+            await db.collection("props")
+            .doc(propToDelete.propId.toString())
+            .delete()
+            .catch(e=>console.error(e));
+            /* loadProps */
+            self.loadProps()
+        }
+      })
     }
   }
 }
