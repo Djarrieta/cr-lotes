@@ -41,7 +41,7 @@
               <router-link :to="{ name: 'SignUp' }" class="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Registrarse</router-link>
             </div>
           </div>
-          <div v-if="!leftMenuVisible" class="md:block ml-0 md:ml-6 hidden">
+          <div v-if="!leftMenuVisible && currentUser" class="md:block ml-0 md:ml-6 hidden">
             <div class="flex">
               <router-link to="/" class="ml-4 mt-2 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-gray-800"><i class="fas fa-home hover:bg-white"></i> Inicio</router-link>
               <router-link to="/" class="ml-4 mt-2 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-500 hover:text-gray-800">Conócenos</router-link>
