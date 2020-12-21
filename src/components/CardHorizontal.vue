@@ -33,7 +33,7 @@
         <!-- Precio -->
         <p class="font-medium  text-primary flex  my-2">
             <span class="mr-1" :class="[prop.s1_price_off > 0 ? 'line-through text-gray-600' : ' text-primary']"> ₡ {{ prop.s1_price  | numberFormat }} </span>  
-            <span class="mx-2" v-if="prop.s1_price_off">{{ prop.s1_price_off }}%OFF</span>
+            <span class="mx-2" v-if="prop.s1_price_off">{{ prop.s1_price_off }}%Desc.</span>
             <span class="text-primary" v-if="prop.s1_price_off">₡ {{ Math.round(prop.s1_price - ((prop.s1_price * prop.s1_price_off) / 100)) | numberFormat }}</span>
         </p>
         <p v-if="!prop.s1_price_alquiler" class="text-gray-700 text-base">
