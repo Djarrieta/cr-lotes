@@ -177,6 +177,11 @@
                         </option>
                     </select>
                   </div>
+                  <!-- Alquiler -->
+                  <div v-if="p.s1_price_alquiler">
+                    <span class="text-xs font-bold">Alquiler/Mes:</span>
+                    <span class="text-primary text-xs">₡ {{p.s1_price_alquiler || numberFormat}} </span>
+                  </div>
                   <button 
                     @click="updateStatus(p.propId)"
                     class="w-full sm:w-32 | px-1 mx-2 my-1 | rounded text-xs bg-gray-400">
