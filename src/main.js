@@ -34,9 +34,13 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 var storage = firebase.storage();
 
-new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app')
+firebase.auth().onAuthStateChanged(()=>{
+  new Vue({
+    router,
+    render: h => h(App)
+  }).$mount('#app')
+
+})
+
 
 export { db,storage};
