@@ -6,8 +6,20 @@
 </template>
 <script>
 import Header from "@/components/Header"
+import firebase from "firebase"
+
 export default {
-  components: { Header }
+  components: { Header },
+  data(){
+    return{
+      currentUser:null
+    }
+  },
+  created(){
+    firebase.auth().onAuthStateChanged(user=>{
+      this.currentUser=user
+    })
+  }
 }
 </script>
 
@@ -15,7 +27,6 @@ export default {
   #app{
     @apply bg-gray-100
   } 
-
   input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 
