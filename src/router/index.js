@@ -9,6 +9,7 @@ import Profile from '@/views/Profile.vue'
 import Registro from '@/views/Registro.vue'
 import Admin from '@/views/Admin.vue'
 import PerfilPropiedad from '@/views/PerfilPropiedad.vue'
+import Testimonios from '@/views/Testimonios.vue'
 import Favoritos from '@/views/Favoritos.vue'
 import Error from '@/views/Error.vue'
 import Swal from 'sweetalert2'
@@ -80,6 +81,11 @@ const routes = [
     path: "/perfil-propiedad/:id", 
     component: PerfilPropiedad, 
     name: 'perfilpropiedad',
+  },
+  { 
+    path: "/testimonios", 
+    component: Testimonios, 
+    name: 'testimonios',
   },
   { 
     path: "*", 
