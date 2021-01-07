@@ -3,7 +3,13 @@ module.exports = {
     // removeDeprecatedGapUtilities: true,
     // purgeLayersByDefault: true,
   },
-  purge: [],
+  purge: [
+    "./pages/**/*.vue", 
+    "./components/**/*.vue", 
+    "./components/steps/**/*.vue",
+    "./plugins/**/*.vue",
+    "./static/**/*.vue",
+    "./store/**/*.vue"],
   theme: {
     fontFamily:{
       'sans': ['Roboto', 'Arial', 'sans-serif'],
