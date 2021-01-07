@@ -2,14 +2,14 @@
 
   <div class="w-full" id="contenedor">
     <!-- filtros -->
-    <div class="container mx-auto py-2 md:flex md:items-center">
+    <div class="container py-2 mx-auto md:flex md:items-center">
         <!-- provincias -->
         <div class="my-1 md:w-1/4">
             <label class="w-16 pl-1 text-base font-bold">Provincia</label>
             <div class="px-1">
                 <select 
                     id="selectPrv"
-                    class="focus:outline-none focus:shadow-outline w-full py-3 border-2"
+                    class="w-full py-3 border-2 focus:outline-none focus:shadow-outline"
                     v-model="s2_idPrvSelected"
                     @change="SelectPrv">
                     <option disabled value="0"
@@ -30,7 +30,7 @@
             <div class="px-1">
                 <select 
                     id="selectCtn"
-                    class="focus:outline-none focus:shadow-outline w-full py-3 border-2"
+                    class="w-full py-3 border-2 focus:outline-none focus:shadow-outline"
                     v-model="s2_idCtnSelected"
                     @change="SelectCtn">
                     <option disabled value="0"
@@ -49,7 +49,7 @@
                 <select 
                     @change="SelectDtt"
                     id="selectDtt"
-                    class="focus:outline-none focus:shadow-outline w-full py-3 border-2"
+                    class="w-full py-3 border-2 focus:outline-none focus:shadow-outline"
                     v-model="s2_idDttSelected">
                     <option disabled value="0"
                     class="">Selecciona</option>
@@ -61,17 +61,17 @@
             </div>
         </div>
         <!-- Botones -->
-        <div class="w-full px-2 mt-5 md:w-1/4 flex justify-between">
-          <button @click="clear" class="w-10 border border-primary rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary mr-1" title="Limpiar filtros"><i class="fas fa-eraser text-primary mr-1"></i></button>
-          <button @click="search" class="w-full border border-primary rounded py-1 bg-white hover:bg-gray-300 font-bold focus:outline-none md:py-2 text-primary"><i class="fas fa-sync text-primary mr-1"></i> Refrescar lista</button>
+        <div class="flex justify-between w-full px-2 mt-5 md:w-1/4">
+          <button @click="clear" class="w-10 py-1 mr-1 font-bold bg-white border rounded border-primary hover:bg-gray-300 focus:outline-none md:py-2 text-primary" title="Limpiar filtros"><i class="mr-1 fas fa-eraser text-primary"></i></button>
+          <button @click="search" class="w-full py-1 font-bold bg-white border rounded border-primary hover:bg-gray-300 focus:outline-none md:py-2 text-primary"><i class="mr-1 fas fa-sync text-primary"></i> Refrescar lista</button>
         </div>
 
     </div>
     
-    <div class="w-full flex flex-col-reverse md:flex md:flex-row md:h-full ms:mb-16 overflow-hidden ">
+    <div class="flex flex-col-reverse w-full overflow-hidden md:flex md:flex-row md:h-full ms:mb-16 ">
         <!-- Cards -->
         <div class="w-full md:w-1/2 lg:w-1/2 | h-full  overflow-y-scroll | text-center">
-          <!-- <ul v-if="!loading" class="grid grid-cols-1 xl:grid-cols-2 2xl:gap-4 gap-2 gap-y-6 justify-items-stretch"> -->
+          <!-- <ul v-if="!loading" class="grid grid-cols-1 gap-2 xl:grid-cols-2 2xl:gap-4 gap-y-6 justify-items-stretch"> -->
           <ul v-if="!loading" class="grid grid-cols-1 gap-2 gap-y-6 justify-items-stretch xl:px-5">
               <li class="w-full px-1" v-for="(prop, n) in props" :key="n">
                   <CardHorizontal 
@@ -80,22 +80,22 @@
               </li>
           </ul>
           <!-- loading -->
-          <div v-if="loading" class="flex justify-center items-center opacity-25  w-full h-full">
-            <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
+          <div v-if="loading" class="flex items-center justify-center w-full h-full opacity-25">
+            <div class="w-32 h-32 border-t-2 border-b-2 rounded-full animate-spin border-primary"></div>
           </div>
           <!-- Alerta sin resultados -->
-          <div v-if="!loading && !props.length" class="bg-red-200 rounded-lg shadow-inner p-2 my-4 text-red-600 text-center">No hay propiedades en venta en esta área. 
+          <div v-if="!loading && !props.length" class="p-2 my-4 text-center text-red-600 bg-red-200 rounded-lg shadow-inner">No hay propiedades en venta en esta área. 
           Selecciona otra región con los desplegables o mueve el mapa.</div>
           <!-- see more -->
-          <button v-if="props.length && showSeeMore"  @click="searchMore" class="w-3/4 p-2 focus:outline-none bg-gray-200 shadow-inner my-2 mx-auto rounded-full">
+          <button v-if="props.length && showSeeMore"  @click="searchMore" class="w-3/4 p-2 mx-auto my-2 bg-gray-200 rounded-full shadow-inner focus:outline-none">
             Ver más
           </button>
         </div>
 
         <!-- Mapa -->
-        <div class="relative w-full md:w-1/2 lg:w-1/2 h-64 md:h-auto">
+        <div class="relative w-full h-64 md:w-1/2 lg:w-1/2 md:h-auto">
           <!-- Buscar en esta área -->
-          <button @click="search" class="hidden md:block absolute bottom-0 z-10 bg-white m-2 rounded-lg border border-primary px-4 py-1 text-primary font-bold"><i class="fas fa-sync text-primary mr-1"></i>Buscar en esta área</button>
+          <button @click="search" class="absolute bottom-0 z-10 hidden px-4 py-1 m-2 font-bold bg-white border rounded-lg md:block border-primary text-primary"><i class="mr-1 fas fa-sync text-primary"></i>Buscar en esta área</button>
           <GmapMap
               class="w-full h-full"
               ref="mapRef"
@@ -266,16 +266,16 @@ export default {
         
         `<div class="text-center">
           <img class="w-32" src="${marker.s8_pictures[0].fileUrl}">
-          <div class="flex justify-between items-center mt-2">
+          <div class="flex items-center justify-between mt-2">
             <div class="flex flex-col mr-2">
-              <p class="font-lg text-md text-primary mb-2">
+              <p class="mb-2 font-lg text-md text-primary">
                       ${ this.formatPrice(marker.s1_price) }
               </p>
-              <p class="font-lg text-md text-primary mb-2">
+              <p class="mb-2 font-lg text-md text-primary">
                       ${ priceUn }
               </p>
             </div>
-            <a target="_blank" href="/perfil-propiedad/${marker.propId}" class="bg-blue-800 rounded-full px-2 text-xs text-gray-100">
+            <a target="_blank" href="/perfil-propiedad/${marker.propId}" class="px-2 text-xs text-gray-100 bg-blue-800 rounded-full">
               Detalles</a>
           </div>
         </div>
@@ -322,10 +322,14 @@ export default {
       this.$refs.mapRef.$mapPromise
       .then(map=>{
           let counter=0
-          const minLat=map.getBounds().Wa.i
-          const maxLat=map.getBounds().Wa.j
-          const minLng=map.getBounds().Ra.i
-          const maxLng=map.getBounds().Ra.j
+          const limitsObject=map.getBounds()
+          
+          const minLat=Object.entries(limitsObject)[0][1].i
+          const maxLat=Object.entries(limitsObject)[0][1].j
+          const minLng=Object.entries(limitsObject)[1][1].i
+          const maxLng=Object.entries(limitsObject)[1][1].j
+
+          console.log(minLat, maxLat, minLng, maxLng)
 
           //busca según filtros
           this.props= []
@@ -362,6 +366,7 @@ export default {
           let counter=0
           this.showSeeMore=false
           //establece los límites del mapa
+          
           const minLat=map.getBounds().Wa.i
           const maxLat=map.getBounds().Wa.j
           const minLng=map.getBounds().Ra.i
