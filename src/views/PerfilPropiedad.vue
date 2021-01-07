@@ -36,7 +36,7 @@
           </div>
         </div>
         <div v-for="(foto, index) in fotos1a5" :key="index">
-          <div v-if="foto.fileUrl" oncontextmenu="return false" class="row-span-1 col-span-1 | bg-primary | h-48 md:h-64">
+          <div v-if="foto.fileUrl" oncontextmenu="return false" class="row-span-1 col-span-1 | bg-white | h-48 md:h-64">
             <img :src="foto.fileUrl" :alt="index" class="object-fill | h-full w-full">
           </div>
           <div v-if="!foto.fileUrl" oncontextmenu="return false" class="row-span-1 col-span-1 | bg-gray-100 | h-48 md:h-64 | grid justify-items-center items-center">
@@ -307,33 +307,6 @@ export default {
   async created () { 
     let self = this
 
-// Capturar datos usuario
-    await firebase.auth().onAuthStateChanged( user => {
-        if(user){
-            self.datosUser = user
-            db.collection("users").doc(this.datosUser.uid).get().then(userInfo=>{
-                //es propia?
-                if (self.info.uid===self.datosUser.uid){
-                  self.ownProp=true
-                }else{
-                  self.ownProp=false
-                }
-                //marcada como propiedad de interes
-                const propsInteres=userInfo.data().propsInteres
-                if(propsInteres && propsInteres.includes(this.idPropiedad)){
-                  self.showInfoVendedor=true
-                }
-                //datos del vendedor
-                db.collection("users")
-                  .doc(self.info.uid)
-                  .get()
-                  .then(x=>self.dataVendedor=x.data())
-            }).catch(e=>console.error(e))
-        }else{
-            self.datosUser = ""
-        }
-    })
-
     //si este componente está metido dentro de confirmación de publicación cargan datos como props si no las busca en con el id
     if(this.infoConfirmacion){
       this.info = this.infoConfirmacion
@@ -370,6 +343,37 @@ export default {
            this.loading = false;
         }).catch(e=>console.error(e))
     }
+
+    // Capturar datos usuario
+    await firebase.auth().onAuthStateChanged( user => {
+        if(user){
+            self.datosUser = user
+            db.collection("users").doc(self.datosUser.uid).get()
+              .then(userInfo=>{
+                //es propia?
+                if (self.info.uid===self.datosUser.uid){
+                  self.ownProp=true
+                }else{
+                  self.ownProp=false
+                }
+                //marcada como propiedad de interes
+                const propsInteres=userInfo.data().propsInteres
+                if(propsInteres && propsInteres.includes(this.idPropiedad)){
+                  self.showInfoVendedor=true
+                }
+                //datos del vendedor
+                db.collection("users")
+                  .doc(self.info.uid)
+                  .get()
+                  .then(x=>self.dataVendedor=x.data())
+              }).catch(e=>console.error(e))
+              
+        }else{
+            self.datosUser = ""
+        }
+    })
+
+    
 
   },
   mounted() {
