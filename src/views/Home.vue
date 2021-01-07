@@ -329,8 +329,6 @@ export default {
           const minLng=Object.entries(limitsObject)[1][1].i
           const maxLng=Object.entries(limitsObject)[1][1].j
 
-          console.log(minLat, maxLat, minLng, maxLng)
-
           //busca según filtros
           this.props= []
           db.collection('props')
@@ -367,10 +365,12 @@ export default {
           this.showSeeMore=false
           //establece los límites del mapa
           
-          const minLat=map.getBounds().Wa.i
-          const maxLat=map.getBounds().Wa.j
-          const minLng=map.getBounds().Ra.i
-          const maxLng=map.getBounds().Ra.j
+          const limitsObject=map.getBounds()
+          
+          const minLat=Object.entries(limitsObject)[0][1].i
+          const maxLat=Object.entries(limitsObject)[0][1].j
+          const minLng=Object.entries(limitsObject)[1][1].i
+          const maxLng=Object.entries(limitsObject)[1][1].j
 
           //busca según filtros
           db.collection('props')
