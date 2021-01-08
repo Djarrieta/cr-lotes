@@ -33,4 +33,7 @@ export default {
     margin: 0; 
   }
   input[type=number] { -moz-appearance:textfield; }
+  
 </style>
+<style src="./assets/styles/index.css">
+
