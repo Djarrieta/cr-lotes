@@ -1,5 +1,4 @@
 {
-  "style": "tailwindcss build src/assets/styles/index.css -o src/assets/styles/tailwind.css",
   "name": "cr-lotes",
   "version": "0.1.0",
   "private": true,
@@ -40,5 +39,4 @@
       "git add"
     ]
   }
-  
 }
