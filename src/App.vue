@@ -2,6 +2,7 @@
   <div id="app" class="min-h-screen" >
     <Header />
     <router-view/>
+    <p v-if="this.$route.path!='/'">Copywrights 2021 Grupo Mastermas Ltda</p>
   </div>
 </template>
 <script>

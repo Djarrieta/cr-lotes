@@ -90,6 +90,7 @@
           <button v-if="props.length && showSeeMore"  @click="searchMore" class="w-3/4 p-2 mx-auto my-2 bg-gray-200 rounded-full shadow-inner focus:outline-none">
             Ver más
           </button>
+          <p>Copywrights 2021 Grupo Mastermas Ltda</p>
         </div>
 
         <!-- Mapa -->
@@ -328,8 +329,6 @@ export default {
           const maxLat=Object.entries(limitsObject)[0][1].j
           const minLng=Object.entries(limitsObject)[1][1].i
           const maxLng=Object.entries(limitsObject)[1][1].j
-
-          console.log(minLat, maxLat, minLng, maxLng)
 
           //busca según filtros
           this.props= []
